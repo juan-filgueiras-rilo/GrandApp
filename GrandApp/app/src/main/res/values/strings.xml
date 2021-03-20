@@ -18,4 +18,10 @@
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>
 
+    <!-- String login -->
+    <string name="IDENTIFICARSE">IDENTIFICARSE</string>
+    <string name="REGISTRARSE">REGISTRARSE</string>
+    <string name="sinsesion">CONTINUAR SIN INICIAR SESIÓN</string>
+
+
 </resources>

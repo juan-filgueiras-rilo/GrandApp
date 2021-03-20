@@ -13,4 +13,7 @@
     <color name="dark_green">#94E684</color>
     <color name="lila">#CB70F1</color>
     <color name="red">#D66262</color>
+    <color name="grey">#222222</color>
+    <color name="offwhite">#F3EBE1</color>
+    <color name="cleargrey">#AAAAAA</color>
 </resources>
