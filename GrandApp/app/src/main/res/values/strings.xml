@@ -22,6 +22,7 @@
     <string name="IDENTIFICARSE">IDENTIFICARSE</string>
     <string name="REGISTRARSE">REGISTRARSE</string>
     <string name="sinsesion">CONTINUAR SIN INICIAR SESIÓN</string>
+    <string name="puedes">O PUEDES REGISTRARTE PULSANDO <b>AQUÍ</b></string>
 
 
 </resources>
