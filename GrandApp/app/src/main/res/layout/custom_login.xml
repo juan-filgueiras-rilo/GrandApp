@@ -29,32 +29,43 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="GrandApp"
                 android:textColor="@color/offwhite"
                 android:textSize="@dimen/title_size"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editTextTextEmailAddress2"
-                android:layout_width="278dp"
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="0dp"
                 android:layout_marginEnd="10dp"
-                android:layou
-                android:ems="10"
+                android:layout_marginBottom="0dp"
+                app:srcCompat="@drawable/bombilla" />
+
+            <EditText
+                android:id="@+id/editTextTextEmailAddress2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="2"
                 android:inputType="textEmailAddress"
                 android:text="@string/sinsesion"
                 android:textColor="@color/offwhite" />
+
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_log"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
             android:layout_alignParentBottom="true"
             android:layout_weight="2"
