@@ -73,7 +73,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="5dp">
 
-            <Button
+            <android.widget.Button
                 android:id="@+id/cas_aceptar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
             android:orientation="horizontal"
             android:layout_marginRight="5dp">
 
-            <Button
+            <android.widget.Button
                 android:id="@+id/cas_cancelar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
