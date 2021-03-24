@@ -19,4 +19,5 @@
     <color name="cleargrey">#AAAAAA</color>
     <color name="transparent">#00000000</color>
     <color name="dark_grey">#bebcbc</color>
+    <color name="dark_grey_2">#323232 </color>
 </resources>

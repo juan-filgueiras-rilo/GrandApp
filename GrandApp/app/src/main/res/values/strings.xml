@@ -27,6 +27,16 @@
     <string name="cuenta"><b>CREAR TU CUENTA</b></string>
     <string name="IDENTIFICATE">¿YA TIENES CUENTA? <b>IDENTIFÍCATE</b></string>
 
+    <!-- String Perfil -->
+    <string name="guardar_cambios"><b>GUARDAR CAMBIOS</b></string>
+    <string name="ayuda"><b>Ayuda</b></string>
+    <string name="acuerdo_usuario"><b>Acuerdo de Usuario</b></string>
+    <string name="cerrar_sesion"><b>Cerrar Sesión</b></string>
 
-
+    <!-- String Rutinas -->
+    <string name="nombre"><b>Nombre</b></string>
+    <string name="descripcion"><b>Descripción</b></string>
+    <string name="anadir_dispositivo"><b>Añadir Dispositivo</b></string>
+    <string name="add_dias"><b>Añadir día(s)</b></string>
+    <string name="add_horas"><b>Añadir hora(s)</b></string>
 </resources>
