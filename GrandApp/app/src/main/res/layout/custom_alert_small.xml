@@ -36,9 +36,19 @@
         android:layout_below="@id/cas_liner"
         android:id="@+id/rel_content">
 
+        <ImageView
+            android:id="@+id/image_aspa_error"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@mipmap/warning"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"/>
+
+
         <ScrollView
             android:id="@+id/scrollTxt"
             android:layout_width="match_parent"
+            android:layout_below="@id/image_aspa_error"
             android:layout_height="wrap_content">
 
             <TextView
