@@ -8,9 +8,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
+        android:layout_margin="0dp"
         android:gravity="top"
+        android:layout_marginBottom="0dp"
         android:orientation="vertical">
         <TextView
             android:id="@+id/tagNombre"
@@ -115,18 +117,17 @@
                 android:background="@drawable/icono_mas"
                 android:textSize="18sp" />
         </LinearLayout>
-    <LinearLayout
-        android:id="@+id/ll_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="8"
-        android:layout_marginTop="10dp">
-        <!-- Listado de DISPOSITIVOS -->
-        <include layout="@layout/recycler" />
-    </LinearLayout>
         <LinearLayout
-
+            android:id="@+id/ll_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="8"
+            android:layout_marginTop="10dp">
+            <!-- Listado de DISPOSITIVOS -->
+            <include layout="@layout/recycler" />
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/dosBotones"
             android:layout_width="match_parent"
             android:layout_height="90dp"
@@ -134,50 +135,15 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="2">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_marginLeft="5dp">
-
                 <android.widget.Button
                     android:id="@+id/cas_aceptar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:background="@drawable/boton_verde"
-                    android:text="@string/guardar"
+                    android:text="@string/add_rutina"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_button" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_marginEnd="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal"
-                android:layout_marginRight="5dp">
-
-                <android.widget.Button
-                    android:id="@+id/cas_cancelar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/boton_rojo"
-                    android:text="@string/eliminar"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/text_button"/>
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

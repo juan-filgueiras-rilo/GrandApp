@@ -39,4 +39,7 @@
     <string name="anadir_dispositivo"><b>Añadir Dispositivo</b></string>
     <string name="add_dias"><b>Añadir día(s)</b></string>
     <string name="add_horas"><b>Añadir hora(s)</b></string>
+    <string name="eliminar"><b>Eliminar</b></string>
+    <string name="guardar"><b>Guardar</b></string>
+    <string name="add_rutina"><b>Añadir Rutina</b></string>
 </resources>
