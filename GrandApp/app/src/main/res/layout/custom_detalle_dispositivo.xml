@@ -24,11 +24,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="10dp">
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="4"
                     android:baselineAligned="false"
                     android:orientation="vertical">
@@ -43,13 +44,12 @@
                             android:id="@+id/imageView"
                             android:layout_width="match_parent"
                             android:layout_height="210dp"
-                            android:layout_centerInParent="true"
                             android:layout_gravity="center"
                             app:srcCompat="@mipmap/bombilla" />
                         <TextView
                             android:id="@+id/nombrePersonalizado"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="0dp"
                             android:layout_marginTop="40dp"
                             android:layout_weight="1"
                             android:gravity="left"
@@ -86,10 +86,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
-                        android:gravity="left"
+                        android:gravity="start"
                         android:text="Rutinas asociadas"
                         android:textColor="@color/grey"
-                        android:textSize="18dp" />
+                        android:textSize="18sp" />
 
                     <include layout="@layout/recycler" />
                 </LinearLayout>

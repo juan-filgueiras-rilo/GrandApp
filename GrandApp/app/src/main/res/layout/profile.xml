@@ -96,15 +96,17 @@ app:layout_behavior="@string/appbar_scrolling_view_behavior">
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold" />
+
             <android.widget.Button
                 android:id="@+id/buttonGuardarCambios"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/boton_verde"
                 android:padding="10dp"
-                android:background="@drawable/guardar_cambios_button"
                 android:text="@string/guardar_cambios"
-                android:textSize="18sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:layout_marginTop="15dp"
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 
