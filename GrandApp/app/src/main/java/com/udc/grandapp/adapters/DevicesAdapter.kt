@@ -2,8 +2,6 @@ package com.udc.grandapp.adapters
 
 import android.content.ClipData
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,15 +18,15 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, val lis
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var view : View = LayoutInflater.from(mContext).inflate(R.layout.custom_dispositivo, parent, false)
-        return DevicesAdapter.ViewHolder(view)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position], listener)
+        holder.bind(mItems[position], listener)
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return mItems.size
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
