@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    tools:context=".MainScreenActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -30,7 +30,6 @@
                 app:tabIndicatorColor="@color/black"
                 app:tabIndicatorGravity="center"
                 app:tabIndicatorHeight="56dp"
-                app:tabMode="scrollable"
                 app:tabTextColor="@color/white"
                 app:tabTextAppearance="@style/MyTabLayoutTextAppearance" />
         </androidx.appcompat.widget.Toolbar>

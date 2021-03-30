@@ -35,7 +35,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/bombilla_cd"
                         android:layout_width="206dp"
                         android:layout_height="210dp"
                         android:layout_centerInParent="true"
@@ -48,7 +48,7 @@
                         app:srcCompat="@mipmap/bombilla" />
 
                     <TextView
-                        android:id="@+id/nombreProducto"
+                        android:id="@+id/nombreProducto_cd"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginBottom="2dp"

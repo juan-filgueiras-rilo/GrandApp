@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="20">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="568dp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="0dp"
+            android:gravity="center"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="18"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="GrandApp"
+                android:textColor="@color/offwhite"
+                android:textSize="@dimen/title_size"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="0dp"
+                app:srcCompat="@drawable/bombilla" />
+
+            <TextView
+                android:id="@+id/sinIniciarSesion"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="0dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="2"
+                android:inputType="none"
+                android:text="@string/sinsesion"
+                android:textColor="@color/offwhite" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="2"
+            android:weightSum="4"
+            android:orientation="horizontal">
+
+            <android.widget.Button
+                android:id="@+id/identificarseSplash"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/login_button"
+                android:text="@string/IDENTIFICARSE"
+                android:textSize="18sp" />
+
+            <android.widget.Button
+                android:id="@+id/registrarseSplash"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/register_button"
+                android:text="@string/REGISTRARSE"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
