@@ -108,7 +108,7 @@
                 android:textStyle="bold" />
 
             <android.widget.Button
-                android:id="@+id/button3"
+                android:id="@+id/addDispositivoToRutina"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginRight="10dp"
@@ -147,7 +147,7 @@
                 android:layout_marginLeft="5dp">
 
                 <android.widget.Button
-                    android:id="@+id/cas_aceptar"
+                    android:id="@+id/guardarRutina"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -169,12 +169,12 @@
                 android:layout_marginRight="5dp">
 
                 <android.widget.Button
-                    android:id="@+id/cas_cancelar"
+                    android:id="@+id/cancelarRutina"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:background="@drawable/boton_rojo"
-                    android:text="@string/eliminar"
+                    android:text="@string/cancelar"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_button"/>
             </LinearLayout>

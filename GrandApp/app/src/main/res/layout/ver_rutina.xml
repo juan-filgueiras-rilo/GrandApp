@@ -136,12 +136,12 @@
             android:orientation="horizontal"
             android:weightSum="2">
                 <android.widget.Button
-                    android:id="@+id/cas_aceptar"
+                    android:id="@+id/guardarRutina"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:background="@drawable/boton_verde"
-                    android:text="@string/add_rutina"
+                    android:text="@string/guardar"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_button" />
         </LinearLayout>

@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragmentRoutines"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="10"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_titulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="@dimen/text_size"
+                android:text="Titulo"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="4dp"
+                android:background="@drawable/sombra_titulo">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <android.widget.Button
+            android:id="@+id/addRoutine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/boton_verde"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:text="@string/add_rutina"
+            android:textColor="@color/black"
+            android:layout_marginTop="15dp"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:id="@+id/ll_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+            <!-- Listado de DISPOSITIVOS -->
+            <include layout="@layout/recycler" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

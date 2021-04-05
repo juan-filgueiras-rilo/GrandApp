@@ -9,26 +9,32 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
-import com.udc.grandapp.adapters.DevicesAdapter
-import com.udc.grandapp.items.CustomerDevice
+import kotlinx.android.synthetic.main.crear_rutina.*
 
-class Devices : Fragment() {
+class UpdateRoutine : Fragment() {
 
     private lateinit var rootView : View
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_devices, container, false)
+        rootView = inflater.inflate(R.layout.ver_rutina, container, false)
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(context, 1)
 
-        var listaExample: List<CustomerDevice> = listOf(CustomerDevice(1, "NombreProducto1", "loadURL"),
-                                                CustomerDevice(2, "NombreProducto2", "loadURL"),
-                                                CustomerDevice(3, "NombreProducto3", "loadURL"))
-        recyclerView.adapter = context?.let { DevicesAdapter(it, listaExample) {
-            Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG)
-        } }
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        guardarRutina.setOnClickListener {
+            Toast.makeText(context, "Guardar rutina", Toast.LENGTH_LONG).show()
+        }
+        cancelarRutina.setOnClickListener {
+            Toast.makeText(context, "Cancelar rutina", Toast.LENGTH_LONG).show()
+        }
+        addDispositivoToRutina.setOnClickListener {
+            Toast.makeText(context, "Añadir dispositivo", Toast.LENGTH_LONG).show()
+        }
     }
 }

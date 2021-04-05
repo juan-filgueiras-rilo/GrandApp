@@ -35,7 +35,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/nombreProducto"
+                        android:id="@+id/nombreRutina"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginBottom="2dp"
@@ -47,7 +47,7 @@
                         android:textColor="@color/black"/>
 
                     <TextView
-                        android:id="@+id/fecha"
+                        android:id="@+id/descripcion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -72,21 +72,21 @@
                         android:weightSum="3">
 
                         <TextView
-                            android:id="@+id/anular"
+                            android:id="@+id/ejecutar"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             app:drawableTopCompat="@drawable/icono_play" />
 
                         <TextView
-                            android:id="@+id/consulta"
+                            android:id="@+id/eliminar"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             app:drawableTopCompat="@drawable/icono_anular" />
 
                         <TextView
-                            android:id="@+id/reimpresion"
+                            android:id="@+id/modificar"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
