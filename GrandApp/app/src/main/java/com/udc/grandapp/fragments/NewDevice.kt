@@ -9,12 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
-import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.adapters.NewDevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
-import kotlinx.android.synthetic.main.custom_nuevodispositivo.*
-import kotlinx.android.synthetic.main.fragment_devices.*
-import kotlinx.android.synthetic.main.fragment_devices.addDevice
 
 class NewDevice : Fragment() {
 
@@ -29,12 +25,8 @@ class NewDevice : Fragment() {
 
         var listaExample: List<CustomerDevice> = listOf(CustomerDevice(1, "Bombilla", "loadURL"))
         recyclerView.adapter = context?.let { NewDevicesAdapter(it, listaExample, parentFragmentManager) {
-            Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG)
+            Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
         } }
         return rootView
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 }

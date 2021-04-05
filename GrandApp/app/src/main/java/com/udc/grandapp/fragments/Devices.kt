@@ -38,7 +38,7 @@ class Devices : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         titulo.text = "Mis dispositivos"
         addDevice.setOnClickListener {
-            Toast.makeText(context, "Nuevo dispositivo", Toast.LENGTH_LONG)
+            Toast.makeText(context, "Nuevo dispositivo", Toast.LENGTH_LONG).show()
             var fr = parentFragmentManager?.beginTransaction()
             fr?.replace(R.id.fragmentDevices, NewDevice())
             fr?.commit()
