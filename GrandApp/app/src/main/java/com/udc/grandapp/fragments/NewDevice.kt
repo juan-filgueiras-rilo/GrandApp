@@ -28,7 +28,7 @@ class NewDevice : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(context, 1)
 
         var listaExample: List<CustomerDevice> = listOf(CustomerDevice(1, "Bombilla", "loadURL"))
-        recyclerView.adapter = context?.let { NewDevicesAdapter(it, listaExample) {
+        recyclerView.adapter = context?.let { NewDevicesAdapter(it, listaExample, parentFragmentManager) {
             Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG)
         } }
         return rootView
