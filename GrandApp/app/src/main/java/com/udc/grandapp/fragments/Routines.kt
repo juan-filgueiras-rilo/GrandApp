@@ -29,7 +29,7 @@ class Routines : Fragment() {
                 Routine(1, "Rutina 1", "Descripción de la rutina 1"),
                 Routine(2, "Rutina 2", "Descripción de la rutina 2"),
                 Routine(3, "Rutina 3", "Descripción de la rutina 3"))
-        recyclerView.adapter = context?.let { RoutinesAdapter(it, lista) {
+        recyclerView.adapter = context?.let { RoutinesAdapter(it, lista, parentFragmentManager) {
             Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
         } }
         return rootView
