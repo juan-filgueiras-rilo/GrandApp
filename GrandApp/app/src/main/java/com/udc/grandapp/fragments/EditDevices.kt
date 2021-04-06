@@ -15,7 +15,7 @@ import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.items.RoutinesDevice
 import kotlinx.android.synthetic.main.fragment_devices.*
 import kotlinx.android.synthetic.main.fragment_devices.titulo
-import kotlinx.android.synthetic.main.fragment_editDevice.*
+import kotlinx.android.synthetic.main.fragment_editdevice.*
 
 class EditDevices  : Fragment() {
 
@@ -23,13 +23,13 @@ class EditDevices  : Fragment() {
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.fragment_editDevice, container, false)
+        rootView = inflater.inflate(R.layout.fragment_editdevice, container, false)
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(context, 1)
 
         var listaRutinas: List<RoutinesDevice> = listOf(RoutinesDevice(1, "Rutina 1", "Descripción"),
-                                                        RoutinesDevice(2, "Rutina 2", "loadURL"))
+                                                        RoutinesDevice(2, "Rutina 2", "Descripción"))
         recyclerView.adapter = context?.let { EditDevicesAdapter(it, listaRutinas, parentFragmentManager) {
             Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG)
         } }

@@ -15,7 +15,7 @@ class editDevice : Fragment() {
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootView = inflater.inflate(R.layout.`fragment_editDevice.xml`, container, false)
+        rootView = inflater.inflate(R.layout.fragment_editdevice, container, false)
         return rootView
     }
 }
