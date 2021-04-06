@@ -28,7 +28,7 @@
                 android:weightSum="26">
 
                 <LinearLayout
-                    android:id="@+id/line1"
+                    android:id="@+id/lineaRutina"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="17"

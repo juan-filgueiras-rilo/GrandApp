@@ -9,7 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
-import kotlinx.android.synthetic.main.crear_rutina.*
+import kotlinx.android.synthetic.main.ver_rutina.addDispositivoToRutina
+import kotlinx.android.synthetic.main.ver_rutina.guardarRutina
 
 class UpdateRoutine : Fragment() {
 
@@ -28,13 +29,16 @@ class UpdateRoutine : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         guardarRutina.setOnClickListener {
-            Toast.makeText(context, "Guardar rutina", Toast.LENGTH_LONG).show()
-        }
-        cancelarRutina.setOnClickListener {
-            Toast.makeText(context, "Cancelar rutina", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Guardar Rutina", Toast.LENGTH_LONG).show()
+            var fr = parentFragmentManager?.beginTransaction()
+            fr?.replace(R.id.fragmentRoutines, Routines())
+            fr?.commit()
         }
         addDispositivoToRutina.setOnClickListener {
             Toast.makeText(context, "Añadir dispositivo", Toast.LENGTH_LONG).show()
+            //var fr = parentFragmentManager?.beginTransaction()
+            //fr?.replace(R.id.fragmentRoutines, Devices())
+            //fr?.commit()
         }
     }
 }

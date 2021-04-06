@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.fragments.NewRoutine
+import com.udc.grandapp.fragments.UpdateRoutine
 import com.udc.grandapp.items.Routine
 import kotlinx.android.synthetic.main.custom_rutina.view.*
 
@@ -44,7 +45,12 @@ class RoutinesAdapter(context : Context, val items: List<Routine>, fragmentManag
             }
             modificar.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentRoutines, NewRoutine())
+                fr?.replace(R.id.fragmentRoutines, UpdateRoutine())
+                fr?.commit()
+            }
+            lineaRutina.setOnClickListener{
+                var fr = fragmentManager?.beginTransaction()
+                fr?.replace(R.id.fragmentRoutines, UpdateRoutine())
                 fr?.commit()
             }
         }
