@@ -39,10 +39,14 @@ class EditDevices  : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         editText.hint = "Bombilla 1"
-        addDevice.setOnClickListener {
-            Toast.makeText(context, "Nuevo dispositivo", Toast.LENGTH_LONG).show()
+        aceptar.setOnClickListener {
             var fr = parentFragmentManager?.beginTransaction()
-            fr?.replace(R.id.fragmentDevices, NewDevice())
+            fr?.replace(R.id.fragmentEditDevices, Devices())
+            fr?.commit()
+        }
+        cancelar.setOnClickListener {
+            var fr = parentFragmentManager?.beginTransaction()
+            fr?.replace(R.id.fragmentEditDevices, Devices())
             fr?.commit()
         }
 

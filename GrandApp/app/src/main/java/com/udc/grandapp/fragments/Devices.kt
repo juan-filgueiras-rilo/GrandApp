@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
+import kotlinx.android.synthetic.main.custom_rutina_dispositivo.view.*
 import kotlinx.android.synthetic.main.fragment_devices.*
 
 class Devices : Fragment() {
@@ -43,6 +44,5 @@ class Devices : Fragment() {
             fr?.replace(R.id.fragmentDevices, NewDevice())
             fr?.commit()
         }
-
     }
 }

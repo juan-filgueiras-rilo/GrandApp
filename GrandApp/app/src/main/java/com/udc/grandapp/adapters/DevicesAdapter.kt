@@ -47,6 +47,9 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, fragmen
             encender.setOnClickListener {
                 Toast.makeText(context, "Encender/Apagar", Toast.LENGTH_LONG).show()
             }
+            eliminar.setOnClickListener {
+                Toast.makeText(context, "Eliminar dispositivo", Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
