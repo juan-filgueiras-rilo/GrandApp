@@ -9,17 +9,19 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
-import com.udc.grandapp.fragments.Devices
-import com.udc.grandapp.items.CustomerDevice
-import kotlinx.android.synthetic.main.custom_nuevodispositivo.view.*
+import com.udc.grandapp.items.RoutinesDevice
+import kotlinx.android.synthetic.main.custom_rutina_dispositivo.view.*
 
-class NewDevicesAdapter(context : Context, val items: List<CustomerDevice>, fragmentManager : FragmentManager, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<NewDevicesAdapter.ViewHolder>(){
+
+class EditDevicesAdapter(context : Context, val items: List<RoutinesDevice>, fragmentManager : FragmentManager, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<EditDevicesAdapter.ViewHolder>(){
+
     private var mContext : Context = context
-    private var mItems : List<CustomerDevice> = items
+    private var mItems : List<RoutinesDevice> = items
     private var mFragmentManager : FragmentManager = fragmentManager
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var view : View = LayoutInflater.from(mContext).inflate(R.layout.custom_nuevodispositivo, parent, false)
+        var view : View = LayoutInflater.from(mContext).inflate(R.layout.custom_rutina_dispositivo, parent, false)
         return ViewHolder(view)
     }
 
@@ -32,15 +34,16 @@ class NewDevicesAdapter(context : Context, val items: List<CustomerDevice>, frag
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: CustomerDevice, listener: (ClipData.Item) -> Unit, fragmentManager: FragmentManager) = with(itemView) {
+        fun bind(item: RoutinesDevice, listener: (ClipData.Item) -> Unit, fragmentManager: FragmentManager) = with(itemView) {
             nombreProducto.text = item.nombre
-            enlazar.setOnClickListener {
+            descripcion.text = item.descripcion
+            ver.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentSearchDevices, Devices())
+                fr?.replace(R.id.fragmentEditDevices, NewRoutine())
                 fr?.commit()
             }
-            rechazar.setOnClickListener {
-                Toast.makeText(context, "Rechazar", Toast.LENGTH_LONG).show()
+            borrar.setOnClickListener {
+                Toast.makeText(context, "Borrar rutina", Toast.LENGTH_LONG).show()
             }
         }
     }

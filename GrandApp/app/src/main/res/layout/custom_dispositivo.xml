@@ -86,7 +86,7 @@
                             app:drawableTopCompat="@drawable/papelera" />
 
                         <TextView
-                            android:id="@+id/anular"
+                            android:id="@+id/encender"
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
                             android:layout_gravity="center"

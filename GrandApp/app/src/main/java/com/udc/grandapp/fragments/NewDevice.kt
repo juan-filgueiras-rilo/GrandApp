@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.NewDevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
+import kotlinx.android.synthetic.main.fragment_devices.*
+import kotlinx.android.synthetic.main.fragment_devices.addDevice
+import kotlinx.android.synthetic.main.fragment_searchdevices.*
 
 class NewDevice : Fragment() {
 
@@ -28,5 +31,13 @@ class NewDevice : Fragment() {
             Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
         } }
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        refrescar.setOnClickListener {
+            Toast.makeText(context, "Refrescar", Toast.LENGTH_LONG).show()
+        }
+
     }
 }
