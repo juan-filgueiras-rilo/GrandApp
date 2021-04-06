@@ -10,11 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.EditDevicesAdapter
-import com.udc.grandapp.adapters.NewDevicesAdapter
-import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.items.RoutinesDevice
-import kotlinx.android.synthetic.main.fragment_devices.*
-import kotlinx.android.synthetic.main.fragment_devices.titulo
 import kotlinx.android.synthetic.main.fragment_editdevice.*
 
 class EditDevices  : Fragment() {
