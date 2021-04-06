@@ -36,7 +36,7 @@ class NewDevicesAdapter(context : Context, val items: List<CustomerDevice>, frag
             nombreProducto.text = item.nombre
             enlazar.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentSearchDevices, Devices())
+                fr?.replace(R.id.fragmentDevices, Devices())
                 fr?.commit()
             }
             rechazar.setOnClickListener {

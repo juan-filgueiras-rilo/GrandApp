@@ -37,12 +37,12 @@ class EditDevices  : Fragment() {
         editText.hint = "Bombilla 1"
         aceptar.setOnClickListener {
             var fr = parentFragmentManager?.beginTransaction()
-            fr?.replace(R.id.fragmentEditDevices, Devices())
+            fr?.replace(R.id.fragmentDevices, Devices())
             fr?.commit()
         }
         cancelar.setOnClickListener {
             var fr = parentFragmentManager?.beginTransaction()
-            fr?.replace(R.id.fragmentEditDevices, Devices())
+            fr?.replace(R.id.fragmentDevices, Devices())
             fr?.commit()
         }
 
