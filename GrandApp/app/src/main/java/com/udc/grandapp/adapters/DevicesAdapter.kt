@@ -9,11 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
-import com.udc.grandapp.fragments.Devices
 import com.udc.grandapp.fragments.EditDevices
 import com.udc.grandapp.items.CustomerDevice
 import kotlinx.android.synthetic.main.custom_dispositivo.view.*
-import kotlinx.android.synthetic.main.custom_nuevodispositivo.view.*
 
 class DevicesAdapter(context : Context, val items: List<CustomerDevice>, fragmentManager : FragmentManager, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<DevicesAdapter.ViewHolder>(){
 
