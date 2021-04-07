@@ -40,7 +40,7 @@ class EditDevicesAdapter(context : Context, val items: List<RoutinesDevice>, fra
             descripcion.text = item.descripcion
             ver.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentDevices, Devices())
+                fr?.replace(R.id.fragmentDevices, NewRoutine())
                 fr?.commit()
             }
             borrar.setOnClickListener {
