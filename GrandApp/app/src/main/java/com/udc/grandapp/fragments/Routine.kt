@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.replace
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import kotlinx.android.synthetic.main.ver_rutina.addDispositivoToRutina
 import kotlinx.android.synthetic.main.ver_rutina.guardarRutina
 
-class UpdateRoutine : Fragment() {
+class Routine : Fragment() {
 
     private lateinit var rootView : View
     private lateinit var recyclerView: RecyclerView
@@ -32,13 +31,13 @@ class UpdateRoutine : Fragment() {
         guardarRutina.setOnClickListener {
             Toast.makeText(context, "Guardar Rutina", Toast.LENGTH_LONG).show()
             var fr = parentFragmentManager?.beginTransaction()
-            fr?.replace(R.id.fragmentRoutines, Routines())
+            fr?.replace(R.id.mainFragment, Resume())
             fr?.commit()
         }
         addDispositivoToRutina.setOnClickListener {
             Toast.makeText(context, "Añadir dispositivo", Toast.LENGTH_LONG).show()
             var fr = parentFragmentManager?.beginTransaction()
-            fr?.replace(R.id.fragmentRoutines, DevicesToRoutine())
+            fr?.replace(R.id.mainFragment, DevicesToRoutine())
             fr?.commit()
         }
     }

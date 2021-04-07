@@ -9,13 +9,17 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
-import com.udc.grandapp.fragments.NewRoutine
-import com.udc.grandapp.items.SettingsDevice
+import com.udc.grandapp.fragments.Device
+import com.udc.grandapp.fragments.EditDevices
+import com.udc.grandapp.items.CustomerDeviceSummary
+import com.udc.grandapp.items.RoutinesDevice
+import kotlinx.android.synthetic.main.custom_dispositivo.view.*
 import kotlinx.android.synthetic.main.custom_lista.view.*
 
-class SettingsAdapter(context : Context, val items: List<SettingsDevice>, fragmentManager : FragmentManager, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<SettingsAdapter.ViewHolder>(){
+class DeviceSummariesAdapter(context : Context, val items: List<CustomerDeviceSummary>, fragmentManager : FragmentManager, val listener: (ClipData.Item) -> Unit)  : RecyclerView.Adapter<DeviceSummariesAdapter.ViewHolder>(){
+
     private var mContext : Context = context
-    private var mItems : List<SettingsDevice> = items
+    private var mItems : List<CustomerDeviceSummary> = items
     private var mFragmentManager : FragmentManager = fragmentManager
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,12 +36,16 @@ class SettingsAdapter(context : Context, val items: List<SettingsDevice>, fragme
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: SettingsDevice, listener: (ClipData.Item) -> Unit, fragmentManager: FragmentManager) = with(itemView) {
-            nombreDispositivo.text = item.ajuste
-            descripcion.text = item.descripcion
-            line1.setOnClickListener {
-                Toast.makeText(context, "Ajuste seleccionado", Toast.LENGTH_LONG).show()
+        fun bind(item: CustomerDeviceSummary, listener: (ClipData.Item) -> Unit, fragmentManager: FragmentManager) = with(itemView) {
+            nombreDispositivo.text = item.name
+            descripcion.text = item.description
+
+            nombreDispositivo.setOnClickListener {
+                var fr = fragmentManager?.beginTransaction()
+                fr?.replace(R.id.mainFragment, Device())
+                fr?.commit()
             }
         }
     }
+
 }

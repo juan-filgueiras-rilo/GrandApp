@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.RoutinesAdapter
-import com.udc.grandapp.items.Routine
+import com.udc.grandapp.items.CustomerRoutine
 import kotlinx.android.synthetic.main.fragment_routines.*
 
 class Routines : Fragment() {
@@ -24,10 +24,10 @@ class Routines : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(context, 1)
 
-        var lista: List<Routine> = listOf(
-                Routine(1, "Rutina 1", "Descripción de la rutina 1"),
-                Routine(2, "Rutina 2", "Descripción de la rutina 2"),
-                Routine(3, "Rutina 3", "Descripción de la rutina 3"))
+        var lista: List<CustomerRoutine> = listOf(
+            CustomerRoutine(1, "Rutina 1", "Descripción de la rutina 1", "url1"),
+            CustomerRoutine(2, "Rutina 2", "Descripción de la rutina 2", "url2"),
+            CustomerRoutine(3, "Rutina 3", "Descripción de la rutina 3", "url3"))
         recyclerView.adapter = context?.let { RoutinesAdapter(it, lista, parentFragmentManager) {
             Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
         } }

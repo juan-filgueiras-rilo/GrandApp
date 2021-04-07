@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.fragments.Devices
 import com.udc.grandapp.fragments.NewRoutine
+import com.udc.grandapp.fragments.UpdateRoutine
 import com.udc.grandapp.items.RoutinesDevice
 import kotlinx.android.synthetic.main.custom_rutina_dispositivo.view.*
 
@@ -41,7 +42,7 @@ class EditDevicesAdapter(context : Context, val items: List<RoutinesDevice>, fra
             descripcion.text = item.descripcion
             ver.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentDevices, NewRoutine())
+                fr?.replace(R.id.fragmentDevices, UpdateRoutine())
                 fr?.commit()
             }
             borrar.setOnClickListener {

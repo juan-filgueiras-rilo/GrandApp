@@ -5,23 +5,21 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
-import com.udc.grandapp.fragments.NewRoutine
-import com.udc.grandapp.fragments.UpdateRoutine
-import com.udc.grandapp.items.Routine
+import com.udc.grandapp.fragments.Routine
+import com.udc.grandapp.items.CustomerRoutine
 import kotlinx.android.synthetic.main.custom_rutina.view.*
 
-class RoutinesAdapter(context : Context, val items: List<Routine>, fragmentManager: FragmentManager, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<RoutinesAdapter.ViewHolder>(){
+class RoutinesAdapter(context : Context, val items: List<CustomerRoutine>, fragmentManager: FragmentManager, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<RoutinesAdapter.ViewHolder>(){
 
     private var mContext : Context = context
-    private var mItems : List<Routine> = items
+    private var mItems : List<CustomerRoutine> = items
     private var mFragmentManager : FragmentManager = fragmentManager
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var view : View = LayoutInflater.from(mContext).inflate(R.layout.custom_rutina, parent, false)
+        var view = LayoutInflater.from(mContext).inflate(R.layout.custom_rutina, parent, false)
         return ViewHolder(view)
     }
 
@@ -34,23 +32,13 @@ class RoutinesAdapter(context : Context, val items: List<Routine>, fragmentManag
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: Routine, listener: (ClipData.Item) -> Unit, fragmentManager: FragmentManager) = with(itemView) {
-            nombreRutina.text = item.nombre
-            descripcion.text = item.descripcion
-            ejecutar.setOnClickListener {
-                Toast.makeText(context, "Pulsado el botón de ejecutar", Toast.LENGTH_LONG).show()
-            }
-            eliminar.setOnClickListener {
-                Toast.makeText(context, "Pulsado el botón de eliminar", Toast.LENGTH_LONG).show()
-            }
-            modificar.setOnClickListener {
+        fun bind(item: CustomerRoutine, listener: (ClipData.Item) -> Unit, fragmentManager: FragmentManager) = with(itemView) {
+            nombreRutina.text = item.name
+            descripcion.text = item.description
+
+            nombreRutina.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentRoutines, UpdateRoutine())
-                fr?.commit()
-            }
-            lineaRutina.setOnClickListener{
-                var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentRoutines, UpdateRoutine())
+                fr?.replace(R.id.mainFragment, Routine())
                 fr?.commit()
             }
         }
