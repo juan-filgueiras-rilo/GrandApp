@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.fragments.Devices
+import com.udc.grandapp.fragments.NewRoutine
 import com.udc.grandapp.items.RoutinesDevice
 import kotlinx.android.synthetic.main.custom_rutina_dispositivo.view.*
 
