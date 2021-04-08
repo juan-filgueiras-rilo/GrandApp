@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
-import com.udc.grandapp.fragments.EditDevices
+import com.udc.grandapp.fragments.UpdateDevice
 import com.udc.grandapp.items.CustomerDevice
 import kotlinx.android.synthetic.main.custom_dispositivo.view.*
 
@@ -39,7 +39,7 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, fragmen
             bombilla_cd.setBackgroundColor(context.resources.getColor(R.color.green))
             consulta.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentDevices, EditDevices())
+                fr?.replace(R.id.fragmentDevices, UpdateDevice())
                 fr?.commit()
             }
             encender.setOnClickListener {

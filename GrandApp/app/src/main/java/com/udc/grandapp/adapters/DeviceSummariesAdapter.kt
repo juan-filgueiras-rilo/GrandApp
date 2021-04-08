@@ -5,15 +5,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
-import com.udc.grandapp.fragments.Device
-import com.udc.grandapp.fragments.EditDevices
+import com.udc.grandapp.fragments.UpdateDeviceMainFragment
 import com.udc.grandapp.items.CustomerDeviceSummary
-import com.udc.grandapp.items.RoutinesDevice
-import kotlinx.android.synthetic.main.custom_dispositivo.view.*
 import kotlinx.android.synthetic.main.custom_lista.view.*
 
 class DeviceSummariesAdapter(context : Context, val items: List<CustomerDeviceSummary>, fragmentManager : FragmentManager, val listener: (ClipData.Item) -> Unit)  : RecyclerView.Adapter<DeviceSummariesAdapter.ViewHolder>(){
@@ -42,7 +38,7 @@ class DeviceSummariesAdapter(context : Context, val items: List<CustomerDeviceSu
 
             nombreDispositivo.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.mainFragment, Device())
+                fr?.replace(R.id.mainFragment, UpdateDeviceMainFragment())
                 fr?.commit()
             }
         }

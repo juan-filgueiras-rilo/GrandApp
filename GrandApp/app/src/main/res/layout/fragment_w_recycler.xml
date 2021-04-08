@@ -30,9 +30,9 @@
                 android:textStyle="bold" />
 
             <LinearLayout
+                android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_weight="2"
-                android:layout_height="4dp"
                 android:background="@drawable/sombra_titulo">
 
             </LinearLayout>
@@ -42,7 +42,7 @@
         <LinearLayout
             android:id="@+id/ll_recycler"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:layout_weight="8"
             android:layout_marginTop="10dp">

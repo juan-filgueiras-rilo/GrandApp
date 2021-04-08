@@ -33,7 +33,7 @@ class NewDevicesAdapter(context : Context, val items: List<CustomerDevice>, frag
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: CustomerDevice, listener: (ClipData.Item) -> Unit, fragmentManager: FragmentManager) = with(itemView) {
-            nombreProducto.text = item.nombre
+            nombreRutinaDispositivo.text = item.nombre
             enlazar.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
                 fr?.replace(R.id.fragmentDevices, Devices())

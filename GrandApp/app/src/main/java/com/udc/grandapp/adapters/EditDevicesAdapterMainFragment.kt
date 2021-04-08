@@ -10,11 +10,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.fragments.UpdateRoutineDevicesFragment
+import com.udc.grandapp.fragments.UpdateRoutineMainFragment
 import com.udc.grandapp.items.RoutinesDevice
 import kotlinx.android.synthetic.main.custom_rutina_dispositivo.view.*
 
 
-class EditDevicesAdapter(context : Context, val items: List<RoutinesDevice>, fragmentManager : FragmentManager, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<EditDevicesAdapter.ViewHolder>(){
+class EditDevicesAdapterMainFragment(context : Context, val items: List<RoutinesDevice>, fragmentManager : FragmentManager, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<EditDevicesAdapterMainFragment.ViewHolder>(){
 
     private var mContext : Context = context
     private var mItems : List<RoutinesDevice> = items
@@ -40,7 +41,7 @@ class EditDevicesAdapter(context : Context, val items: List<RoutinesDevice>, fra
             descripcion.text = item.descripcion
             ver.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentDevices, UpdateRoutineDevicesFragment())
+                fr?.replace(R.id.mainFragment, UpdateRoutineMainFragment())
                 fr?.commit()
             }
             borrar.setOnClickListener {
