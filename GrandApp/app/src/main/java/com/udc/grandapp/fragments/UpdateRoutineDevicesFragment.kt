@@ -28,13 +28,11 @@ class UpdateRoutineDevicesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         guardarRutina.setOnClickListener {
-            Toast.makeText(context, "Guardar Rutina", Toast.LENGTH_LONG).show()
             var fr = parentFragmentManager?.beginTransaction()
             fr?.replace(R.id.fragmentDevices, UpdateDevice())
             fr?.commit()
         }
         addDispositivoToRutina.setOnClickListener {
-            Toast.makeText(context, "HOLA, PASO POR AQUI", Toast.LENGTH_LONG).show()
             var fr = parentFragmentManager?.beginTransaction()
             fr?.replace(R.id.fragmentDevices, DevicesToRoutineCreateRoutine())
             fr?.commit()
