@@ -12,9 +12,12 @@ import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DeviceNewRoutinesAdapter
 import com.udc.grandapp.adapters.DeviceSummariesAdapter
 import com.udc.grandapp.adapters.DevicesAdapter
+import com.udc.grandapp.adapters.DevicesToRoutineRoutinesAdapter
 import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.items.CustomerDeviceSummary
+import kotlinx.android.synthetic.main.custom_lista.*
 import kotlinx.android.synthetic.main.fragment_devices.titulo
+import kotlinx.android.synthetic.main.ver_rutina.*
 
 class DevicesToRoutineCreateRoutine : Fragment() {
 
@@ -30,7 +33,7 @@ class DevicesToRoutineCreateRoutine : Fragment() {
         var deviceSummaryListExample: List<CustomerDeviceSummary> = listOf(CustomerDeviceSummary(1, "NombreDispositivo1", "descripcion1", "url1"),
                 CustomerDeviceSummary(2, "NombreDispositivo2", "descripcion2", "url2"),
                 CustomerDeviceSummary(3, "NombreDispositivo3", "descripcion3", "url3"))
-        recyclerView.adapter = context?.let { DeviceNewRoutinesAdapter(it, deviceSummaryListExample, parentFragmentManager) {
+        recyclerView.adapter = context?.let { DevicesToRoutineRoutinesAdapter(it, deviceSummaryListExample, parentFragmentManager) {
             Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG)
         } }
 

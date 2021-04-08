@@ -36,7 +36,7 @@ class DeviceUpdateRoutinesAdapter(context : Context, val items: List<CustomerDev
             nombreDispositivo.text = item.name
             descripcion.text = item.description
 
-            nombreDispositivo.setOnClickListener {
+            line1.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
                 fr?.replace(R.id.fragmentRoutines, UpdateRoutine())
                 fr?.commit()
