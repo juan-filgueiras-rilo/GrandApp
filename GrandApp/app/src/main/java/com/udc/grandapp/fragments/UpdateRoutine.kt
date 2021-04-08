@@ -36,7 +36,7 @@ class UpdateRoutine : Fragment() {
         addDispositivoToRutina.setOnClickListener {
             Toast.makeText(context, "Añadir dispositivo", Toast.LENGTH_LONG).show()
             var fr = parentFragmentManager?.beginTransaction()
-            fr?.replace(R.id.fragmentRoutines, DevicesToRoutineCreateRoutine())
+            fr?.replace(R.id.fragmentRoutines, DevicesToRoutineUpdateRoutine())
             fr?.commit()
         }
     }
