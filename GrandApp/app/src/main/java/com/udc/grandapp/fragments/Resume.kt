@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DeviceSummariesAdapter
 import com.udc.grandapp.adapters.RoutinesAdapter
+import com.udc.grandapp.adapters.RoutinesAdapterMainFragment
 import com.udc.grandapp.items.CustomerDeviceSummary
 import com.udc.grandapp.items.CustomerRoutine
 
@@ -41,7 +42,7 @@ class Resume : Fragment() {
         var routineListExample: List<CustomerRoutine> = listOf(CustomerRoutine(1, "NombreRutina1", "descripcion1", "url1"),
                 CustomerRoutine(2, "NombreRutina2", "descripcion2", "url2"),
                 CustomerRoutine(3, "NombreRutina3", "descripcion3", "url3"))
-        routineRecyclerView.adapter = context?.let { RoutinesAdapter(it, routineListExample, parentFragmentManager) {
+        routineRecyclerView.adapter = context?.let { RoutinesAdapterMainFragment(it, routineListExample, parentFragmentManager) {
             Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG)
         } }
 

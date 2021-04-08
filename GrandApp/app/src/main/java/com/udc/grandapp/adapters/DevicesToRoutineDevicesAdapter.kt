@@ -16,7 +16,7 @@ import com.udc.grandapp.fragments.UpdateRoutineDevicesFragment
 import com.udc.grandapp.items.CustomerDeviceSummary
 import kotlinx.android.synthetic.main.custom_lista.view.*
 
-class DevicesToRoutineRoutinesAdapter(context : Context, val items: List<CustomerDeviceSummary>, fragmentManager : FragmentManager, val listener: (ClipData.Item) -> Unit)  : RecyclerView.Adapter<DevicesToRoutineRoutinesAdapter.ViewHolder>(){
+class DevicesToRoutineDevicesAdapter(context : Context, val items: List<CustomerDeviceSummary>, fragmentManager : FragmentManager, val listener: (ClipData.Item) -> Unit)  : RecyclerView.Adapter<DevicesToRoutineDevicesAdapter.ViewHolder>(){
 
     private var mContext : Context = context
     private var mItems : List<CustomerDeviceSummary> = items
@@ -42,7 +42,7 @@ class DevicesToRoutineRoutinesAdapter(context : Context, val items: List<Custome
 
             line1.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentRoutines, UpdateRoutine())
+                fr?.replace(R.id.fragmentDevices, UpdateRoutineDevicesFragment())
                 fr?.commit()
             }
         }

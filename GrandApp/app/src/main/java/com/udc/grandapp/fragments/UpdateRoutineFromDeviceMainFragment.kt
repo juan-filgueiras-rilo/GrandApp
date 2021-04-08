@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import kotlinx.android.synthetic.main.ver_rutina.*
 
-class UpdateRoutineDevicesFragment : Fragment() {
+class UpdateRoutineFromDeviceMainFragment : Fragment() {
 
     private lateinit var rootView : View
     private lateinit var recyclerView: RecyclerView
@@ -30,13 +30,13 @@ class UpdateRoutineDevicesFragment : Fragment() {
         guardarRutina.setOnClickListener {
             Toast.makeText(context, "Guardar Rutina", Toast.LENGTH_LONG).show()
             var fr = parentFragmentManager?.beginTransaction()
-            fr?.replace(R.id.fragmentDevices, UpdateDevice())
+            fr?.replace(R.id.mainFragment, UpdateDeviceMainFragment())
             fr?.commit()
         }
         addDispositivoToRutina.setOnClickListener {
-            Toast.makeText(context, "HOLA, PASO POR AQUI", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Añadir dispositivo", Toast.LENGTH_LONG).show()
             var fr = parentFragmentManager?.beginTransaction()
-            fr?.replace(R.id.fragmentDevices, DevicesToRoutineUpdateRoutineDevicesFragment())
+            fr?.replace(R.id.mainFragment, DevicesToRoutineCreateRoutine())
             fr?.commit()
         }
     }

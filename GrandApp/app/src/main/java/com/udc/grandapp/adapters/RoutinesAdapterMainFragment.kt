@@ -9,10 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
-import com.udc.grandapp.fragments.NewRoutine
-import com.udc.grandapp.fragments.Routine
-import com.udc.grandapp.fragments.UpdateRoutine
-import com.udc.grandapp.fragments.UpdateRoutineDevicesFragment
+import com.udc.grandapp.fragments.*
 import com.udc.grandapp.items.CustomerRoutine
 import kotlinx.android.synthetic.main.custom_lista.view.*
 import kotlinx.android.synthetic.main.custom_rutina.view.*
@@ -20,7 +17,7 @@ import kotlinx.android.synthetic.main.custom_rutina.view.descripcion
 import kotlinx.android.synthetic.main.custom_rutina_dispositivo.view.*
 import kotlinx.android.synthetic.main.custom_rutina_dispositivo.view.line1
 
-class RoutinesAdapter(context : Context, val items: List<CustomerRoutine>, fragmentManager: FragmentManager, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<RoutinesAdapter.ViewHolder>(){
+class RoutinesAdapterMainFragment(context : Context, val items: List<CustomerRoutine>, fragmentManager: FragmentManager, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<RoutinesAdapterMainFragment.ViewHolder>(){
 
     private var mContext : Context = context
     private var mItems : List<CustomerRoutine> = items
@@ -51,12 +48,12 @@ class RoutinesAdapter(context : Context, val items: List<CustomerRoutine>, fragm
             }
             modificar.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentRoutines, UpdateRoutine())
+                fr?.replace(R.id.mainFragment, UpdateRoutineMainFragment())
                 fr?.commit()
             }
             custom_rutina_parent.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentRoutines, UpdateRoutine())
+                fr?.replace(R.id.mainFragment, UpdateRoutineMainFragment())
                 fr?.commit()
             }
         }

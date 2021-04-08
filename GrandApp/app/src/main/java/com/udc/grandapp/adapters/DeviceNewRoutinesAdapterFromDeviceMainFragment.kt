@@ -5,18 +5,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
-import com.udc.grandapp.fragments.DevicesToRoutineCreateRoutine
 import com.udc.grandapp.fragments.NewRoutine
 import com.udc.grandapp.fragments.UpdateRoutine
-import com.udc.grandapp.fragments.UpdateRoutineDevicesFragment
+import com.udc.grandapp.fragments.UpdateRoutineFromDeviceMainFragment
+import com.udc.grandapp.fragments.UpdateRoutineMainFragment
 import com.udc.grandapp.items.CustomerDeviceSummary
 import kotlinx.android.synthetic.main.custom_lista.view.*
 
-class DevicesToRoutineRoutinesAdapter(context : Context, val items: List<CustomerDeviceSummary>, fragmentManager : FragmentManager, val listener: (ClipData.Item) -> Unit)  : RecyclerView.Adapter<DevicesToRoutineRoutinesAdapter.ViewHolder>(){
+class DeviceNewRoutinesAdapterFromDeviceMainFragment(context : Context, val items: List<CustomerDeviceSummary>, fragmentManager : FragmentManager, val listener: (ClipData.Item) -> Unit)  : RecyclerView.Adapter<DeviceNewRoutinesAdapterFromDeviceMainFragment.ViewHolder>(){
 
     private var mContext : Context = context
     private var mItems : List<CustomerDeviceSummary> = items
@@ -40,9 +39,9 @@ class DevicesToRoutineRoutinesAdapter(context : Context, val items: List<Custome
             nombreDispositivo.text = item.name
             descripcion.text = item.description
 
-            line1.setOnClickListener {
+            nombreDispositivo.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentRoutines, UpdateRoutine())
+                fr?.replace(R.id.mainFragment, UpdateRoutineFromDeviceMainFragment())
                 fr?.commit()
             }
         }
