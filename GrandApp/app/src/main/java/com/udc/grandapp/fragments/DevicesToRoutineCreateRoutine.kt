@@ -30,7 +30,7 @@ class DevicesToRoutineCreateRoutine : Fragment() {
         var deviceSummaryListExample: List<CustomerDeviceSummary> = listOf(CustomerDeviceSummary(1, "NombreDispositivo1", "descripcion1", "url1"),
                 CustomerDeviceSummary(2, "NombreDispositivo2", "descripcion2", "url2"),
                 CustomerDeviceSummary(3, "NombreDispositivo3", "descripcion3", "url3"))
-        recyclerView.adapter = context?.let { DevicesToRoutineRoutinesAdapter(it, deviceSummaryListExample, parentFragmentManager) {
+        recyclerView.adapter = context?.let { DevicesToRoutineCreateRoutineAdapter(it, deviceSummaryListExample, parentFragmentManager) {
             Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG)
         } }
 

@@ -36,7 +36,7 @@ class DeviceSummariesAdapter(context : Context, val items: List<CustomerDeviceSu
             nombreDispositivo.text = item.name
             descripcion.text = item.description
 
-            nombreDispositivo.setOnClickListener {
+            line1.setOnClickListener {
                 var fr = fragmentManager?.beginTransaction()
                 fr?.replace(R.id.mainFragment, UpdateDeviceMainFragment())
                 fr?.commit()
