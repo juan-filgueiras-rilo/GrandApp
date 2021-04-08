@@ -9,11 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
+import com.udc.grandapp.adapters.DeviceNewRoutinesAdapter
+import com.udc.grandapp.adapters.DeviceSummariesAdapter
 import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
+import com.udc.grandapp.items.CustomerDeviceSummary
 import kotlinx.android.synthetic.main.fragment_devices.titulo
 
-class DevicesToRoutine : Fragment() {
+class DevicesToRoutineCreateRoutine : Fragment() {
 
     private lateinit var rootView : View
     private lateinit var recyclerView: RecyclerView
@@ -23,6 +26,14 @@ class DevicesToRoutine : Fragment() {
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(context, 1)
+
+        var deviceSummaryListExample: List<CustomerDeviceSummary> = listOf(CustomerDeviceSummary(1, "NombreDispositivo1", "descripcion1", "url1"),
+                CustomerDeviceSummary(2, "NombreDispositivo2", "descripcion2", "url2"),
+                CustomerDeviceSummary(3, "NombreDispositivo3", "descripcion3", "url3"))
+        recyclerView.adapter = context?.let { DeviceNewRoutinesAdapter(it, deviceSummaryListExample, parentFragmentManager) {
+            Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG)
+        } }
+
         return rootView
     }
 

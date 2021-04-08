@@ -12,7 +12,6 @@ import com.udc.grandapp.R
 import kotlinx.android.synthetic.main.crear_rutina.*
 import kotlinx.android.synthetic.main.crear_rutina.addDispositivoToRutina
 import kotlinx.android.synthetic.main.crear_rutina.guardarRutina
-import kotlinx.android.synthetic.main.ver_rutina.*
 
 class NewRoutine : Fragment() {
 
@@ -45,7 +44,7 @@ class NewRoutine : Fragment() {
         addDispositivoToRutina.setOnClickListener {
             Toast.makeText(context, "Añadir dispositivo", Toast.LENGTH_LONG).show()
             var fr = parentFragmentManager?.beginTransaction()
-            fr?.replace(R.id.fragmentRoutines, DevicesToRoutine())
+            fr?.replace(R.id.fragmentRoutines, DevicesToRoutineCreateRoutine())
             fr?.commit()
         }
     }
