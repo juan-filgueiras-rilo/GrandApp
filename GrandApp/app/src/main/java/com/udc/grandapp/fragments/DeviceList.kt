@@ -11,9 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
-import kotlinx.android.synthetic.main.fragment_devices.titulo
 
-class DevicesToRoutineDevicesFragment : Fragment() {
+class DeviceList : Fragment() {
 
     private lateinit var rootView : View
     private lateinit var recyclerView: RecyclerView
@@ -23,11 +22,18 @@ class DevicesToRoutineDevicesFragment : Fragment() {
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(context, 1)
-        return rootView
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        titulo.text = "Mis Dispositivos";
+        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1, "NombreProducto1", "loadURL"),
+                CustomerDevice(2, "NombreProducto2", "loadURL"),
+                CustomerDevice(3, "NombreProducto3", "loadURL"))
+
+        recyclerView.adapter = context?.let {
+            activity?.let { it1 ->
+                DevicesAdapter(it, listaExample, it1, R.layout.custom_lista) {
+                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        return rootView
     }
 }

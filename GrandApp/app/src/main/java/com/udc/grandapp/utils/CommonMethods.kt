@@ -9,7 +9,7 @@ class CommonMethods {
         fun create(): CommonMethods = CommonMethods()
     }
 
-    fun clearExistFragments(context : FragmentActivity){
+    fun clearExistFragments(context: FragmentActivity){
         if (context.supportFragmentManager.backStackEntryCount > 0)
             context.supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
     }

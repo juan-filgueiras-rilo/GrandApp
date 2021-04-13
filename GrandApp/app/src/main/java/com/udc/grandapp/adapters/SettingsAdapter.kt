@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
-import com.udc.grandapp.fragments.NewRoutine
 import com.udc.grandapp.items.SettingsDevice
 import kotlinx.android.synthetic.main.custom_lista.view.*
 

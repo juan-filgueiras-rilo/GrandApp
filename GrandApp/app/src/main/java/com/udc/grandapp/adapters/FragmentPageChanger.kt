@@ -16,7 +16,7 @@ class FragmentPageChanger(val fm: FragmentManager, val context: Context) : Fragm
 
     override fun getItem(position: Int): Fragment {
         when (position){
-            0 -> return Resume()
+            0 -> return Home()
             1 -> return Devices()
             2 -> return Routines()
             3 -> return Profile()

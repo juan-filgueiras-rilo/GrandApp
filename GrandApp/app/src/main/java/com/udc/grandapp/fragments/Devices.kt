@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
-import kotlinx.android.synthetic.main.custom_rutina_dispositivo.view.*
 import kotlinx.android.synthetic.main.fragment_devices.*
+
 
 class Devices : Fragment() {
 
@@ -25,23 +26,29 @@ class Devices : Fragment() {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(context, 1)
 
-        var listaExample: List<CustomerDevice> = listOf(CustomerDevice(1, "NombreProducto1", "loadURL"),
-                                                CustomerDevice(2, "NombreProducto2", "loadURL"),
-                                                CustomerDevice(3, "NombreProducto3", "loadURL"))
-        recyclerView.adapter = context?.let { DevicesAdapter(it, listaExample, parentFragmentManager) {
-            Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG)
-        } }
+        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1, "NombreProducto1", "loadURL"),
+                CustomerDevice(2, "NombreProducto2", "loadURL"),
+                CustomerDevice(3, "NombreProducto3", "loadURL"))
+
+        recyclerView.adapter = context?.let {
+            activity?.let { it1 ->
+                DevicesAdapter(it, listaExample, it1, R.layout.custom_dispositivo) {
+                Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+            }
+            }
+        }
         return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        titulo.text = "Mis dispositivos"
+        titulo.text = activity?.resources?.getString(R.string.mis_dispositivos)
         addDevice.setOnClickListener {
             Toast.makeText(context, "Nuevo dispositivo", Toast.LENGTH_LONG).show()
-            var fr = parentFragmentManager?.beginTransaction()
-            fr?.replace(R.id.fragmentDevices, NewDevice())
-            fr?.commit()
+            val ft: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
+            ft?.replace(R.id.fragmentDevices, NewDevice())
+            ft?.addToBackStack("Devices")
+            ft?.commit()
         }
     }
 }

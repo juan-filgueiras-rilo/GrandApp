@@ -5,27 +5,29 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
-import com.udc.grandapp.fragments.NewRoutine
-import com.udc.grandapp.fragments.UpdateRoutine
+import com.udc.grandapp.fragments.DeviceView
+import com.udc.grandapp.fragments.UpdateDevice
+
 import com.udc.grandapp.items.CustomerDeviceSummary
 import kotlinx.android.synthetic.main.custom_lista.view.*
 
-class DeviceNewRoutinesAdapter(context : Context, val items: List<CustomerDeviceSummary>, fragmentManager : FragmentManager, val listener: (ClipData.Item) -> Unit)  : RecyclerView.Adapter<DeviceNewRoutinesAdapter.ViewHolder>(){
+class DeviceSummaryAdapter(context : Context, val items: List<CustomerDeviceSummary>, activity : FragmentActivity, val listener: (ClipData.Item) -> Unit)  : RecyclerView.Adapter<DeviceSummaryAdapter.ViewHolder>(){
 
     private var mContext : Context = context
     private var mItems : List<CustomerDeviceSummary> = items
-    private var mFragmentManager : FragmentManager = fragmentManager
+    private var mActivity : FragmentActivity = activity
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var view : View = LayoutInflater.from(mContext).inflate(R.layout.custom_lista, parent, false)
+        val view : View = LayoutInflater.from(mContext).inflate(R.layout.custom_lista, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(mItems[position], listener, mFragmentManager)
+        holder.bind(mItems[position], listener, mActivity)
     }
 
     override fun getItemCount(): Int {
@@ -33,14 +35,15 @@ class DeviceNewRoutinesAdapter(context : Context, val items: List<CustomerDevice
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: CustomerDeviceSummary, listener: (ClipData.Item) -> Unit, fragmentManager: FragmentManager) = with(itemView) {
+        fun bind(item: CustomerDeviceSummary, listener: (ClipData.Item) -> Unit, activity: FragmentActivity) = with(itemView) {
             nombreDispositivo.text = item.name
             descripcion.text = item.description
 
             line1.setOnClickListener {
-                var fr = fragmentManager?.beginTransaction()
-                fr?.replace(R.id.fragmentRoutines, NewRoutine())
-                fr?.commit()
+                val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
+                ft.replace(R.id.mainFragment, DeviceView())
+                ft.addToBackStack("Summary")
+                ft.commit()
             }
         }
     }
