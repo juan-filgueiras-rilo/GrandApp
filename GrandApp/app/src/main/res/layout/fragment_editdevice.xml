@@ -114,12 +114,12 @@
                         android:orientation="horizontal"
                         android:layout_marginLeft="5dp">
 
-                        <android.widget.Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/aceptar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:background="@drawable/boton_verde"
+                            android:backgroundTint="@color/dark_green"
                             android:text="@string/aceptar"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_button" />
@@ -136,12 +136,12 @@
                         android:orientation="horizontal"
                         android:layout_marginRight="5dp">
 
-                        <android.widget.Button
+                        <com.google.android.material.button.MaterialButton
                             android:id="@+id/cancelar"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:background="@drawable/boton_rojo"
+                            android:backgroundTint="@color/red"
                             android:text="@string/cancelar"
                             android:textColor="@color/white"
                             android:textSize="@dimen/text_button"/>

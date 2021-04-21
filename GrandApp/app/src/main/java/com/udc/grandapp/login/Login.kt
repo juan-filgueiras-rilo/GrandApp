@@ -3,7 +3,7 @@ package com.udc.grandapp.login
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
+import com.google.android.material.button.MaterialButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,9 +12,9 @@ import com.udc.grandapp.R
 
 class Login : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var identificarse : Button
+    private lateinit var identificarse : MaterialButton
     private lateinit var registrarse : TextView
-    private lateinit var identificarseGoogle: Button
+    private lateinit var identificarseGoogle: MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

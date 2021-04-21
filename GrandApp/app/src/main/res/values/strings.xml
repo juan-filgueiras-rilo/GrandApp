@@ -52,4 +52,5 @@
 
     <!-- String devices -->
     <string name="anadir_dev"><b>Añadir dispositivo</b></string>
+    <string name="refrescar"><b>Refrescar</b></string>
 </resources>

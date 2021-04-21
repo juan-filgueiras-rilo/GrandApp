@@ -3,16 +3,16 @@ package com.udc.grandapp
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
+import com.google.android.material.button.MaterialButton
 import androidx.appcompat.app.AppCompatActivity
 import com.udc.grandapp.login.Login
 import com.udc.grandapp.login.SignUp
 
 class SplashActivity : AppCompatActivity() , View.OnClickListener {
 
-        private lateinit var identificarse : Button
-        private lateinit var registrarse : Button
+        private lateinit var identificarse : MaterialButton
+        private lateinit var registrarse : MaterialButton
         private lateinit var sinIniciarSesion: TextView
 
         override fun onCreate(savedInstanceState: Bundle?) {
