@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -19,8 +20,7 @@ class DeviceView : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_editdevice, container, false)
-        rootView.findViewById<Button>(R.id.aceptar).visibility = View.GONE
-        rootView.findViewById<Button>(R.id.cancelar).visibility = View.GONE
+        rootView.findViewById<LinearLayout>(R.id.dosBotones).visibility = View.GONE
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(context, 1)

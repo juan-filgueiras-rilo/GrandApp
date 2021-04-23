@@ -92,7 +92,7 @@
             android:layout_height="96dp" />
 
         <LinearLayout
-            android:id="@+id/ll_log"
+            android:id="@+id/addDispositivo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
