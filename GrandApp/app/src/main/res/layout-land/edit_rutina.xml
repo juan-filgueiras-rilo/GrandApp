@@ -1,0 +1,190 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/crearRutina"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="top"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tagNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="10dp"
+            android:text="@string/nombre"
+            android:textSize="@dimen/text_size"
+            android:textColor="@color/dark_grey"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="left"
+            android:textColor="@color/black"
+            android:inputType="text"
+            android:padding="10dp"
+            android:text="Encender las luces"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/tagDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="10dp"
+            android:textColor="@color/dark_grey"
+            android:text="@string/descripcion"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="left"
+            android:textColor="@color/black"
+            android:inputType="text"
+            android:padding="10dp"
+            android:text="Enciende todas las luces de la casa"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tagDias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:textColor="@color/dark_grey"
+            android:padding="10dp"
+            android:text="@string/add_dias"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold" />
+
+        <ca.antonious.materialdaypicker.MaterialDayPicker
+            android:id="@+id/day_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tagHoras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:padding="10dp"
+            android:text="@string/add_horas"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold" />
+
+        <TimePicker
+            android:id="@+id/datePicker1"
+            android:layout_width="wrap_content"
+            android:layout_height="96dp" />
+
+        <LinearLayout
+            android:id="@+id/addDispositivo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/addDispositivoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:inputType="text"
+                android:textColor="@color/dark_grey"
+                android:padding="10dp"
+                android:text="@string/anadir_dispositivo"
+                android:textSize="@dimen/text_size"
+                android:textStyle="bold" />
+
+            <android.widget.Button
+                android:id="@+id/addDispositivoButton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/icono_mas"
+                android:textSize="18sp" />
+        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="8"
+        android:layout_marginTop="10dp">
+        <!-- Listado de DISPOSITIVOS -->
+        <include layout="@layout/recycler" />
+    </LinearLayout>
+        <LinearLayout
+
+            android:id="@+id/dosBotones"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_below="@+id/rel_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_marginLeft="5dp">
+
+                <android.widget.Button
+                    android:id="@+id/guardarRutina"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/boton_verde"
+                    android:text="@string/guardar"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_button" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal"
+                android:layout_marginRight="5dp">
+
+                <android.widget.Button
+                    android:id="@+id/cancelarRutina"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/boton_rojo"
+                    android:text="@string/cancelar"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_button"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
