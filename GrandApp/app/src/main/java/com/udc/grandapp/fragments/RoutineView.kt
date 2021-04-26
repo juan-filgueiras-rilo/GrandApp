@@ -1,5 +1,6 @@
 package com.udc.grandapp.fragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,8 +28,13 @@ class RoutineView : Fragment() {
         rootView.findViewById<LinearLayout>(R.id.addDispositivo).visibility = View.GONE
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = GridLayoutManager(context, 1)
+        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
         return rootView
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
     }
 }

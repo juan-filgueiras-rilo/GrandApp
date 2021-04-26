@@ -1,5 +1,6 @@
 package com.udc.grandapp.fragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
@@ -15,6 +17,7 @@ import com.udc.grandapp.adapters.RoutinesAdapter
 import com.udc.grandapp.adapters.RoutinesSummaryAdapter
 import com.udc.grandapp.items.CustomerDeviceSummary
 import com.udc.grandapp.items.CustomerRoutine
+import com.udc.grandapp.utils.CommonMethods
 
 class Home : Fragment() {
 
@@ -26,11 +29,11 @@ class Home : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_principal, container, false)
         routineRecyclerView = rootView.findViewById<RelativeLayout>(R.id.routine_recycler).findViewById<RecyclerView>(R.id.recycler)
         routineRecyclerView.setHasFixedSize(true)
-        routineRecyclerView.layoutManager = GridLayoutManager(context, 1)
+        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, routineRecyclerView)
 
         deviceRecyclerView = rootView.findViewById<RelativeLayout>(R.id.device_recycler).findViewById<RecyclerView>(R.id.recycler)
         deviceRecyclerView.setHasFixedSize(true)
-        deviceRecyclerView.layoutManager = GridLayoutManager(context, 1)
+        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, deviceRecyclerView)
 
         val deviceSummaryListExample: List<CustomerDeviceSummary> = listOf(CustomerDeviceSummary(1, "NombreDispositivo1", "descripcion1", "url1"),
             CustomerDeviceSummary(2, "NombreDispositivo2", "descripcion2", "url2"),
@@ -55,5 +58,11 @@ class Home : Fragment() {
         }
 
         return rootView
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, routineRecyclerView)
+        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, deviceRecyclerView)
     }
 }

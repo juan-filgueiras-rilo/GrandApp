@@ -1,5 +1,6 @@
 package com.udc.grandapp.fragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,7 @@ class UpdateRoutine : Fragment() {
         rootView.findViewById<TextView>(R.id.addDispositivoText).visibility = View.VISIBLE
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = GridLayoutManager(context, 1)
+        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
         return rootView
     }
@@ -44,5 +45,10 @@ class UpdateRoutine : Fragment() {
             ft?.addToBackStack("Update Routine")
             ft?.commit()
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
     }
 }
