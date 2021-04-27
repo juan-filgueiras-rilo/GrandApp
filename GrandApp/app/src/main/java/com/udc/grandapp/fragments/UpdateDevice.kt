@@ -1,5 +1,6 @@
 package com.udc.grandapp.fragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,7 +28,7 @@ class UpdateDevice  : Fragment() {
         rootView.findViewById<Button>(R.id.cancelar).visibility = View.VISIBLE
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = GridLayoutManager(context, 1)
+        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
         val listaRutinas: List<RoutinesDevice> = listOf(RoutinesDevice(1, "Rutina 1", "Descripción"),
                                                         RoutinesDevice(2, "Rutina 2", "Descripción"))
@@ -50,5 +51,10 @@ class UpdateDevice  : Fragment() {
             CommonMethods.create().clearExistFragments(context as FragmentActivity)
         }
 
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
     }
 }
