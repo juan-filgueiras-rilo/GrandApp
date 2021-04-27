@@ -99,7 +99,7 @@ public class UserController {
 	public AuthenticatedUserDto login(@Validated @RequestBody LoginParamsDto params)
 		throws IncorrectLoginException {
 		
-		User user = userService.login(params.getUserName(), params.getPassword());
+		User user = userService.login(params.getEmail(), params.getPassword());
 			
 		return toAuthenticatedUserDto(generateServiceToken(user), user);
 		

@@ -4,18 +4,18 @@ import javax.validation.constraints.NotNull;
 
 public class LoginParamsDto {
 	
-	private String userName;
+	private String email;
 	private String password;
 	
 	public LoginParamsDto() {}
 
 	@NotNull
-	public String getUserName() {
-		return userName;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName.trim();
+	public void setEmail(String email) {
+		this.email = email.trim();
 	}
 
 	@NotNull
