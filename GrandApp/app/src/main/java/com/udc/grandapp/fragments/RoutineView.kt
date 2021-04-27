@@ -1,10 +1,12 @@
 package com.udc.grandapp.fragments
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -22,14 +24,17 @@ class RoutineView : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.edit_rutina, container, false)
-        rootView.findViewById<Button>(R.id.guardarRutina).visibility = View.GONE
-        rootView.findViewById<Button>(R.id.cancelarRutina).visibility = View.GONE
-        rootView.findViewById<Button>(R.id.addDispositivoButton).visibility = View.GONE
-        rootView.findViewById<TextView>(R.id.addDispositivoText).visibility = View.GONE
+        rootView.findViewById<LinearLayout>(R.id.dosBotones).visibility = View.GONE
+        rootView.findViewById<LinearLayout>(R.id.addDispositivo).visibility = View.GONE
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = GridLayoutManager(context, 1)
+        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
         return rootView
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
     }
 }

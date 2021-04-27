@@ -9,13 +9,11 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.udc.grandapp.adapters.FragmentPageChanger
 import com.udc.grandapp.utils.CommonMethods
 
-
 class MainScreenActivity : AppCompatActivity() {
 
     private lateinit var toolbar : Toolbar
     private lateinit var  tabLayout: TabLayout
     private lateinit var  viewPager : ViewPager
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
