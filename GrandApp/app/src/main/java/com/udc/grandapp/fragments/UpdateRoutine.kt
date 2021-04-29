@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
@@ -37,6 +38,10 @@ class UpdateRoutine : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         guardarRutina.setOnClickListener {
+            CommonMethods.create().clearExistFragments(context as FragmentActivity)
+        }
+        cancelarRutina.setOnClickListener {
+            Toast.makeText(context, "Cancelar", Toast.LENGTH_LONG).show()
             CommonMethods.create().clearExistFragments(context as FragmentActivity)
         }
         addDispositivoButton.setOnClickListener {
