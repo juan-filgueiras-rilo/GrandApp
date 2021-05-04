@@ -7,8 +7,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.udc.grandserver.model.dao.UserDao;
 import com.udc.grandserver.model.entities.User;
-import com.udc.grandserver.model.entities.UserDao;
 import com.udc.grandserver.model.exceptions.DuplicateInstanceException;
 import com.udc.grandserver.model.exceptions.IncorrectLoginException;
 import com.udc.grandserver.model.exceptions.IncorrectPasswordException;

@@ -1,23 +1,44 @@
 package com.udc.grandserver.rest.dtos;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.udc.grandserver.model.entities.Device;
 
 public class DeviceDto {
 
+	public interface AllValidations {}
+	
+	public interface UpdateValidations {}
+	
 	private Long id;
 	private String name;
 	private String description;
+	private Long userId;
 
 	public DeviceDto() {
 		super();
 	}
 
-	public DeviceDto(Long id, String name, String description) {
+	public DeviceDto(
+			final Long id,
+			final String name,
+			final String description,
+			final Long userId) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 	}
-
+	
+	public DeviceDto(Device device) {
+		super();
+		this.id = device.getIdDevice();
+		this.name = device.getName();
+		this.description = device.getDescription();
+		this.userId = device.getUserId();
+	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -26,6 +47,8 @@ public class DeviceDto {
 		this.id = id;
 	}
 
+	@NotNull(groups={AllValidations.class, UpdateValidations.class})
+	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
 	public String getName() {
 		return name;
 	}
@@ -34,6 +57,8 @@ public class DeviceDto {
 		this.name = name;
 	}
 
+	@NotNull(groups={AllValidations.class, UpdateValidations.class})
+	@Size(min=1, max=60, groups={AllValidations.class, UpdateValidations.class})
 	public String getDescription() {
 		return description;
 	}
@@ -42,6 +67,12 @@ public class DeviceDto {
 		this.description = description;
 	}
 
-	
-	
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
 }

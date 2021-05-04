@@ -130,10 +130,12 @@ public class UserController {
 	
 	@PostMapping("/{id}/changePassword")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void changePassword(@RequestAttribute Long userId, @PathVariable Long id,
-		@Validated @RequestBody ChangePasswordParamsDto params)
+	public void changePassword(
+			@RequestAttribute Long userId,
+			@PathVariable Long id,
+			@Validated @RequestBody ChangePasswordParamsDto params)
 		throws PermissionException, InstanceNotFoundException, IncorrectPasswordException {
-		
+				
 		if (!id.equals(userId)) {
 			throw new PermissionException();
 		}
