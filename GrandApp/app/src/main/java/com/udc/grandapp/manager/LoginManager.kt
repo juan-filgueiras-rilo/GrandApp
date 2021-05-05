@@ -2,13 +2,13 @@ package com.udc.grandapp.manager
 
 import android.app.Activity
 import android.widget.Toast
-import com.udc.grandapp.model.LoginModel
+import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.webServiceGrandServer.LoginService
 import java.lang.Exception
 
 class LoginManager(activity: Activity) : GenericManager(activity) {
     override fun onWorkerExceute(datos: Companion.DatosThreaded) {
-        var loginModel: LoginModel?
+        var loginModel: GenericModel?
         try {
             loginModel = LoginService().solicitudLogin()
         }catch (e:Exception){

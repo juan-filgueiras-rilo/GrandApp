@@ -3,14 +3,14 @@ package com.udc.grandapp.manager
 import android.app.Activity
 import android.widget.Toast
 import com.udc.grandapp.manager.transferObjects.DatosSingUp
-import com.udc.grandapp.model.SignUpModel
+import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.webServiceGrandServer.SingUpService
 import java.lang.Exception
 import java.net.SocketTimeoutException
 
 class SignUpManager(activity: Activity) : GenericManager(activity) {
     override fun onWorkerExceute(datos: Companion.DatosThreaded) {
-        var signup: SignUpModel?
+        var signup: GenericModel?
         try {
             val datosPeticion: DatosSingUp = datos.mDatosOperaction as DatosSingUp
             signup = SingUpService().signup(datosPeticion.mUser, datosPeticion.mEmail, datosPeticion.mPassword)

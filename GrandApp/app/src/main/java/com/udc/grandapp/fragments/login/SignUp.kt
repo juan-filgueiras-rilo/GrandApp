@@ -16,6 +16,8 @@ import com.udc.grandapp.R
 import com.udc.grandapp.manager.SignUpManager
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosSingUp
+import com.udc.grandapp.model.GenericModel
+import com.udc.grandapp.model.SignUpLoginModel
 
 
 class SignUp : AppCompatActivity(), View.OnClickListener {
@@ -88,7 +90,13 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
 
             class ResponseManager() : IResponseManagerGeneric {
                 override fun onSuccesResponse(model: Any) {
+                    val modelResponse: GenericModel = model as GenericModel
+                    if (modelResponse.error == "0") {
+                        val singUp: SignUpLoginModel =  SignUpLoginModel.Parse(modelResponse.json)
+                        //TODO-> insertar en bd
                         startActivity(Intent(MainScreenActivity::class.simpleName))
+                    }
+                    else Toast.makeText(applicationContext, modelResponse.mensaje, Toast.LENGTH_LONG).show()
                 }
 
                 override fun onErrorResponse(model: Any) {

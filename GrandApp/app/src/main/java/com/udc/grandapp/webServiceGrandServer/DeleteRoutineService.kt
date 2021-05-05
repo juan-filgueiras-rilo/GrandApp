@@ -20,7 +20,6 @@ class DeleteRoutineService: GrandServer() {
                 "}")
 
         doDeleteRequest(body, "")
-
         return GenericModel("0", "", "")
     }
 }
