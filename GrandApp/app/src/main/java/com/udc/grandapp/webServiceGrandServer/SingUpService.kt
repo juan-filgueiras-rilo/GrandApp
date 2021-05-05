@@ -2,11 +2,23 @@ package com.udc.grandapp.webServiceGrandServer
 
 import com.udc.grandapp.model.SignUpModel
 import okhttp3.*
-import java.io.*
 
 
 class SingUpService(): GrandServer() {
 
+    fun signup(nombre: String, email: String, pwd: String): SignUpModel {
+        val body: RequestBody = RequestBody.create(mediaType, "{\n" +
+                "    \"userName\": \"juan1\",\n" +
+                "    \"password\": \"juan1\",\n" +
+                "    \"email\": \"juan1@juan1.com\"\n" +
+                "}")
+
+        doPostRequest(body, MetodoSignUp)
+
+        return SignUpModel("")
+    }
+}
+/*
     fun signup(nombre: String, email: String, pwd: String): SignUpModel {
         val client: OkHttpClient = OkHttpClient()
         val mediaType = MediaType.parse("application/json; charset=utf-8")
@@ -17,9 +29,9 @@ class SingUpService(): GrandServer() {
                 "}")
         val request = Request.Builder()
             .post(body)
-            .url("http://localhost:8080/users/signUp")
-            .header("Connection", "close")
-            .header("Accept", "application/json")
+            .url("http://192.168.56.1:8080/users/signUp")
+            .header("Connection", "keep-alive")
+            .header("Accept", "/*")
             .header("Content-Type", "application/json")
             .header("Cache-Control", "no-cache")
             .build()
@@ -34,4 +46,4 @@ class SingUpService(): GrandServer() {
         })
         return SignUpModel("")
     }
-}
+    */
