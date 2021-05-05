@@ -1,4 +1,4 @@
-package com.udc.grandapp.login
+package com.udc.grandapp.fragments.login
 
 import android.content.Intent
 import android.os.Bundle

@@ -28,7 +28,7 @@ class UpdateDevice  : Fragment() {
         rootView.findViewById<Button>(R.id.cancelar).visibility = View.VISIBLE
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
         val listaRutinas: List<RoutinesDevice> = listOf(RoutinesDevice(1, "Rutina 1", "Descripción"),
                                                         RoutinesDevice(2, "Rutina 2", "Descripción"))
@@ -45,16 +45,16 @@ class UpdateDevice  : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         editText.hint = "Bombilla 1"
         aceptar.setOnClickListener {
-            CommonMethods.create().clearExistFragments(context as FragmentActivity)
+            CommonMethods.clearExistFragments(context as FragmentActivity)
         }
         cancelar.setOnClickListener {
-            CommonMethods.create().clearExistFragments(context as FragmentActivity)
+            CommonMethods.clearExistFragments(context as FragmentActivity)
         }
 
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
     }
 }

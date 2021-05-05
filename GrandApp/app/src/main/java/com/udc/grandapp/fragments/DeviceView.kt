@@ -26,7 +26,7 @@ class DeviceView : Fragment() {
         rootView.findViewById<LinearLayout>(R.id.dosBotones).visibility = View.GONE
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
         val listaRutinas: List<RoutinesDevice> = listOf(RoutinesDevice(1, "Rutina 1", "Descripción"),
                 RoutinesDevice(2, "Rutina 2", "Descripción"))
@@ -43,6 +43,6 @@ class DeviceView : Fragment() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
     }
 }

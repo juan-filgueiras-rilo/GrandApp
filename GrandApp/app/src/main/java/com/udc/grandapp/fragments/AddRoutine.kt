@@ -30,7 +30,7 @@ class AddRoutine : Fragment() {
         rootView.findViewById<TextView>(R.id.addDispositivoText).visibility = View.VISIBLE
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
         return rootView
     }
 
@@ -38,11 +38,11 @@ class AddRoutine : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         guardarRutina.setOnClickListener {
             Toast.makeText(context, "Guardar Rutina", Toast.LENGTH_LONG).show()
-            CommonMethods.create().clearExistFragments(context as FragmentActivity)
+            CommonMethods.clearExistFragments(context as FragmentActivity)
         }
         cancelarRutina.setOnClickListener {
             Toast.makeText(context, "Cancelar", Toast.LENGTH_LONG).show()
-            CommonMethods.create().clearExistFragments(context as FragmentActivity)
+            CommonMethods.clearExistFragments(context as FragmentActivity)
         }
         addDispositivoButton.setOnClickListener {
             Toast.makeText(context, "Añadir dispositivo", Toast.LENGTH_LONG).show()
@@ -56,6 +56,6 @@ class AddRoutine : Fragment() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
     }
 }

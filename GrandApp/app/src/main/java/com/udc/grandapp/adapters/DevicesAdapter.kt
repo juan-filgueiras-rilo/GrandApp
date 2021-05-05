@@ -60,7 +60,7 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activit
                     nombreDispositivo.setText(item.nombre)
                     descripcion.setText(item.url)
                     r_customlista.setOnClickListener{
-                        CommonMethods.create().clearExistFragments(context as FragmentActivity)
+                        CommonMethods.clearExistFragments(context as FragmentActivity)
                     }
                 }
                 R.layout.custom_nuevodispositivo -> {

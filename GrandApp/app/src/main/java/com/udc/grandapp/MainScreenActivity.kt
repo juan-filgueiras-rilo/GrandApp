@@ -31,12 +31,12 @@ class MainScreenActivity : AppCompatActivity() {
 
         val onTabSelectedListener: OnTabSelectedListener = object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                CommonMethods.create().clearExistFragments(this@MainScreenActivity)
+                CommonMethods.clearExistFragments(this@MainScreenActivity)
                 viewPager.currentItem = tab.position
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {
-                CommonMethods.create().clearExistFragments(this@MainScreenActivity)
+                CommonMethods.clearExistFragments(this@MainScreenActivity)
                 viewPager.currentItem = tab.position
             }
         }

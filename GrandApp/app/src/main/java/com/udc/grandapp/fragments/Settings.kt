@@ -25,7 +25,7 @@ class Settings() : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_w_recycler, container, false)
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
         var listaExample: List<SettingsDevice> = listOf(SettingsDevice(1, "Ajuste 1", "Descripcion 1"),
                 SettingsDevice(2, "Ajuste 2", "Descripcion 2"),
@@ -43,6 +43,6 @@ class Settings() : Fragment() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
     }
 }

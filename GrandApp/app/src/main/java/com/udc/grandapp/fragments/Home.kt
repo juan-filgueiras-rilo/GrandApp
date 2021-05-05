@@ -29,11 +29,11 @@ class Home : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_principal, container, false)
         routineRecyclerView = rootView.findViewById<RelativeLayout>(R.id.routine_recycler).findViewById<RecyclerView>(R.id.recycler)
         routineRecyclerView.setHasFixedSize(true)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, routineRecyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, routineRecyclerView)
 
         deviceRecyclerView = rootView.findViewById<RelativeLayout>(R.id.device_recycler).findViewById<RecyclerView>(R.id.recycler)
         deviceRecyclerView.setHasFixedSize(true)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, deviceRecyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, deviceRecyclerView)
 
         val deviceSummaryListExample: List<CustomerDeviceSummary> = listOf(CustomerDeviceSummary(1, "NombreDispositivo1", "descripcion1", "url1"),
             CustomerDeviceSummary(2, "NombreDispositivo2", "descripcion2", "url2"),
@@ -62,7 +62,7 @@ class Home : Fragment() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, routineRecyclerView)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, deviceRecyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, routineRecyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, deviceRecyclerView)
     }
 }

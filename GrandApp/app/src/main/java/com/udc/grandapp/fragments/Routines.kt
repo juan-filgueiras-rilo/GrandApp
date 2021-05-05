@@ -26,7 +26,7 @@ class Routines : Fragment() {
         rootView = inflater.inflate(R.layout.fragment_routines, container, false)
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
         var lista: List<CustomerRoutine> = listOf(
             CustomerRoutine(1, "Rutina 1", "Descripción de la rutina 1", "url1"),
@@ -55,6 +55,6 @@ class Routines : Fragment() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        CommonMethods.create().recyclerViewGridCount(context as FragmentActivity, recyclerView)
+        CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
     }
 }

@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.udc.grandapp">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -25,7 +28,7 @@
         </activity>
 
         <activity
-            android:name=".login.Login"
+            android:name="com.udc.grandapp.fragments.login.Login"
             android:label="@string/app_name"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"
@@ -35,7 +38,7 @@
         </activity>
 
         <activity
-            android:name=".login.SignUp"
+            android:name="com.udc.grandapp.fragments.login.SignUp"
             android:label="@string/app_name"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="stateHidden|adjustPan"

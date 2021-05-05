@@ -6,8 +6,8 @@ import android.view.View
 import android.widget.TextView
 import com.google.android.material.button.MaterialButton
 import androidx.appcompat.app.AppCompatActivity
-import com.udc.grandapp.login.Login
-import com.udc.grandapp.login.SignUp
+import com.udc.grandapp.fragments.login.Login
+import com.udc.grandapp.fragments.login.SignUp
 
 class SplashActivity : AppCompatActivity() , View.OnClickListener {
 
