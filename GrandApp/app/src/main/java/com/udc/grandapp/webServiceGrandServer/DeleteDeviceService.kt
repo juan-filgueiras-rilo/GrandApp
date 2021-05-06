@@ -14,7 +14,6 @@ class DeleteDeviceService: GrandServer() {
                 "}")
 
         doDeleteRequest(body, "")
-
         return GenericModel("0", "", "")
     }
 }

@@ -1,15 +1,15 @@
 package com.udc.grandapp.webServiceGrandServer
 
-import com.udc.grandapp.model.GetDevicesModel
+import com.udc.grandapp.model.GenericModel
 import okhttp3.RequestBody
 
 class GetRoutinesService: GrandServer() {
 
-    fun getDevices(): GetDevicesModel {
+    fun getDevices(): GenericModel {
         val body: RequestBody = RequestBody.create(mediaType, "")
 
         doGetRequest(body, MetodoGetRoutinesByUserId)
 
-        return GetDevicesModel("nombre")
+        return GenericModel("0", "", "")
     }
 }

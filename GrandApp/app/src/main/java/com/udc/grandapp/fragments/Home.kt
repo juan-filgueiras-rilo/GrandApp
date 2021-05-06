@@ -1,5 +1,7 @@
 package com.udc.grandapp.fragments
 
+import android.app.Activity
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,14 +11,19 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DeviceSummaryAdapter
-import com.udc.grandapp.adapters.RoutinesAdapter
 import com.udc.grandapp.adapters.RoutinesSummaryAdapter
 import com.udc.grandapp.items.CustomerDeviceSummary
 import com.udc.grandapp.items.CustomerRoutine
+import com.udc.grandapp.manager.GetDevicesManager
+import com.udc.grandapp.manager.GetRoutinesManager
+import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
+import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
+import com.udc.grandapp.model.GenericModel
+import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.utils.CommonMethods
 
 class Home : Fragment() {
@@ -64,5 +71,46 @@ class Home : Fragment() {
         super.onConfigurationChanged(newConfig)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, routineRecyclerView)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, deviceRecyclerView)
+    }
+
+    fun getDevices(){
+        val mGetDevicesManager: GetDevicesManager = GetDevicesManager(context as Activity)
+
+        class ResponseManager() : IResponseManagerGeneric {
+            override fun onSuccesResponse(model: Any) {
+                val modelResponse: GenericModel = model as GenericModel
+                if (modelResponse.error == "0") {
+                    val devices: List<DevicesModel> =  DevicesModel.Parse(modelResponse.json)
+                    //TODO login?
+                    startActivity(Intent(MainScreenActivity::class.simpleName))
+                }
+                else Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+
+            }
+
+            override fun onErrorResponse(model: Any) {
+                Toast.makeText(context, "Error al obtener los dispositivos (Diálogo)", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        val responseManager: IResponseManagerGeneric = ResponseManager()
+        mGetDevicesManager.realizarOperacion(responseManager, DatosOperacionGeneric())
+    }
+
+    fun getRoutines(){
+        val mGetRoutinesManager: GetRoutinesManager = GetRoutinesManager(context as Activity)
+
+        class ResponseManager() : IResponseManagerGeneric {
+            override fun onSuccesResponse(model: Any) {
+
+            }
+
+            override fun onErrorResponse(model: Any) {
+                Toast.makeText(context, "Error al obtener las rutinas (Diálogo)", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        val responseManager: IResponseManagerGeneric = ResponseManager()
+        mGetRoutinesManager.realizarOperacion(responseManager, DatosOperacionGeneric())
     }
 }

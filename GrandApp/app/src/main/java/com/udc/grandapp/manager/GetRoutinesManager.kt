@@ -5,13 +5,14 @@ import android.widget.Toast
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.webServiceGrandServer.GetDevicesService
+import com.udc.grandapp.webServiceGrandServer.GetRoutinesService
 import java.lang.Exception
 
-class GetDevicesManager(activity: Activity) : GenericManager(activity) {
+class GetRoutinesManager (activity: Activity) : GenericManager(activity) {
     override fun onWorkerExceute(datos: Companion.DatosThreaded) {
         var devices: GenericModel?
         try {
-            devices = GetDevicesService().getDevices()
+            devices = GetRoutinesService().getRoutines()
         }catch (e: Exception){
             e.printStackTrace()
             datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, e.message, Toast.LENGTH_LONG).show() })

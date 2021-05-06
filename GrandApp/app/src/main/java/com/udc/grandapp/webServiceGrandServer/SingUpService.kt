@@ -1,12 +1,12 @@
 package com.udc.grandapp.webServiceGrandServer
 
-import com.udc.grandapp.model.SignUpModel
+import com.udc.grandapp.model.GenericModel
 import okhttp3.*
 
 
 class SingUpService(): GrandServer() {
 
-    fun signup(nombre: String, email: String, pwd: String): SignUpModel {
+    fun signup(nombre: String, email: String, pwd: String): GenericModel {
         val body: RequestBody = RequestBody.create(mediaType, "{\n" +
                 "    \"userName\": \"juan1\",\n" +
                 "    \"password\": \"juan1\",\n" +
@@ -15,7 +15,7 @@ class SingUpService(): GrandServer() {
 
         doPostRequest(body, MetodoSignUp)
 
-        return SignUpModel("")
+        return GenericModel("0", "", "")
     }
 }
 /*
@@ -44,6 +44,6 @@ class SingUpService(): GrandServer() {
                 response.body()?.string()
             )
         })
-        return SignUpModel("")
+        return GenericModel("", "", "")
     }
     */
