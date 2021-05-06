@@ -5,7 +5,7 @@ import okhttp3.RequestBody
 
 class GetRoutinesService: GrandServer() {
 
-    fun getDevices(): GenericModel {
+    fun getRoutines(): GenericModel {
         val body: RequestBody = RequestBody.create(mediaType, "")
 
         doGetRequest(body, MetodoGetRoutinesByUserId)

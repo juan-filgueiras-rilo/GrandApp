@@ -5,7 +5,7 @@ package com.udc.grandapp.webServiceGrandServer
 
 class UpdateRoutineService: GrandServer() {
 
-    fun updateProfile(): UpdateRoutineModel {
+    fun updateRoutine(id: String, name: String, description: String, userId: String): UpdateRoutineModel {
         val body: RequestBody = RequestBody.create(mediaType, "{\n" +
                 "    \"id\": \"1\"\n" +
                 "    \"name\": \"Aspirador Roomba\",\n" +

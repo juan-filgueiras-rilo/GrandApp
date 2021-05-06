@@ -55,6 +55,18 @@
             <intent-filter> <category android:name="android.intent.category.DEFAULT" /></intent-filter>
         </activity>
 
+        <service android:name=".services.RoutineAlarmService" />
+        <receiver
+            android:name=".services.EnableRoutinesReceive"
+            android:enabled="true">
+            <intent-filter> <action android:name="android.intent.action.BOOT_COMPLETED"/></intent-filter>
+        </receiver>
+        <receiver
+            android:name=".services.RestartService"
+            android:enabled="true">
+            <intent-filter> <action android:name="android.intent.action.BOOT_COMPLETED"/></intent-filter>
+        </receiver>
+
         <meta-data android:name="AA_DB_NAME" android:value="GrandApp"/>
         <meta-data android:name="AA_DB_VERSION" android:value="1"/>
         <meta-data android:name="AA_MODELS" android:value="com.udc.grandapp.dbmodel.DBUser, com.udc.grandapp.dbmodel.DBRoutine,

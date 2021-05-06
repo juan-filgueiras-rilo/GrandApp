@@ -5,7 +5,7 @@ import okhttp3.RequestBody
 
 class DeleteRoutineService: GrandServer() {
 
-    fun deleteRoutine(): GenericModel {
+    fun deleteRoutine(id: String): GenericModel {
         val body: RequestBody = RequestBody.create(mediaType, "{\n" +
                 "    \"name\": \"Rutina bien molona\",\n" +
                 "    \"description\": \"Esta rutina mola mogollon\"\n" +

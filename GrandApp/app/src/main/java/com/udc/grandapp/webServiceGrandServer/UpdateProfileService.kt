@@ -5,7 +5,7 @@ import okhttp3.RequestBody
 
 class UpdateProfileService: GrandServer() {
 
-    fun updateProfile(): UpdateProfileModel {
+    fun updateProfile(userName: String, email: String): UpdateProfileModel {
         val body: RequestBody = RequestBody.create(mediaType, "{\n" +
                 "    \"userName\": \"juan1\",\n" +
                 "    \"email\": \"juan@juan.com\"\n" +

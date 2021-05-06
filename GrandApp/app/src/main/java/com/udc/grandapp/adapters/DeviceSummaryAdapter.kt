@@ -41,7 +41,7 @@ class DeviceSummaryAdapter(context : Context, val items: List<CustomerDeviceSumm
 
             line1.setOnClickListener {
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                ft.replace(R.id.mainFragment, DeviceView())
+                ft.replace(R.id.drawerLayout, DeviceView())
                 ft.addToBackStack("Summary")
                 ft.commit()
             }

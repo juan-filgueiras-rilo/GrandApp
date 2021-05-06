@@ -15,7 +15,7 @@ class UpdateRoutineManager(activity: Activity) : GenericManager(activity) {
         try {
             val datosPeticion: DatosUpdateRoutine = datos.mDatosOperaction as DatosUpdateRoutine
             updateRoutine = UpdateRoutineService().updateRoutine(datosPeticion.id, datosPeticion.name,
-            datosPeticion.description, datosPeticion.userId, datosPeticion.deviceList)
+            datosPeticion.description, datosPeticion.userId)//TODO deviceList
         }catch (e: SocketTimeoutException){
             e.printStackTrace()
             datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
