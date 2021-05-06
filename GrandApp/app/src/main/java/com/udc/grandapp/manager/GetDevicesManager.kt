@@ -15,11 +15,11 @@ class GetDevicesManager(activity: Activity) : GenericManager(activity) {
             devices = GetDevicesService().getDevices()
         }catch (e: SocketTimeoutException){
             e.printStackTrace()
-            datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
+            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
             devices = null
         }catch (e: Exception){
             e.printStackTrace()
-            datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, e.message, Toast.LENGTH_LONG).show() })
+            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
             devices = null
         }
         datos.mResultado = devices as Any

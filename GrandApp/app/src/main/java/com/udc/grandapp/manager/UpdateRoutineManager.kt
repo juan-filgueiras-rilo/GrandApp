@@ -18,11 +18,11 @@ class UpdateRoutineManager(activity: Activity) : GenericManager(activity) {
             datosPeticion.description, datosPeticion.userId, datosPeticion.deviceList)
         }catch (e: SocketTimeoutException){
             e.printStackTrace()
-            datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
+            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
             updateRoutine = null
         }catch (e: Exception){
             e.printStackTrace()
-            datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, e.message, Toast.LENGTH_LONG).show() })
+            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
             updateRoutine = null
         }
         datos.mResultado = updateRoutine as Any

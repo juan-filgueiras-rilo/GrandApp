@@ -17,11 +17,11 @@ class UpdateDeviceManager(activity: Activity) : GenericManager(activity) {
             updateDevice = UpdateDeviceService().updateDevice(datosPeticion.id, datosPeticion.name, datosPeticion.description, datosPeticion.userId)
         }catch (e: SocketTimeoutException){
             e.printStackTrace()
-            datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
+            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
             updateDevice = null
         }catch (e: Exception){
             e.printStackTrace()
-            datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, e.message, Toast.LENGTH_LONG).show() })
+            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
             updateDevice = null
         }
         datos.mResultado = updateDevice as Any
