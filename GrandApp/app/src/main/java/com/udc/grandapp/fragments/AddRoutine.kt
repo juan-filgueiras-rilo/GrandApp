@@ -58,4 +58,5 @@ class AddRoutine : Fragment() {
         super.onConfigurationChanged(newConfig)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
     }
+
 }

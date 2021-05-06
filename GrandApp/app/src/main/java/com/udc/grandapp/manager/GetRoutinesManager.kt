@@ -16,11 +16,11 @@ class GetRoutinesManager (activity: Activity) : GenericManager(activity) {
             routines = GetRoutinesService().getRoutines()
         }catch (e: SocketTimeoutException){
             e.printStackTrace()
-            datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
+            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
             routines = null
         }catch (e: Exception){
             e.printStackTrace()
-            datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, e.message, Toast.LENGTH_LONG).show() })
+            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
             routines = null
         }
         datos.mResultado = routines as Any

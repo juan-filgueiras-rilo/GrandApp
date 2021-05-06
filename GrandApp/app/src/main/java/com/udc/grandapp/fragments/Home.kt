@@ -24,6 +24,7 @@ import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.model.DevicesModel
+import com.udc.grandapp.model.RoutinesModel
 import com.udc.grandapp.utils.CommonMethods
 
 class Home : Fragment() {
@@ -102,6 +103,13 @@ class Home : Fragment() {
 
         class ResponseManager() : IResponseManagerGeneric {
             override fun onSuccesResponse(model: Any) {
+                val modelResponse: GenericModel = model as GenericModel
+                if (modelResponse.error == "0") {
+                    val devices: List<RoutinesModel> =  RoutinesModel.Parse(modelResponse.json)
+                    //TODO login?
+                    startActivity(Intent(MainScreenActivity::class.simpleName))
+                }
+                else Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
 
             }
 

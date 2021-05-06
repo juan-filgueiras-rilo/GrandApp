@@ -17,9 +17,9 @@ class LoginManager(activity: Activity) : GenericManager(activity) {
             loginModel = LoginService().solicitudLogin(datosPeticion.nombre, datosPeticion.pwd)
         } catch (e: SocketTimeoutException) {
             e.printStackTrace()
-            datos.mActivivity.runOnUiThread(Runnable {
+            datos.mActivity.runOnUiThread(Runnable {
                 Toast.makeText(
-                    datos.mActivivity,
+                    datos.mActivity,
                     "Servidores no disponibles",
                     Toast.LENGTH_LONG
                 ).show()
@@ -27,9 +27,9 @@ class LoginManager(activity: Activity) : GenericManager(activity) {
             loginModel = null
         } catch (e: Exception) {
             e.printStackTrace()
-            datos.mActivivity.runOnUiThread(Runnable {
+            datos.mActivity.runOnUiThread(Runnable {
                 Toast.makeText(
-                    datos.mActivivity,
+                    datos.mActivity,
                     e.message,
                     Toast.LENGTH_LONG
                 ).show()

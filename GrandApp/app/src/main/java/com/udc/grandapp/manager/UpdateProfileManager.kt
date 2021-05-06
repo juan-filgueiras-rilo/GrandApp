@@ -17,11 +17,11 @@ class UpdateProfileManager(activity: Activity) : GenericManager(activity) {
             updateProfile = UpdateProfileService().updateProfile(datosPeticion.userName, datosPeticion.email)
         }catch (e: SocketTimeoutException){
             e.printStackTrace()
-            datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
+            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
             updateProfile = null
         }catch (e: Exception){
             e.printStackTrace()
-            datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, e.message, Toast.LENGTH_LONG).show() })
+            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
             updateProfile = null
         }
         datos.mResultado = updateProfile as Any

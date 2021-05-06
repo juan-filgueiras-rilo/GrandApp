@@ -30,7 +30,7 @@ open class GenericManager(activity: Activity) {
 
     companion object {
         data class DatosThreaded(
-                var mActivivity: Activity,
+                var mActivity: Activity,
                 var mCallBack: IResponseManagerGeneric,
                 var mDatosOperaction: DatosOperacionGeneric,
                 var mResultado: Any
@@ -39,7 +39,7 @@ open class GenericManager(activity: Activity) {
 
     fun onPreExecute(datos:DatosThreaded){
         try {
-            Toast.makeText(datos.mActivivity, "PopUp Cargando", Toast.LENGTH_LONG).show()
+            Toast.makeText(datos.mActivity, "PopUp Cargando", Toast.LENGTH_LONG).show()
         }catch (e:Exception){
             e.printStackTrace()
         }
@@ -85,7 +85,7 @@ open class GenericManager(activity: Activity) {
     fun onPostExecute(datos:DatosThreaded){
         try {
             try {
-                Toast.makeText(datos.mActivivity, "Cerrar diálogo cargando", Toast.LENGTH_LONG).show()
+                Toast.makeText(datos.mActivity, "Cerrar diálogo cargando", Toast.LENGTH_LONG).show()
             }catch (e:Exception){
                 e.printStackTrace()
             }
@@ -96,7 +96,7 @@ open class GenericManager(activity: Activity) {
                 datos.mCallBack.onErrorResponse(datos.mResultado)
             }
         }catch (e:Exception){
-            Toast.makeText(datos.mActivivity, "Error procesando la petición", Toast.LENGTH_LONG).show()
+            Toast.makeText(datos.mActivity, "Error procesando la petición", Toast.LENGTH_LONG).show()
             if (!CommonMethods.isNullOrEmptyObject(datos.mCallBack as Any))
                 datos.mCallBack.onErrorResponse("Error procesnado la petición" as Any)
         }
