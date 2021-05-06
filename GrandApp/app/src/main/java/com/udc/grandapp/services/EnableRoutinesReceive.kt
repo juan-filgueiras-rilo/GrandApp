@@ -4,13 +4,15 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
+import kotlin.random.Random
 
 class EnableRoutinesReceive  : BroadcastReceiver() {
 
-    var list = listOf<String>("Somos IoT Rangers y sabemos hacer servicios :D","Te estoy vigilando","Estoy recopilando información de tu gato para anuncios","0.2 semanales, porfa")
-    var index = 0
+    var list = listOf<String>("Somos IoT Rangers y sabemos hacer servicios :D",
+        "Te estoy vigilando",
+        "Estoy recopilando información de tu gato para anuncios",
+        "0.2 puntos semanales, porfa")
     override fun onReceive(context: Context, intent: Intent) {
-        Toast.makeText(context, list.get(index), Toast.LENGTH_SHORT).show()
-        if (index == 3) index = 0 else index += 1
+        Toast.makeText(context, list[Random.nextInt(0,4)], Toast.LENGTH_SHORT).show()
     }
 }

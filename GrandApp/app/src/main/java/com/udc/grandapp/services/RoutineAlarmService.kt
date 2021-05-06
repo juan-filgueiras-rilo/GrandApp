@@ -71,6 +71,6 @@ class RoutineAlarmService  : Service() {
         var intent:Intent = Intent(context, EnableRoutinesReceive::class.java)
         var alarmIntent:PendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
         var alarmManager:AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 3*1000, 2*1000, alarmIntent)
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 3*1000, 10*1000, alarmIntent)
     }
 }
