@@ -45,7 +45,7 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activit
                     bombilla_cd.setBackgroundColor(context.resources.getColor(R.color.green))
                     consulta.setOnClickListener {
                         val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                        ft.replace(R.id.fragmentDevices, UpdateDevice())
+                        ft.replace(R.id.drawerLayout, UpdateDevice())
                         ft.addToBackStack("DevicesAdapter")
                         ft.commit()
                     }

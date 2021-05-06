@@ -5,7 +5,7 @@ import okhttp3.RequestBody
 
 class UpdateDeviceService(): GrandServer() {
 
-    fun updateDevice(): UpdateDeviceModel {
+    fun updateDevice(id: String, name: String, description: String, userId: String): UpdateDeviceModel {
         val body: RequestBody = RequestBody.create(mediaType, "{\n" +
                 "    \"id\": \"1\",\n" +
                 "    \"name\": \"bombilla\",\n" +

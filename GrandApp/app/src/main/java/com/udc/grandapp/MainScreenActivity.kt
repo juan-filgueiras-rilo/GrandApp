@@ -1,5 +1,6 @@
 package com.udc.grandapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.udc.grandapp.adapters.FragmentPageChanger
+import com.udc.grandapp.services.RoutineAlarmService
 import com.udc.grandapp.utils.CommonMethods
 
 class MainScreenActivity : AppCompatActivity() {
@@ -24,6 +26,9 @@ class MainScreenActivity : AppCompatActivity() {
         viewPager = findViewById<ViewPager>(R.id.view_pager)
 
         initTabLayout()
+        Intent(this, RoutineAlarmService::class.java).also { intent ->
+            startService(intent)
+        }
     }
 
     fun initTabLayout(){

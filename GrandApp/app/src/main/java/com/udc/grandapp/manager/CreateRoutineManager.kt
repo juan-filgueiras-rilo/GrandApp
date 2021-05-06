@@ -14,8 +14,8 @@ class CreateRoutineManager(activity: Activity) : GenericManager(activity) {
         var createRoutine: CreateRoutineModel?
         try {
             val datosPeticion: DatosCreateRoutine = datos.mDatosOperaction as DatosCreateRoutine
-            createRoutine = CreateRoutineService().createRoutine(datosPeticion.name, datosPeticion.description,
-            datosPeticion.userId, datosPeticion.deviceList)
+            createRoutine = CreateRoutineService().createRoutine()
+            //createRoutine(datosPeticion.name, datosPeticion.description, datosPeticion.userId, datosPeticion.deviceList)
         }catch (e: SocketTimeoutException){
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })

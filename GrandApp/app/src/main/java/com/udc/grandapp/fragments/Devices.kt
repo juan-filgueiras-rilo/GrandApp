@@ -44,8 +44,8 @@ class Devices : Fragment() {
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
                 DevicesAdapter(it, listaExample, it1, R.layout.custom_dispositivo) {
-                Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
-            }
+                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                }
             }
         }
 

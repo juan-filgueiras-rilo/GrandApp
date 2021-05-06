@@ -60,12 +60,12 @@
                 android:layout_alignParentTop="true"
                 android:clickable="true"
                 android:focusable="true">
-            </FrameLayout>
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
 
         </RelativeLayout>
 
