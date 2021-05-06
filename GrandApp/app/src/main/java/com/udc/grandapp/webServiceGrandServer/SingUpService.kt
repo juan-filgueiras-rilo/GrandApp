@@ -7,13 +7,18 @@ import okhttp3.*
 class SingUpService(): GrandServer() {
 
     fun signup(nombre: String, email: String, pwd: String): GenericModel {
-        val body: RequestBody = RequestBody.create(mediaType, "{\n" +
-                "    \"userName\": \"juan1\",\n" +
-                "    \"password\": \"juan1\",\n" +
-                "    \"email\": \"juan1@juan1.com\"\n" +
-                "}")
+        try {
+            val body: RequestBody = RequestBody.create(mediaType, "{\n" +
+                    "    \"userName\": \"juan1\",\n" +
+                    "    \"password\": \"juan1\",\n" +
+                    "    \"email\": \"juan1@juan1.com\"\n" +
+                    "}")
 
-        doPostRequest(body, MetodoSignUp)
+            doPostRequest(body, MetodoSignUp)
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
 
         return GenericModel("0", "", "")
     }

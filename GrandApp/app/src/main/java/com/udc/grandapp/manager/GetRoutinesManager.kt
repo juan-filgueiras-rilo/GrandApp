@@ -13,7 +13,7 @@ class GetRoutinesManager (activity: Activity) : GenericManager(activity) {
     override fun onWorkerExecute(datos: Companion.DatosThreaded) {
         var routines: GenericModel?
         try {
-            routines = GetRoutinesService().getRoutines()
+            routines = GetRoutinesService().getRoutines(infoBd()!!.userId, infoBd()!!.token)
         }catch (e: SocketTimeoutException){
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })

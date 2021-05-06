@@ -14,6 +14,10 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
                 infoPersistente = UserConfigManager(context).getUserInfoFromBD()
             return infoPersistente as UserInfoModel
         }
+
+        fun reiniciarInfoPersistente(context: Context){
+            infoPersistente = UserConfigManager(context).getUserInfoFromBD()
+        }
     }
 
     fun getUserInfoFromBD(): UserInfoModel? {

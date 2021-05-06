@@ -10,19 +10,19 @@ import java.net.SocketTimeoutException
 
 class DeleteRoutineManager(activity: Activity) : GenericManager(activity) {
     override fun onWorkerExecute(datos: Companion.DatosThreaded) {
-        var DeleteRoutine: GenericModel?
+        var deleteRoutine: GenericModel?
         try {
             val datosPeticion: DatosDeleteRoutine = datos.mDatosOperaction as DatosDeleteRoutine
-            DeleteRoutine = DeleteRoutineService().deleteRoutine(datosPeticion.id)
+            deleteRoutine = DeleteRoutineService().deleteRoutine(datosPeticion.routineId, infoBd()!!.token)
         }catch (e: SocketTimeoutException){
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
-            DeleteRoutine = null
+            deleteRoutine = null
         }catch (e: Exception){
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
-            DeleteRoutine = null
+            deleteRoutine = null
         }
-        datos.mResultado = DeleteRoutine as Any
+        datos.mResultado = deleteRoutine as Any
     }
 }

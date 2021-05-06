@@ -12,7 +12,7 @@ class GetDevicesManager(activity: Activity) : GenericManager(activity) {
     override fun onWorkerExecute(datos: Companion.DatosThreaded) {
         var devices: GenericModel?
         try {
-            devices = GetDevicesService().getDevices()
+            devices = GetDevicesService().getDevices(infoBd()!!.userId, infoBd()!!.token)
         }catch (e: SocketTimeoutException){
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })

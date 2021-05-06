@@ -10,19 +10,19 @@ import java.net.SocketTimeoutException
 
 class DeleteDeviceManager(activity: Activity) : GenericManager(activity) {
     override fun onWorkerExecute(datos: Companion.DatosThreaded) {
-        var DeleteDevice: GenericModel?
+        var deleteDevice: GenericModel?
         try {
             val datosPeticion: DatosDeleteDevice = datos.mDatosOperaction as DatosDeleteDevice
-            DeleteDevice = DeleteDeviceService().deleteDevice(datosPeticion.id)
+            deleteDevice = DeleteDeviceService().deleteDevice(datosPeticion.deviceId, infoBd()!!.token)
         }catch (e: SocketTimeoutException){
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
-            DeleteDevice = null
+            deleteDevice = null
         }catch (e: Exception){
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
-            DeleteDevice = null
+            deleteDevice = null
         }
-        datos.mResultado = DeleteDevice as Any
+        datos.mResultado = deleteDevice as Any
     }
 }
