@@ -61,7 +61,7 @@ open class GenericManager(activity: Activity) {
             mWorker = Thread(Runnable {
                 try {
                     try {
-                        onWorkerExceute(datos)
+                        onWorkerExecute(datos)
                     }catch (e:Exception){
                         e.printStackTrace()
                     }
@@ -78,7 +78,7 @@ open class GenericManager(activity: Activity) {
         }
     }
 
-    open fun onWorkerExceute(datos:DatosThreaded){
+    open fun onWorkerExecute(datos:DatosThreaded){
         //redefinir siempre en las subclases
     }
 

@@ -7,17 +7,22 @@ import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.webServiceGrandServer.GetDevicesService
 import com.udc.grandapp.webServiceGrandServer.GetRoutinesService
 import java.lang.Exception
+import java.net.SocketTimeoutException
 
 class GetRoutinesManager (activity: Activity) : GenericManager(activity) {
-    override fun onWorkerExceute(datos: Companion.DatosThreaded) {
-        var devices: GenericModel?
+    override fun onWorkerExecute(datos: Companion.DatosThreaded) {
+        var routines: GenericModel?
         try {
-            devices = GetRoutinesService().getRoutines()
+            routines = GetRoutinesService().getRoutines()
+        }catch (e: SocketTimeoutException){
+            e.printStackTrace()
+            datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
+            routines = null
         }catch (e: Exception){
             e.printStackTrace()
             datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, e.message, Toast.LENGTH_LONG).show() })
-            devices = null
+            routines = null
         }
-        datos.mResultado = devices as Any
+        datos.mResultado = routines as Any
     }
 }

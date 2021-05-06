@@ -9,7 +9,7 @@ import java.lang.Exception
 import java.net.SocketTimeoutException
 
 class SignUpManager(activity: Activity) : GenericManager(activity) {
-    override fun onWorkerExceute(datos: Companion.DatosThreaded) {
+    override fun onWorkerExecute(datos: Companion.DatosThreaded) {
         var signup: GenericModel?
         try {
             val datosPeticion: DatosSingUp = datos.mDatosOperaction as DatosSingUp

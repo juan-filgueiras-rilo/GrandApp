@@ -6,12 +6,17 @@ import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.webServiceGrandServer.GetDevicesService
 import java.lang.Exception
+import java.net.SocketTimeoutException
 
 class GetDevicesManager(activity: Activity) : GenericManager(activity) {
-    override fun onWorkerExceute(datos: Companion.DatosThreaded) {
+    override fun onWorkerExecute(datos: Companion.DatosThreaded) {
         var devices: GenericModel?
         try {
             devices = GetDevicesService().getDevices()
+        }catch (e: SocketTimeoutException){
+            e.printStackTrace()
+            datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
+            devices = null
         }catch (e: Exception){
             e.printStackTrace()
             datos.mActivivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivivity, e.message, Toast.LENGTH_LONG).show() })
