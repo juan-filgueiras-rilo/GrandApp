@@ -1,5 +1,6 @@
 package com.udc.grandapp
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -17,6 +18,7 @@ class SplashActivity : AppCompatActivity() , View.OnClickListener {
 
         override fun onCreate(savedInstanceState: Bundle?) {
                 super.onCreate(savedInstanceState)
+                checkEula()
                 setContentView(R.layout.splash)
 
                 identificarse = findViewById(R.id.identificarseSplash)
@@ -35,6 +37,20 @@ class SplashActivity : AppCompatActivity() , View.OnClickListener {
                         R.id.identificarseSplash -> startActivity(Intent(this, Login::class.java))
                         R.id.registrarseSplash -> startActivity(Intent(this, SignUp::class.java))
                         R.id.sinIniciarSesion -> startActivity(Intent(this, MainScreenActivity::class.java))
+                }
+        }
+
+        private fun checkEula() {
+                val preferences = applicationContext
+                        .getSharedPreferences("com.udc.grandapp", Context.MODE_PRIVATE)
+                val eulaAccepted = preferences.getBoolean("eulaAccepted", false)
+                if (!eulaAccepted) {
+                        val intent = Intent(this, EulaActivity::class.java)
+                        val bundle = Bundle()
+                        val eula = R.raw.eula
+                        bundle.putInt("eula", eula)
+                        intent.putExtras(bundle)
+                        startActivityForResult(intent, 1)
                 }
         }
 
