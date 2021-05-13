@@ -1,5 +1,9 @@
 # GrandApp
 
+Backend
+
+Para arrancar el backend, descargar el módulo GrandServer del proyecto.
+A continuación tenemos que cambiar la url a la que apunta el proyecto Android, para esto en la clase “GrandServer.kt” hay que cambiar la IP de la variable “url” por la de la máquina en la que tengamos levantado el backend.
 ## Requirements
 
 - Java SE 11+.
