@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteDatabase
 
-class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 1){
+class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 2){
 
     companion object {
         var infoPersistente: UserInfoModel? = null

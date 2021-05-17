@@ -12,19 +12,11 @@ import java.net.SocketTimeoutException
 
 class CreateRoutineManager(activity: Activity) : GenericManager(activity) {
     override fun onWorkerExecute(datos: Companion.DatosThreaded) {
-        var createRoutine: GenericModel?
         try {
-            val datosPeticion: DatosCreateRoutine = datos.mDatosOperaction as DatosCreateRoutine
-            createRoutine = CreateRoutineService().createRoutine(datosPeticion.name, datosPeticion.description, datosPeticion.userId, datosPeticion.deviceList, infoBd()!!.token)
-        }catch (e: SocketTimeoutException){
-            e.printStackTrace()
-            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
-            createRoutine = null
+            CreateRoutineService().createRoutine(datos, infoBd()!!.token)
         }catch (e: Exception){
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
-            createRoutine = null
         }
-        datos.mResultado = createRoutine as Any
     }
 }

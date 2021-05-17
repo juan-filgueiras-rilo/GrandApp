@@ -1,11 +1,14 @@
 package com.udc.grandapp.webServiceGrandServer
 
+import com.udc.grandapp.manager.GenericManager
+import com.udc.grandapp.manager.transferObjects.DatosCreateDevice
 import com.udc.grandapp.model.GenericModel
 import okhttp3.RequestBody
 
 class CreateDeviceService: GrandServer() {
 
-    fun createDevice(name: String, description: String, userId: String, token: String): GenericModel {
+    fun createDevice(datos: GenericManager.Companion.DatosThreaded, token: String) {
+        val datosPeticion: DatosCreateDevice = datos.mDatosOperaction as DatosCreateDevice
         try {
             val body: RequestBody = RequestBody.create(mediaType, "{\n" +
                     "    \"name\": \"bombilla\",\n" +
@@ -13,11 +16,10 @@ class CreateDeviceService: GrandServer() {
                     "    \"userId\": \"1\"\n" +
                     "}")
 
-            doPostRequest(body, MetodoCreateDevice)
+            doPostRequest(body, MetodoCreateDevice, datos)
 
         }catch (e:Exception){
             e.printStackTrace()
         }
-        return GenericModel("0", "", "")
     }
 }

@@ -78,7 +78,7 @@
         </receiver>
 
         <meta-data android:name="AA_DB_NAME" android:value="GrandApp"/>
-        <meta-data android:name="AA_DB_VERSION" android:value="1"/>
+        <meta-data android:name="AA_DB_VERSION" android:value="2"/>
         <meta-data android:name="AA_MODELS" android:value="com.udc.grandapp.dbmodel.DBUser, com.udc.grandapp.dbmodel.DBRoutine,
                                                            com.udc.grandapp.dbmodel.DBDevice"/>
 

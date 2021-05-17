@@ -11,20 +11,8 @@ import java.net.SocketTimeoutException
 
 class LoginManager(activity: Activity) : GenericManager(activity) {
     override fun onWorkerExecute(datos: Companion.DatosThreaded) {
-        var loginModel: GenericModel?
         try {
-            val datosPeticion: DatosLogin = datos.mDatosOperaction as DatosLogin
-            loginModel = LoginService().solicitudLogin(datosPeticion.nombre, datosPeticion.pwd)
-        } catch (e: SocketTimeoutException) {
-            e.printStackTrace()
-            datos.mActivity.runOnUiThread(Runnable {
-                Toast.makeText(
-                    datos.mActivity,
-                    "Servidores no disponibles",
-                    Toast.LENGTH_LONG
-                ).show()
-            })
-            loginModel = null
+            LoginService().solicitudLogin(datos)
         } catch (e: Exception) {
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable {
@@ -34,9 +22,6 @@ class LoginManager(activity: Activity) : GenericManager(activity) {
                     Toast.LENGTH_LONG
                 ).show()
             })
-            loginModel = null
-
         }
-        datos.mResultado = loginModel as Any
     }
 }

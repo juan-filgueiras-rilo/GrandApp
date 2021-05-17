@@ -1,12 +1,14 @@
 package com.udc.grandapp.webServiceGrandServer;
 
+import com.udc.grandapp.manager.GenericManager
+import com.udc.grandapp.manager.transferObjects.DatosCreateRoutine
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import okhttp3.RequestBody
 
 public class CreateRoutineService(): GrandServer() {
 
-        fun createRoutine(name: String, desc: String, userId: String, deviceList: List<DevicesModel>, token: String): GenericModel {
+        fun createRoutine(datos: GenericManager.Companion.DatosThreaded, token: String) {
             val body: RequestBody = RequestBody.create(mediaType, "{\n" +
                     "    \"name\": \"Rutina bien molona\",\n" +
                     "    \"description\": \"Esta rutina mola mogollon\"\n" +
@@ -20,8 +22,6 @@ public class CreateRoutineService(): GrandServer() {
                     "    ]" +
                     "}")
 
-            doPostRequest(body, MetodoCreateRoutine)
-
-            return GenericModel("0", "", "")
+            doPostRequest(body, MetodoCreateRoutine, datos)
         }
 }

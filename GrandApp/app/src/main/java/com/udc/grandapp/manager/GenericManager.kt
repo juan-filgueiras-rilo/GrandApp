@@ -12,7 +12,6 @@ import com.udc.grandapp.utils.CommonMethods
 import java.lang.Exception
 
 open class GenericManager(activity: Activity) {
-    var error: String = ""
     lateinit var mWorker: Thread
     var mDialogPopup: Dialog? = null
     var mInfoBD: UserInfoModel? = UserConfigManager.getUserInfoPersistente(activity)
@@ -29,19 +28,41 @@ open class GenericManager(activity: Activity) {
     }
 
     companion object {
+        var error: String = ""
         data class DatosThreaded(
                 var mActivity: Activity,
                 var mCallBack: IResponseManagerGeneric,
                 var mDatosOperaction: DatosOperacionGeneric,
                 var mResultado: Any
         )
-    }
 
-    fun onPreExecute(datos:DatosThreaded){
-        try {
-            Toast.makeText(datos.mActivity, "PopUp Cargando", Toast.LENGTH_LONG).show()
-        }catch (e:Exception){
-            e.printStackTrace()
+        fun onPreExecute(datos:DatosThreaded){
+            try {
+                Toast.makeText(datos.mActivity, "PopUp Cargando", Toast.LENGTH_LONG).show()
+            }catch (e:Exception){
+                e.printStackTrace()
+            }
+        }
+
+        fun onPostExecute(datos:DatosThreaded){
+            try {
+                try {
+                    Toast.makeText(datos.mActivity, "Cerrar diálogo cargando", Toast.LENGTH_LONG).show()
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+
+                if (!CommonMethods.isNullOrEmptyObject(datos.mResultado) || !CommonMethods.isNullOrEmptyObject(datos.mCallBack as Any)){
+                    datos.mCallBack.onSuccesResponse(datos.mResultado)
+                }else if (!CommonMethods.isNullOrEmptyObject(error as Any) && !CommonMethods.isNullOrEmptyObject(datos.mCallBack as Any)){
+                    datos.mCallBack.onErrorResponse(datos.mResultado)
+                }
+            }catch (e:Exception){
+                Toast.makeText(datos.mActivity, "Error procesando la petición", Toast.LENGTH_LONG).show()
+                if (!CommonMethods.isNullOrEmptyObject(datos.mCallBack as Any))
+                    datos.mCallBack.onErrorResponse("Error procesnado la petición" as Any)
+            }
+
         }
     }
 
@@ -65,7 +86,7 @@ open class GenericManager(activity: Activity) {
                     }catch (e:Exception){
                         e.printStackTrace()
                     }
-                    mActivity.runOnUiThread(Runnable { onPostExecute(datos) })
+                    //mActivity.runOnUiThread(Runnable { onPostExecute(datos) })
                 }catch (e:Exception){
                     e.printStackTrace()
                 }
@@ -82,26 +103,6 @@ open class GenericManager(activity: Activity) {
         //redefinir siempre en las subclases
     }
 
-    fun onPostExecute(datos:DatosThreaded){
-        try {
-            try {
-                Toast.makeText(datos.mActivity, "Cerrar diálogo cargando", Toast.LENGTH_LONG).show()
-            }catch (e:Exception){
-                e.printStackTrace()
-            }
-
-            if (!CommonMethods.isNullOrEmptyObject(datos.mResultado) || !CommonMethods.isNullOrEmptyObject(datos.mCallBack as Any)){
-                datos.mCallBack.onSuccesResponse(datos.mResultado)
-            }else if (!CommonMethods.isNullOrEmptyObject(error as Any) && !CommonMethods.isNullOrEmptyObject(datos.mCallBack as Any)){
-                datos.mCallBack.onErrorResponse(datos.mResultado)
-            }
-        }catch (e:Exception){
-            Toast.makeText(datos.mActivity, "Error procesando la petición", Toast.LENGTH_LONG).show()
-            if (!CommonMethods.isNullOrEmptyObject(datos.mCallBack as Any))
-                datos.mCallBack.onErrorResponse("Error procesnado la petición" as Any)
-        }
-
-    }
 
     fun cancelar(){
         try {

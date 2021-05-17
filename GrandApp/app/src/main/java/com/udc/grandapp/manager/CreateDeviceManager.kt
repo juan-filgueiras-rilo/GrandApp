@@ -11,19 +11,11 @@ import java.net.SocketTimeoutException
 
 class CreateDeviceManager(activity: Activity) : GenericManager(activity) {
     override fun onWorkerExecute(datos: Companion.DatosThreaded) {
-        var createDevice: GenericModel?
         try {
-            val datosPeticion: DatosCreateDevice = datos.mDatosOperaction as DatosCreateDevice
-            createDevice = CreateDeviceService().createDevice(datosPeticion.name, datosPeticion.description, datosPeticion.userId, infoBd()!!.token)
-        }catch (e: SocketTimeoutException){
-            e.printStackTrace()
-            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
-            createDevice = null
+            CreateDeviceService().createDevice(datos, infoBd()!!.token)
         }catch (e: Exception){
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
-            createDevice = null
         }
-        datos.mResultado = createDevice as Any
     }
 }

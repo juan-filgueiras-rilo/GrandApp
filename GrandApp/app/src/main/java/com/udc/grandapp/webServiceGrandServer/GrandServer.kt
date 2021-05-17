@@ -1,5 +1,7 @@
 package com.udc.grandapp.webServiceGrandServer
 
+import com.udc.grandapp.manager.GenericManager
+import com.udc.grandapp.model.GenericModel
 import okhttp3.*
 import java.io.IOException
 
@@ -8,7 +10,7 @@ open class GrandServer {
     private val namespace: String = "GrandApp"
     val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8");
 
-    private val url: String = "http://192.168.56.1:8080" // Esta es la URL de la maquina a la que conectarse
+    private val url: String = "http://192.168.8.110:8080" // Esta es la URL de la maquina a la que conectarse
 
     //Aquí irían los nombres de todos los métodos del web service
     //Users
@@ -37,7 +39,7 @@ open class GrandServer {
             .build()
     }
 
-    fun doPostRequest(body: RequestBody, metodo: String) {
+    fun doPostRequest(body: RequestBody, metodo: String, datos: GenericManager.Companion.DatosThreaded) {
         val client: OkHttpClient = OkHttpClient()
         val mediaType = MediaType.parse("application/json; charset=utf-8")
 
@@ -45,10 +47,23 @@ open class GrandServer {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
-            override fun onResponse(call: Call, response: Response) = println(
-                response.body()?.string()
-            )
+            override fun onResponse(call: Call, response: Response) {
+                var resultado: GenericModel? = null
+                var resp: String? = null
+                try {
+                    resp = response.body()!!.string()
+                }catch (e: Exception){
+                    resp = null
+                }
+
+                if (resp == null || resp.toLowerCase().contains("error"))
+                    resultado = GenericModel("1", resp!!, "")
+                else resultado = GenericModel("0", "", resp)
+                datos.mResultado = resultado!!
+                GenericManager.onPostExecute(datos)
+            }
         })
+
     }
 
     fun createPutRequest(body: RequestBody, metodo:String): Request {

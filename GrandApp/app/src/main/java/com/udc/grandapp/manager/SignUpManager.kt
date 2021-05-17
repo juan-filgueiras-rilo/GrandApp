@@ -10,19 +10,11 @@ import java.net.SocketTimeoutException
 
 class SignUpManager(activity: Activity) : GenericManager(activity) {
     override fun onWorkerExecute(datos: Companion.DatosThreaded) {
-        var signup: GenericModel?
         try {
-            val datosPeticion: DatosSingUp = datos.mDatosOperaction as DatosSingUp
-            signup = SingUpService().signup(datosPeticion.mUser, datosPeticion.mEmail, datosPeticion.mPassword)
-        }catch (e:SocketTimeoutException){
-            e.printStackTrace()
-            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
-            signup = null
+            SingUpService().signup(datos)
         }catch (e: Exception){
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
-            signup = null
         }
-        datos.mResultado = signup as Any
     }
 }

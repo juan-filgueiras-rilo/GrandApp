@@ -21,6 +21,7 @@ import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosSingUp
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.model.SignUpLoginModel
+import kotlin.math.sign
 
 
 class SignUp : AppCompatActivity(), View.OnClickListener {
@@ -51,7 +52,6 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
         pwd.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 valuePwd = s.toString()
-                //pwd.setText("*".repeat(s!!.length))
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -66,7 +66,6 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
         pwd1.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 valuePwd1 = s.toString()
-                //pwd1.setText("*".repeat(s!!.length))
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -82,10 +81,32 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
         when (v!!.id) {
             R.id.identificarseSignUp -> startActivity(Intent(this, Login::class.java))
             R.id.crearCuenta -> {
-                singUp()
-                startActivity(Intent(this, MainScreenActivity::class.java))
+                if (!validarLogin()){
+                    singUp()
+                    //startActivity(Intent(this, MainScreenActivity::class.java))
+                }else
+                    Toast.makeText(applicationContext, "Rellena los campos del formulario", Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    fun validarLogin(): Boolean{
+        var error: Boolean = false
+        if (nombre.text == null || nombre.text!!.isEmpty()){
+            error = true
+            //TODO: marcar error en la interfaz
+        }
+
+        if (email.text == null || !email.text!!.contains("@")){
+            error = true
+            //TODO: marcar en la interfaz
+        }
+
+        if (pwd.text == null || pwd.text!!.isEmpty() || pwd1.text == null || pwd1.text!!.isEmpty() || !pwd.text.toString()!!.equals(pwd1.text.toString())){
+            error = true
+            //TODO marcar en la interfaz
+        }
+        return error
     }
 
     fun singUp(){
@@ -97,8 +118,8 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
                     val modelResponse: GenericModel = model as GenericModel
                     if (modelResponse.error == "0") {
                         val singUp: SignUpLoginModel =  SignUpLoginModel.Parse(modelResponse.json)
-                        insertarBD(singUp)
-                        activity.runOnUiThread(Runnable {  startActivity(Intent(MainScreenActivity::class.simpleName)) })
+                        insertarUserBD(singUp)
+                        //activity.runOnUiThread(Runnable {  startActivity(Intent(MainScreenActivity::class.simpleName)) })
 
                     }
                     else Toast.makeText(applicationContext, modelResponse.mensaje, Toast.LENGTH_LONG).show()
@@ -114,12 +135,15 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun insertarBD(singUp: SignUpLoginModel){
+    fun insertarUserBD(singUp: SignUpLoginModel){
         val db = UserConfigManager(this).writableDatabase
 
         val values = ContentValues().apply {
-            put("userId", "1")
-            put("token", "leijfewoifghjewoivjqoewfihewoighe")
+            put("userId", singUp.id)
+            put("token",singUp.token)
+            put("userName", singUp.userName)
+            put("email", singUp.email)
+            put("role", singUp.role)
         }
 
         val newRowId = db?.insert("DBUser", null, values)

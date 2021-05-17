@@ -1,5 +1,7 @@
 package com.udc.grandapp.model
 
+import org.json.JSONObject
+
 class SignUpLoginModel() {
         lateinit var id: String
         lateinit var userName: String
@@ -17,7 +19,13 @@ class SignUpLoginModel() {
 
         companion object{
                 fun Parse(json: String): SignUpLoginModel{
-                        return SignUpLoginModel("1", "laura", "laura@gmail.com", "USER", "token")
+                        return SignUpLoginModel(
+                                JSONObject(JSONObject(json)["user"].toString())["id"].toString(),
+                                JSONObject(JSONObject(json)["user"].toString())["userName"].toString(),
+                                JSONObject(JSONObject(json)["user"].toString())["email"].toString(),
+                                JSONObject(JSONObject(json)["user"].toString())["role"].toString(),
+                                JSONObject(json)["serviceToken"].toString()
+                        )
                 }
         }
 }
