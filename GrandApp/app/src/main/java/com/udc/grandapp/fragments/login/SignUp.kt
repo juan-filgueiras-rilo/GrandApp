@@ -83,7 +83,7 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
             R.id.crearCuenta -> {
                 if (!validarLogin()){
                     singUp()
-                    //startActivity(Intent(this, MainScreenActivity::class.java))
+                    startActivity(Intent(this, MainScreenActivity::class.java))
                 }else
                     Toast.makeText(applicationContext, "Rellena los campos del formulario", Toast.LENGTH_LONG).show()
             }
@@ -119,7 +119,7 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
                     if (modelResponse.error == "0") {
                         val singUp: SignUpLoginModel =  SignUpLoginModel.Parse(modelResponse.json)
                         insertarUserBD(singUp)
-                        //activity.runOnUiThread(Runnable {  startActivity(Intent(MainScreenActivity::class.simpleName)) })
+                        activity.runOnUiThread(Runnable {  startActivity(Intent(MainScreenActivity::class.simpleName)) })
 
                     }
                     else Toast.makeText(applicationContext, modelResponse.mensaje, Toast.LENGTH_LONG).show()
