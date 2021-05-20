@@ -83,7 +83,7 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
             R.id.crearCuenta -> {
                 if (!validarLogin()){
                     singUp()
-                    startActivity(Intent(this, MainScreenActivity::class.java))
+                    //startActivity(Intent(this, MainScreenActivity::class.java))
                 }else
                     Toast.makeText(applicationContext, "Rellena los campos del formulario", Toast.LENGTH_LONG).show()
             }
