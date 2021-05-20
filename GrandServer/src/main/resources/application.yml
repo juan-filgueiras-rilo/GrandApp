@@ -9,9 +9,10 @@ spring:
       enabled: false
       max-file-size: 10MB
   datasource:
-    url: @dataSource.url@
-    username: @dataSource.user@
-    password: @dataSource.password@
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://ec2-54-72-155-238.eu-west-1.compute.amazonaws.com:5432/d8rdmjobe6mfbb?user=jlwiyyrlxzwrjg&password=e29b2b05af7e550e2aaac427752414b8801dad5edc069a126daf8f65bc28540d&sslmode=require
+    username: jlwiyyrlxzwrjg
+    password: e29b2b05af7e550e2aaac427752414b8801dad5edc069a126daf8f65bc28540d
     max-active: 4
     max-idle: 2
     max-wait: 10000
@@ -19,6 +20,7 @@ spring:
     remove-abandoned-timeout: 60
     log-abandoned: true
     validation-query: SELECT 1
+    generate-ddl: true
   devtools:
     restart:
       trigger-file: reload
@@ -28,12 +30,13 @@ spring:
     default-property-inclusion: NON_NULL
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
       show-sql: true
       format-sql: true
       use-sql-comments: true
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database-platform: org.hibernate.dialect.PostgreSQLDialect  
 project:
   jwt:
     signKey: Bu:GW8bgPlEw

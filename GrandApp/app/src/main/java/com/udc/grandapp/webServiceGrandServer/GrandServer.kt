@@ -10,7 +10,7 @@ open class GrandServer {
     private val namespace: String = "GrandApp"
     val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8");
 
-    private val url: String = "http://192.168.8.110:8080" // Esta es la URL de la maquina a la que conectarse
+    private val url: String = "https://iot-rangers-backend.herokuapp.com" // Esta es la URL de la maquina a la que conectarse
 
     //Aquí irían los nombres de todos los métodos del web service
     //Users
