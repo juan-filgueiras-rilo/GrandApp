@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.udc</groupId>
 	<artifactId>grandserver</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1</version>
 	<name>grandserver</name>
 	<description>Backend Server for GrandApp</description>
 	<properties>
@@ -26,70 +26,7 @@
 		<!-- Maven Java 11 support for 3.8+ compiler -->
 		<maven.compiler.target>11</maven.compiler.target>
 		<maven.compiler.source>11</maven.compiler.source>
-		<flyway.user>granddb</flyway.user>
-		<flyway.password>granddb</flyway.password>
-		<flyway.schemas>granddb</flyway.schemas>
 	</properties>
-	<profiles>
-		<profile>
-			<id>mysql</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<properties>
-				<!-- JDBC driver properties -->
-				<jdbcDriver.groupId>mysql</jdbcDriver.groupId>
-				<jdbcDriver.artifactId>mysql-connector-java</jdbcDriver.artifactId>
-				<jdbcDriver.version>8.0.12</jdbcDriver.version>
-				<jdbcDriver.className>com.mysql.cj.jdbc.Driver</jdbcDriver.className>
-
-				<!-- Data source properties -->
-				<dataSource.baseUrl>jdbc:mysql://localhost/granddb</dataSource.baseUrl>
-				<dataSource.url>${dataSource.baseUrl}?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=Europe/Madrid</dataSource.url>
-				<testDataSource.url>${dataSource.baseUrl}test?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=Europe/Madrid</testDataSource.url>
-				<dataSource.createTablesScript>1-MySQLCreateTables.sql</dataSource.createTablesScript>
-				<dataSource.createDataScript>2-MySQLCreateData.sql</dataSource.createDataScript>
-
-				<!-- Data source properties -->
-				<dataSource.user>granddb</dataSource.user>
-				<dataSource.password>granddb</dataSource.password>
-				<testDataSource.user>${dataSource.user}</testDataSource.user>
-				<testDataSource.password>${dataSource.password}</testDataSource.password>
-				<flyway.url>${dataSource.url}</flyway.url>
-
-			</properties>
-		</profile>
-		<profile>
-			<!-- H2 database profile -->
-			<!-- Prepares the project to make use of an H2 in-memory database -->
-			<id>h2</id>
-			<activation>
-				<!-- Active by default so it can be installed by CI -->
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<!-- JDBC driver properties -->
-				<jdbcDriver.groupId>com.h2database</jdbcDriver.groupId>
-				<jdbcDriver.artifactId>h2</jdbcDriver.artifactId>
-				<jdbcDriver.version>1.4.200</jdbcDriver.version>
-				<jdbcDriver.className>org.h2.Driver</jdbcDriver.className>
-				<!-- Access data -->
-				<!-- Default values for testing and development -->
-				<!-- Override them for production -->
-				<dataSource.baseUrl>jdbc:h2:mem:granddb</dataSource.baseUrl>
-				<dataSource.url>${dataSource.baseUrl};MODE=MySQL;CASE_INSENSITIVE_IDENTIFIERS=TRUE</dataSource.url>
-				<testDataSource.url>${dataSource.baseUrl}test;MODE=MySQL;CASE_INSENSITIVE_IDENTIFIERS=TRUE</testDataSource.url>
-				<!-- Data source properties -->
-				<dataSource.user>sa</dataSource.user>
-				<dataSource.password></dataSource.password>
-				<testDataSource.user>${dataSource.user}</testDataSource.user>
-				<testDataSource.password>${dataSource.password}</testDataSource.password>
-				<dataSource.createTablesScript>1-MySQLCreateTables.sql</dataSource.createTablesScript>
-				<dataSource.createDataScript>2-MySQLCreateData.sql</dataSource.createDataScript>
-				<flyway.url>${dataSource.url}</flyway.url>
-			</properties>
-		</profile>
-	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -106,11 +43,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>${jdbcDriver.groupId}</groupId>
-			<artifactId>${jdbcDriver.artifactId}</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -140,13 +72,14 @@
 			<version>1.3.3</version>
 		</dependency>
 		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 	</dependencies>
 
