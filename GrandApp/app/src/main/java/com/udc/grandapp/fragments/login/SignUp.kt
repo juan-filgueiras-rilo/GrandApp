@@ -119,8 +119,8 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
                     if (modelResponse.error == "0") {
                         val singUp: SignUpLoginModel =  SignUpLoginModel.Parse(modelResponse.json)
                         insertarUserBD(singUp)
-                        activity.runOnUiThread(Runnable {  startActivity(Intent(MainScreenActivity::class.simpleName)) })
-
+                        val intent: Intent = Intent(activity, MainScreenActivity::class.java)
+                        activity.startActivity(intent)
                     }
                     else Toast.makeText(applicationContext, modelResponse.mensaje, Toast.LENGTH_LONG).show()
                 }
