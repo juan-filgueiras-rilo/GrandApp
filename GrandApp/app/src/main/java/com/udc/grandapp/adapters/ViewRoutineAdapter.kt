@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.R
 import com.udc.grandapp.fragments.RoutineView
 import com.udc.grandapp.fragments.UpdateRoutine
@@ -56,7 +57,16 @@ class ViewRoutineAdapter(context : Context, val items: List<RoutinesDevice>, fra
                 ft.commit()
             }
             borrar.setOnClickListener {
-                Toast.makeText(context, "Borrar rutina", Toast.LENGTH_LONG).show()
+                MaterialAlertDialogBuilder(context)
+                    .setTitle(resources.getString(R.string.titlealert))
+                    .setMessage(resources.getString(R.string.supporting_textRoutineFromDevice))
+                    .setNegativeButton(resources.getString(R.string.decline)) { dialog, which ->
+                        // Respond to negative button press
+                    }
+                    .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
+                        // Respond to positive button press
+                    }
+                    .show()
             }
         }
     }
