@@ -1,6 +1,7 @@
 package com.udc.grandapp.manager
 
 import android.app.Activity
+import androidx.appcompat.app.AlertDialog
 import android.app.Dialog
 import android.view.View
 import android.widget.ProgressBar
@@ -17,14 +18,20 @@ import java.lang.Exception
 
 open class GenericManager(activity: Activity) {
     lateinit var mWorker: Thread
-    var mDialogPopup: Dialog? = null
+    var mDialogPopup: AlertDialog? = null
     var mInfoBD: UserInfoModel? = UserConfigManager.getUserInfoPersistente(activity)
     var mActivity: Activity = activity
 
 
     init {
         if (!(CommonMethods.comprobarConexion(activity as FragmentActivity)))
-            Toast.makeText(activity, "Error con la conexión a internet", Toast.LENGTH_LONG).show()
+            //Toast.makeText(activity, "Error con la conexión a internet", Toast.LENGTH_LONG).show()
+            MaterialAlertDialogBuilder(activity)
+                    .setTitle(activity.getString(R.string.titlealert))
+                    .setMessage(activity.getString(R.string.supporting_textConnection))
+                    .setNeutralButton(activity.getString(R.string.ok)) { dialog, which ->
+                        // Respond to negative button press
+                    }.show()
     }
 
     open fun infoBd():UserInfoModel? {
@@ -37,15 +44,17 @@ open class GenericManager(activity: Activity) {
                 var mActivity: Activity,
                 var mCallBack: IResponseManagerGeneric,
                 var mDatosOperaction: DatosOperacionGeneric,
+                var mDialogPopup: AlertDialog?,
                 var mResultado: Any
         )
 
         fun onPreExecute(datos:DatosThreaded){
             try {
                 //Toast.makeText(datos.mActivity, "PopUp Cargando", Toast.LENGTH_LONG).show()
-                datos.mActivity.runOnUiThread { MaterialAlertDialogBuilder(datos.mActivity as FragmentActivity)
-                        .setCancelable(false)
-                        .setView(R.layout.progressbar).show()}
+                datos.mActivity.runOnUiThread {
+                    var builder: MaterialAlertDialogBuilder = MaterialAlertDialogBuilder(datos.mActivity as FragmentActivity)
+                    builder.setCancelable(false).setView(R.layout.progressbar)
+                datos.mDialogPopup = builder.show()}
             }catch (e:Exception){
                 e.printStackTrace()
             }
@@ -55,8 +64,7 @@ open class GenericManager(activity: Activity) {
             try {
                 try {
                     //Toast.makeText(datos.mActivity, "Cerrar diálogo cargando", Toast.LENGTH_LONG).show()
-                    val progressBar = datos.mActivity.window.decorView.findViewById<ProgressBar>(R.id.progressBar)
-                    progressBar.visibility = View.GONE
+                    datos.mActivity.runOnUiThread { datos.mDialogPopup?.dismiss() }
                 }catch (e:Exception){
                     e.printStackTrace()
                 }
@@ -67,8 +75,8 @@ open class GenericManager(activity: Activity) {
                     datos.mCallBack.onErrorResponse(datos.mResultado)
                 }
             }catch (e:Exception){
+                e.printStackTrace()
                 //Toast.makeText(datos.mActivity, "Error procesando la petición", Toast.LENGTH_LONG).show()
-
                 if (!CommonMethods.isNullOrEmptyObject(datos.mCallBack as Any))
                     datos.mCallBack.onErrorResponse("Error procesando la petición" as Any)
             }
@@ -78,7 +86,7 @@ open class GenericManager(activity: Activity) {
 
     fun realizarOperacion(response: IResponseManagerGeneric, datosOperacion: DatosOperacionGeneric){
         try {
-            var datos: DatosThreaded = DatosThreaded(mActivity, response, datosOperacion, Object())
+            var datos: DatosThreaded = DatosThreaded(mActivity, response, datosOperacion, mDialogPopup, Object())
 
             mActivity.runOnUiThread(Runnable {
                 try {

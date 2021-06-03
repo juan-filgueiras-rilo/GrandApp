@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
 import com.udc.grandapp.manager.SignUpManager
@@ -30,9 +31,13 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
     private lateinit var crearCuenta : MaterialButton
     private lateinit var identificarse: TextView
     private lateinit var nombre: TextInputEditText
+    private lateinit var nombreContenedor: TextInputLayout
     private lateinit var email: TextInputEditText
+    private lateinit var emailContenedor: TextInputLayout
     private lateinit var pwd: TextInputEditText
+    private lateinit var pwdContenedor: TextInputLayout
     private lateinit var pwd1: TextInputEditText
+    private lateinit var pwd1Contenedor: TextInputLayout
     private lateinit var valuePwd: String
     private lateinit var valuePwd1: String
 
@@ -47,9 +52,23 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
         crearCuenta.setOnClickListener(this)
 
         nombre = findViewById(R.id.nombre_user)
+        nombreContenedor = findViewById(R.id.nombre_usercontenedor)
+        nombre.setOnFocusChangeListener{ view: View, b: Boolean ->
+            nombreContenedor.isErrorEnabled = false
+        }
+
         email = findViewById(R.id.email)
+        emailContenedor = findViewById(R.id.emailcontenedor)
+        email.setOnFocusChangeListener{ view: View, b: Boolean ->
+            emailContenedor.isErrorEnabled = false
+        }
 
         pwd = findViewById(R.id.pwd)
+        pwdContenedor = findViewById(R.id.pwdcontenedor)
+        pwd.setOnFocusChangeListener{ view: View, b: Boolean ->
+            pwdContenedor.isErrorEnabled = false
+        }
+
         pwd.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 valuePwd = s.toString()
@@ -64,6 +83,10 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
         })
 
         pwd1 = findViewById(R.id.pwd1)
+        pwd1Contenedor = findViewById(R.id.pwd1contenedor)
+        pwd1.setOnFocusChangeListener{ view: View, b: Boolean ->
+            pwd1Contenedor.isErrorEnabled = false
+        }
         pwd1.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 valuePwd1 = s.toString()
@@ -85,8 +108,8 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
                 if (!validarLogin()){
                     singUp()
                     //startActivity(Intent(this, MainScreenActivity::class.java))
-                }else
-                    Toast.makeText(applicationContext, "Rellena los campos del formulario", Toast.LENGTH_LONG).show()
+                }/*else
+                    Toast.makeText(applicationContext, "Rellena todos los campos del formulario", Toast.LENGTH_LONG).show()*/
             }
         }
     }
@@ -95,17 +118,25 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
         var error: Boolean = false
         if (nombre.text == null || nombre.text!!.isEmpty()){
             error = true
-            //TODO: marcar error en la interfaz
+            this.nombreContenedor.error = resources.getString(R.string.vacio)
         }
 
-        if (email.text == null || !email.text!!.contains("@")){
+        if (email.text == null || email.text!!.isEmpty()){
             error = true
-            //TODO: marcar en la interfaz
+            this.emailContenedor.error = resources.getString(R.string.vacio)
+        } else if (!email.text!!.contains("@")) {
+            error = true
+            this.emailContenedor.error = resources.getString(R.string.mailerror)
         }
 
         if (pwd.text == null || pwd.text!!.isEmpty() || pwd1.text == null || pwd1.text!!.isEmpty() || !pwd.text.toString()!!.equals(pwd1.text.toString())){
             error = true
-            //TODO marcar en la interfaz
+            if (pwd.text == null || pwd.text!!.isEmpty()) {
+                this.pwdContenedor.error = resources.getString(R.string.vacio)
+
+            }else{
+                this.pwd1Contenedor.error = resources.getString(R.string.pwd1error)
+            }
         }
         return error
     }

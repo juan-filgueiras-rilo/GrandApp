@@ -37,6 +37,11 @@
     <string name="password">Contraseña</string>
     <string name="passwordrepeat">Repetir contraseña</string>
     <string name="ok">OK</string>
+    <string name="vacio">El campo no puede quedar vacío</string>
+    <string name="mailerror">Formato de email incorrecto</string>
+    <string name="pwd1error">Las contraseñas no coinciden</string>
+    <string name="supporting_textlogin"><b>Email y/o contraseña incorrecto</b></string>
+
 
     <!-- String Perfil -->
     <string name="guardar_cambios"><b>GUARDAR CAMBIOS</b></string>
@@ -67,6 +72,7 @@
     <!-- String Manager -->
     <string name="error"><b>Error</b></string>
     <string name="supporting_textManager"><b>Error procesando la petición</b></string>
+    <string name="supporting_textConnection"><b>Error con la conexión a internet</b></string>
 
     <string name="cargando"><b>Cargando...</b></string>
 

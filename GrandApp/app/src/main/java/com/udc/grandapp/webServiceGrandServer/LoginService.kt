@@ -11,8 +11,8 @@ class LoginService: GrandServer() {
         try {
             val datosPeticion: DatosLogin = datos.mDatosOperaction as DatosLogin
             val body: RequestBody = RequestBody.create(mediaType, "{\n" +
-                    "    \"email\": \"juan1@juan1.com\"\n" +
-                    "    \"password\": \"juan1\",\n" +
+                    "    \"email\": \""+ datosPeticion.nombre + "\",\n" +
+                    "    \"password\": \""+ datosPeticion.pwd + "\"\n" +
                     "}")
 
             doPostRequest(body, MetodoLogin, datos)
