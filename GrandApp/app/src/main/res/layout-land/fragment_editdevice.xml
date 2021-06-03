@@ -70,16 +70,9 @@
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/editText"
                                     android:layout_width="match_parent"
-                                    android:layout_height="40dp"
+                                    android:layout_height="60dp"
                                     android:hint="Bombilla del Salón" />
                             </com.google.android.material.textfield.TextInputLayout>
-                            <TextView
-                                android:id="@+id/micro"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="left"
-                                android:layout_weight="9"
-                                app:drawableTopCompat="@mipmap/microphone" />
                         </LinearLayout>
                     </LinearLayout>
                     <TextView

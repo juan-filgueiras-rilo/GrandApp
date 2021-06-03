@@ -33,6 +33,10 @@
     <string name="GOOGLE"><b>IDENTIFÍCATE CON GOOGLE</b></string>
     <string name="cuenta"><b>CREAR TU CUENTA</b></string>
     <string name="IDENTIFICATE">¿YA TIENES CUENTA? <b>IDENTIFÍCATE</b></string>
+    <string name="email">Email</string>
+    <string name="password">Contraseña</string>
+    <string name="passwordrepeat">Repetir contraseña</string>
+    <string name="ok">OK</string>
 
     <!-- String Perfil -->
     <string name="guardar_cambios"><b>GUARDAR CAMBIOS</b></string>
@@ -48,9 +52,20 @@
     <string name="add_horas"><b>Añadir hora(s)</b></string>
     <string name="eliminar"><b>Eliminar</b></string>
     <string name="guardar"><b>Guardar</b></string>
+    <string name="supporting_textRoutine"><b>¿Está seguro de que desea eliminar la rutina?</b></string>
     <string name="add_rutina"><b>Añadir Rutina</b></string>
 
     <!-- String devices -->
     <string name="anadir_dev"><b>Añadir dispositivo</b></string>
     <string name="refrescar"><b>Refrescar</b></string>
+    <string name="decline"><b>No</b></string>
+    <string name="titlealert"><b>Aviso</b></string>
+    <string name="supporting_textDevice"><b>¿Está seguro de que desea eliminar el dispositivo?</b></string>
+    <string name="accept"><b>Sí</b></string>
+    <string name="supporting_textRoutineFromDevice"><b>¿Está seguro de que desea quitar este dispositivo de la rutina?</b></string>
+
+    <!-- String Manager -->
+    <string name="error"><b>Error</b></string>
+    <string name="supporting_textManager"><b>Error procesando la petición</b></string>
+
 </resources>

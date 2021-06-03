@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.R
 import com.udc.grandapp.fragments.UpdateRoutine
 import com.udc.grandapp.items.CustomerRoutine
@@ -44,17 +45,26 @@ class RoutinesAdapter(context : Context, val items: List<CustomerRoutine>, activ
                 Toast.makeText(context, "Ejecutar rutina", Toast.LENGTH_LONG).show()
             }
             eliminar.setOnClickListener {
-                Toast.makeText(context, "Eliminar rutina", Toast.LENGTH_LONG).show()
+                MaterialAlertDialogBuilder(context)
+                    .setTitle(resources.getString(R.string.titlealert))
+                    .setMessage(resources.getString(R.string.supporting_textRoutine))
+                    .setNegativeButton(resources.getString(R.string.decline)) { dialog, which ->
+                        // Respond to negative button press
+                    }
+                    .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
+                        // Respond to positive button press
+                    }
+                    .show()
             }
             modificar.setOnClickListener {
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                ft.replace(R.id.drawerLayout, UpdateRoutine())
+                ft.replace(R.id.fragmentRoutines, UpdateRoutine())
                 ft.addToBackStack("RoutinesAdapter")
                 ft.commit()
             }
             custom_rutina_parent.setOnClickListener {
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                ft.replace(R.id.drawerLayout, UpdateRoutine())
+                ft.replace(R.id.fragmentRoutines, UpdateRoutine())
                 ft.addToBackStack("RoutinesAdapter")
                 ft.commit()
             }

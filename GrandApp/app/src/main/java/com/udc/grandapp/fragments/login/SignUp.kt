@@ -12,6 +12,7 @@ import com.google.android.material.button.MaterialButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
@@ -126,7 +127,15 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
                 }
 
                 override fun onErrorResponse(model: Any) {
-                    Toast.makeText(applicationContext, "Error al loguearse (Diálogo)", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(applicationContext, "Error al loguearse (Diálogo)", Toast.LENGTH_LONG).show()
+                    activity.runOnUiThread { MaterialAlertDialogBuilder(activity)
+                        .setTitle(resources.getString(R.string.error))
+                        .setMessage(resources.getString(R.string.supporting_textManager))
+                        .setNeutralButton(resources.getString(R.string.ok)){ dialog, which ->
+                            // Respond to positive button press
+                        }.show() }
+
+                    //TODO: EL dialogo da error por el threadUI
                 }
             }
 

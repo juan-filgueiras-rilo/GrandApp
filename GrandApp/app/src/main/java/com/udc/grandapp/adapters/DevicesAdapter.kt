@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.R
 import com.udc.grandapp.fragments.UpdateDevice
 import com.udc.grandapp.items.CustomerDevice
@@ -45,7 +46,7 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activit
                     bombilla_cd.setBackgroundColor(context.resources.getColor(R.color.green))
                     consulta.setOnClickListener {
                         val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                        ft.replace(R.id.drawerLayout, UpdateDevice())
+                        ft.replace(R.id.fragmentDevices, UpdateDevice())
                         ft.addToBackStack("DevicesAdapter")
                         ft.commit()
                     }
@@ -53,7 +54,16 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activit
                         Toast.makeText(context, "Encender/Apagar", Toast.LENGTH_LONG).show()
                     }
                     eliminar.setOnClickListener {
-                        Toast.makeText(context, "Eliminar dispositivo", Toast.LENGTH_LONG).show()
+                        MaterialAlertDialogBuilder(context)
+                            .setTitle(resources.getString(R.string.titlealert))
+                            .setMessage(resources.getString(R.string.supporting_textDevice))
+                            .setNegativeButton(resources.getString(R.string.decline)) { dialog, which ->
+                                // Respond to negative button press
+                            }
+                            .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
+                                // Respond to positive button press
+                            }
+                            .show()
                     }
                 }
                 R.layout.custom_lista -> {
