@@ -135,7 +135,6 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
                             // Respond to positive button press
                         }.show() }
 
-                    //TODO: EL dialogo da error por el threadUI
                 }
             }
 

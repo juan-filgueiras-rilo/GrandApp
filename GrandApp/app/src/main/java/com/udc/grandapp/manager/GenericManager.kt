@@ -43,8 +43,9 @@ open class GenericManager(activity: Activity) {
         fun onPreExecute(datos:DatosThreaded){
             try {
                 //Toast.makeText(datos.mActivity, "PopUp Cargando", Toast.LENGTH_LONG).show()
-                val progressBar = datos.mActivity.window.decorView.findViewById<ProgressBar>(R.id.progressBar)
-                progressBar.visibility = View.VISIBLE
+                datos.mActivity.runOnUiThread { MaterialAlertDialogBuilder(datos.mActivity as FragmentActivity)
+                        .setCancelable(false)
+                        .setView(R.layout.progressbar).show()}
             }catch (e:Exception){
                 e.printStackTrace()
             }

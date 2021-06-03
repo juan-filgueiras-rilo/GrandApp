@@ -68,4 +68,6 @@
     <string name="error"><b>Error</b></string>
     <string name="supporting_textManager"><b>Error procesando la petición</b></string>
 
+    <string name="cargando"><b>Cargando...</b></string>
+
 </resources>
