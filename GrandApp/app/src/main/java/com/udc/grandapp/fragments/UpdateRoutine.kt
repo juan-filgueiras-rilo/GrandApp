@@ -27,8 +27,9 @@ import com.udc.grandapp.model.UpdateRoutineModel
 import com.udc.grandapp.utils.CommonMethods
 import kotlinx.android.synthetic.main.edit_rutina.*
 
-class UpdateRoutine : Fragment() {
+class UpdateRoutine(layout: Int) : Fragment() {
 
+    private var layout : Int = layout
     private lateinit var rootView : View
     private lateinit var recyclerView: RecyclerView
 
@@ -47,19 +48,40 @@ class UpdateRoutine : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        guardarRutina.setOnClickListener {
-            updateRoutines()
-            CommonMethods.clearExistFragments(context as FragmentActivity)
-        }
-        cancelarRutina.setOnClickListener {
-            Toast.makeText(context, "Cancelar", Toast.LENGTH_LONG).show()
-            CommonMethods.clearExistFragments(context as FragmentActivity)
-        }
-        addDispositivoButton.setOnClickListener {
-            val ft: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
-            ft?.replace(R.id.fragmentRoutines, DeviceList())
-            ft?.addToBackStack("Update Routine")
-            ft?.commit()
+        when(layout) {
+            1 -> {
+                guardarRutina.setOnClickListener {
+                    updateRoutines()
+                    CommonMethods.clearExistFragments(context as FragmentActivity)
+                }
+                cancelarRutina.setOnClickListener {
+                    Toast.makeText(context, "Cancelar", Toast.LENGTH_LONG).show()
+                    CommonMethods.clearExistFragments(context as FragmentActivity)
+                }
+                addDispositivoButton.setOnClickListener {
+                    val ft: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
+                    ft?.replace(R.id.crearRutina, DeviceList())
+                    ft?.addToBackStack("Update Routine")
+                    ft?.commit()
+                }
+            }
+            2 -> {
+                guardarRutina.setOnClickListener {
+                    updateRoutines()
+                    (context as FragmentActivity).supportFragmentManager.popBackStack()
+                }
+                cancelarRutina.setOnClickListener {
+                    Toast.makeText(context, "Cancelar", Toast.LENGTH_LONG).show()
+                    (context as FragmentActivity).supportFragmentManager.popBackStack()
+                }
+                addDispositivoButton.setOnClickListener {
+                    val ft: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
+                    ft?.replace(R.id.crearRutina, DeviceList())
+                    ft?.addToBackStack("Update Routine")
+                    ft?.commit()
+                }
+
+            }
         }
     }
 

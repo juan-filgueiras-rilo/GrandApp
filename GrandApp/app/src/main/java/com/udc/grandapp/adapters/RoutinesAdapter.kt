@@ -58,13 +58,13 @@ class RoutinesAdapter(context : Context, val items: List<CustomerRoutine>, activ
             }
             modificar.setOnClickListener {
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                ft.replace(R.id.fragmentRoutines, UpdateRoutine())
+                ft.replace(R.id.fragmentRoutines, UpdateRoutine(1))
                 ft.addToBackStack("RoutinesAdapter")
                 ft.commit()
             }
             custom_rutina_parent.setOnClickListener {
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                ft.replace(R.id.fragmentRoutines, UpdateRoutine())
+                ft.replace(R.id.fragmentRoutines, UpdateRoutine(1))
                 ft.addToBackStack("RoutinesAdapter")
                 ft.commit()
             }

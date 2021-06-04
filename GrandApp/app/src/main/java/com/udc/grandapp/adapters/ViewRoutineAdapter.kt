@@ -47,10 +47,10 @@ class ViewRoutineAdapter(context : Context, val items: List<RoutinesDevice>, fra
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
                 when(layout){
                     1 -> {
-                        ft.replace(R.id.drawerLayout, RoutineView())
+                        ft.replace(R.id.mainFragment, RoutineView())
                     }
                     2 -> {
-                        ft.replace(R.id.drawerLayout, UpdateRoutine())
+                        ft.replace(R.id.drawerLayout, UpdateRoutine(2))
                     }
                 }
                 ft.addToBackStack("ViewRoutineAdapter")
