@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -70,7 +71,9 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activit
                     nombreDispositivo.setText(item.nombre)
                     descripcion.setText(item.url)
                     r_customlista.setOnClickListener{
-                        CommonMethods.clearExistFragments(context as FragmentActivity)
+                        //CommonMethods.clearExistFragments(context as FragmentActivity)
+                        // Al seleccionar un dispositivo deberíamos poder seguir configurando la rutina
+                        (context as FragmentActivity).supportFragmentManager.popBackStack()
                     }
                 }
                 R.layout.custom_nuevodispositivo -> {
