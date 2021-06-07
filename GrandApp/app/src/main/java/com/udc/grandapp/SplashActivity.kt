@@ -9,6 +9,8 @@ import com.google.android.material.button.MaterialButton
 import androidx.appcompat.app.AppCompatActivity
 import com.udc.grandapp.fragments.login.Login
 import com.udc.grandapp.fragments.login.SignUp
+import com.udc.grandapp.manager.configuration.UserConfigManager
+import com.udc.grandapp.model.UserInfoModel
 
 class SplashActivity : AppCompatActivity() , View.OnClickListener {
 

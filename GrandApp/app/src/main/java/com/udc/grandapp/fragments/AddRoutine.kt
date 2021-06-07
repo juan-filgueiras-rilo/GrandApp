@@ -1,5 +1,7 @@
 package com.udc.grandapp.fragments
 
+import android.app.Activity
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +10,31 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.get
+import androidx.core.view.iterator
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
+import com.udc.grandapp.adapters.DevicesAdapter
+import com.udc.grandapp.items.CustomerDevice
+import com.udc.grandapp.manager.CreateRoutineManager
+import com.udc.grandapp.manager.LoginManager
+import com.udc.grandapp.manager.configuration.UserConfigManager
+import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
+import com.udc.grandapp.manager.transferObjects.DatosCreateDevice
+import com.udc.grandapp.manager.transferObjects.DatosCreateRoutine
+import com.udc.grandapp.manager.transferObjects.DatosLogin
+import com.udc.grandapp.model.CreateRoutineModel
+import com.udc.grandapp.model.DevicesModel
+import com.udc.grandapp.model.GenericModel
+import com.udc.grandapp.model.SignUpLoginModel
 import com.udc.grandapp.utils.CommonMethods
+import kotlinx.android.synthetic.main.custom_rutina.*
 import kotlinx.android.synthetic.main.edit_rutina.*
 
 class AddRoutine : Fragment() {
@@ -31,6 +51,20 @@ class AddRoutine : Fragment() {
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
+
+        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1,"NombreProducto1", "loadURL"),
+                CustomerDevice(2, "NombreProducto2", "loadURL"),
+                CustomerDevice(3, "NombreProducto3", "loadURL")
+        )
+
+        recyclerView.adapter = context?.let {
+            activity?.let { it1 ->
+                DevicesAdapter(it, listaExample, it1, R.layout.custom_dispositivosrutina) {
+                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
         return rootView
     }
 
@@ -38,7 +72,10 @@ class AddRoutine : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         guardarRutina.setOnClickListener {
             Toast.makeText(context, "Guardar Rutina", Toast.LENGTH_LONG).show()
-            CommonMethods.clearExistFragments(context as FragmentActivity)
+            if (!validarRutina()){
+                addRutine()
+                //CommonMethods.clearExistFragments(context as FragmentActivity)
+            }
         }
         cancelarRutina.setOnClickListener {
             Toast.makeText(context, "Cancelar", Toast.LENGTH_LONG).show()
@@ -57,6 +94,60 @@ class AddRoutine : Fragment() {
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
+    }
+
+    fun validarRutina(): Boolean{
+        var error: Boolean = false
+        if (editTextNombre.text == null || editTextNombre.text!!.isEmpty()) {
+            error = true
+        }
+        if (editTextDescripcion.text == null || editTextDescripcion.text!!.isEmpty()){
+            error = true
+        }
+        return error
+    }
+
+    fun addRutine(){
+        if (editTextNombre.text != null && !editTextNombre.text.toString().isEmpty() &&
+                !editTextDescripcion.text.isEmpty() && editTextDescripcion.text.toString() != null) {
+            val CreateRoutineManager: CreateRoutineManager = CreateRoutineManager(context as Activity)
+            val activity: Activity = context as Activity
+            class ResponseManager() : IResponseManagerGeneric {
+                override fun onSuccesResponse(model: Any) {
+                    val modelResponse: GenericModel = model as GenericModel
+                    if (modelResponse.error == "0") {
+                        //val routine: CreateRoutineModel =  CreateRoutineModel.Parse(modelResponse.json)
+                        //insertarRutinaBD(login)
+                        CommonMethods.clearExistFragments(context as FragmentActivity)
+                    }
+                    else Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                }
+
+                override fun onErrorResponse(model: Any) {
+                    //Toast.makeText(applicationContext, "Error al loguearse (Diálogo)", Toast.LENGTH_LONG).show()
+                    activity.runOnUiThread { MaterialAlertDialogBuilder(activity)
+                            .setTitle(resources.getString(R.string.error))
+                            .setMessage(resources.getString(R.string.supporting_textlogin))
+                            .setNeutralButton(resources.getString(R.string.ok)){ dialog, which ->
+                                // Respond to positive button press
+                            }.show() }
+                }
+            }
+            val responseManager: IResponseManagerGeneric = ResponseManager()
+            var dias:  MutableList<String> = mutableListOf()
+            for (i in day_picker.selectedDays) {
+                dias.add(i.toString())
+            }
+
+
+            //DevicesModel(UserConfigManager.getUserInfoPersistente(context as Activity))
+            //TODO Coger los dispositivos seleccionados para la rutina
+
+
+            CreateRoutineManager.realizarOperacion(responseManager, DatosCreateRoutine(editTextNombre.text.toString(),
+                    editTextDescripcion.text.toString(), UserConfigManager.getUserInfoPersistente(context as Activity)!!.userId,
+                    dias, datePicker1.toString(), )
+        }
     }
 
 }

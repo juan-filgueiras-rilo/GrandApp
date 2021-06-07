@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
+import com.udc.grandapp.adapters.DevicesAdapter
+import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.manager.UpdateDeviceManager
 import com.udc.grandapp.manager.UpdateRoutineManager
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
@@ -43,6 +45,19 @@ class UpdateRoutine(layout: Int) : Fragment() {
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
+
+        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1,"NombreProducto1", "loadURL"),
+                CustomerDevice(2, "NombreProducto2", "loadURL"),
+                CustomerDevice(3, "NombreProducto3", "loadURL")
+        )
+
+        recyclerView.adapter = context?.let {
+            activity?.let { it1 ->
+                DevicesAdapter(it, listaExample, it1, R.layout.custom_dispositivosrutina) {
+                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
 
         return rootView
     }

@@ -1,6 +1,7 @@
 package com.udc.grandapp.fragments.login
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -16,13 +17,11 @@ import com.google.android.material.textfield.TextInputLayout
 import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
 import com.udc.grandapp.manager.LoginManager
-import com.udc.grandapp.manager.SignUpManager
+import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosLogin
-import com.udc.grandapp.manager.transferObjects.DatosSingUp
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.model.SignUpLoginModel
-import com.udc.grandapp.services.RoutineAlarmService
 
 class Login : AppCompatActivity(), View.OnClickListener {
 
@@ -112,7 +111,7 @@ class Login : AppCompatActivity(), View.OnClickListener {
                     val modelResponse: GenericModel = model as GenericModel
                     if (modelResponse.error == "0") {
                         val login: SignUpLoginModel =  SignUpLoginModel.Parse(modelResponse.json)
-                        //TODO login?
+                        insertarUserBD(login)
                         val intent: Intent = Intent(activity, MainScreenActivity::class.java)
                         activity.startActivity(intent)
                     }
@@ -134,4 +133,21 @@ class Login : AppCompatActivity(), View.OnClickListener {
             loginManager.realizarOperacion(responseManager, DatosLogin(email.text.toString(), valuePwd))
         }
     }
+
+    fun insertarUserBD(singUp: SignUpLoginModel){
+        val db = UserConfigManager(this).writableDatabase
+
+        val values = ContentValues().apply {
+            put("userId", singUp.id)
+            put("token",singUp.token)
+            put("userName", singUp.userName)
+            put("email", singUp.email)
+            put("role", singUp.role)
+        }
+
+        val newRowId = db?.insert("DBUser", null, values)
+
+        UserConfigManager.reiniciarInfoPersistente(this)
+    }
+
 }
