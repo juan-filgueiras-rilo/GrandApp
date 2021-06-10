@@ -3,6 +3,7 @@ package com.udc.grandapp.fragments
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.view.get
 import androidx.core.view.iterator
 import androidx.fragment.app.Fragment
@@ -70,6 +72,7 @@ class AddRoutine : Fragment() {
         return rootView
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         guardarRutina.setOnClickListener {
@@ -109,6 +112,7 @@ class AddRoutine : Fragment() {
         return error
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     fun addRutine(){
         if (editTextNombre.text != null && !editTextNombre.text.toString().isEmpty() &&
                 !editTextDescripcion.text.isEmpty() && editTextDescripcion.text.toString() != null) {
@@ -120,34 +124,30 @@ class AddRoutine : Fragment() {
                     if (modelResponse.error == "0") {
                         //val routine: CreateRoutineModel =  CreateRoutineModel.Parse(modelResponse.json)
                         //insertarRutinaBD(login)
+                            //TODO Insertar en BD, cambiar estructura de bd para almacenar dispositivos asociados a rutina?
                         CommonMethods.clearExistFragments(context as FragmentActivity)
                     }
                     else {//Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
-                        if (isAdded) {
-                            activity.runOnUiThread {
-                                MaterialAlertDialogBuilder(activity)
-                                        .setTitle(resources.getString(R.string.error))
-                                        .setMessage(modelResponse.mensaje)
-                                        .setNeutralButton(resources.getString(R.string.ok)) { dialog, which ->
-                                            // Respond to positive button press
-                                        }.show()
-                            }
-                        }
+                        MaterialAlertDialogBuilder(activity)
+                                .setTitle("Error")
+                                .setMessage(modelResponse.mensaje)
+                                .setNeutralButton("OK") { dialog, which ->
+                                    // Respond to positive button press
+                                }.show()
+
+
                     }
                 }
 
                 override fun onErrorResponse(model: Any) {
-                    //Toast.makeText(applicationContext, "Error al loguearse (Diálogo)", Toast.LENGTH_LONG).show()
-                    if (isAdded) {
-                        activity.runOnUiThread {
-                            MaterialAlertDialogBuilder(activity)
-                                    .setTitle(resources.getString(R.string.error))
-                                    .setMessage(resources.getString(R.string.supporting_textlogin))
-                                    .setNeutralButton(resources.getString(R.string.ok)) { dialog, which ->
-                                        // Respond to positive button press
-                                    }.show()
-                        }
-                    }
+                    MaterialAlertDialogBuilder(activity)
+                        .setTitle("Error")
+                        .setMessage("Error al guardar la rutina")
+                        .setNeutralButton("OK") { dialog, which ->
+                            // Respond to positive button press
+                        }.show()
+
+
                 }
             }
             val responseManager: IResponseManagerGeneric = ResponseManager()
@@ -163,10 +163,14 @@ class AddRoutine : Fragment() {
                         (recyclerView.Recycler().getViewForPosition(i).nombreDisp.text as String),
                         (recyclerView.Recycler().getViewForPosition(i).descripciondisp.text as String)))
             }
+            println(UserConfigManager.getUserInfoPersistente(context as Activity)!!.userId)
+            println(recyclerView.Recycler().getViewForPosition(0).nombreDisp.text as String)
+            println(datePicker1.hour.toString() + datePicker1.minute.toString())
+            println(recyclerView.Recycler().getViewForPosition(0).descripciondisp.text as String)
 
             CreateRoutineManager.realizarOperacion(responseManager, DatosCreateRoutine(editTextNombre.text.toString(),
                     editTextDescripcion.text.toString(), UserConfigManager.getUserInfoPersistente(context as Activity)!!.userId,
-                    dias, datePicker1.toString(), devices))
+                    dias, datePicker1.hour.toString() + ":" + datePicker1.minute.toString(), devices))
         }
     }
 

@@ -82,33 +82,29 @@ class UpdateDevice  : Fragment() {
                     startActivity(Intent(MainScreenActivity::class.simpleName))
                 }
                 else {
-                    if (isAdded) {
                     //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
-                    activity.runOnUiThread {
                         MaterialAlertDialogBuilder(activity)
-                                .setTitle(resources.getString(R.string.error))
+                                .setTitle("Error")
                                 .setMessage(modelResponse.mensaje)
-                                .setNeutralButton(resources.getString(R.string.ok)) { dialog, which ->
+                                .setNeutralButton("OK") { dialog, which ->
                                     // Respond to positive button press
                                 }.show()
-                    }
-                    }
+
+
                 }
 
             }
 
             override fun onErrorResponse(model: Any) {
-                if (isAdded) {
+
                     //Toast.makeText(context, "Error al actualizar los dispositivos (Diálogo)", Toast.LENGTH_LONG).show()
-                    activity.runOnUiThread {
                         MaterialAlertDialogBuilder(activity)
-                                .setTitle(resources.getString(R.string.error))
-                                .setMessage(resources.getString(R.string.supporting_textDeviceUpdate))
-                                .setNeutralButton(resources.getString(R.string.ok)) { dialog, which ->
+                                .setTitle("Error")
+                                .setMessage("Error al actualizar los dispositivos")
+                                .setNeutralButton("OK") { dialog, which ->
                                     // Respond to positive button press
                                 }.show()
-                    }
-                }
+
             }
         }
 

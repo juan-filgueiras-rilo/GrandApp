@@ -87,33 +87,27 @@ class Home : Fragment() {
                     startActivity(Intent(MainScreenActivity::class.simpleName))
                 }
                 else {
-                    if (isAdded) {
                     //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
-                    activity.runOnUiThread {
-                        MaterialAlertDialogBuilder(activity)
-                                .setTitle(resources.getString(R.string.error))
-                                .setMessage(modelResponse.mensaje)
-                                .setNeutralButton(resources.getString(R.string.ok)) { dialog, which ->
-                                    // Respond to positive button press
-                                }.show()
-                    }
-                    }
+                    MaterialAlertDialogBuilder(activity)
+                            .setTitle("Error")
+                            .setMessage(modelResponse.mensaje)
+                            .setNeutralButton("OK") { dialog, which ->
+                                // Respond to positive button press
+                            }.show()
+
+
                 }
 
             }
 
             override fun onErrorResponse(model: Any) {
-                if (isAdded) {
                     //Toast.makeText(context, "Error al obtener los dispositivos (Diálogo)", Toast.LENGTH_LONG).show()
-                    activity.runOnUiThread {
-                        MaterialAlertDialogBuilder(activity)
-                                .setTitle(resources.getString(R.string.error))
-                                .setMessage(resources.getString(R.string.supporting_textDeviceError))
-                                .setNeutralButton(resources.getString(R.string.ok)) { dialog, which ->
-                                    // Respond to positive button press
-                                }.show()
-                    }
-                }
+                    MaterialAlertDialogBuilder(activity)
+                            .setTitle("Error")
+                            .setMessage("Al obtener los dispositivos")
+                            .setNeutralButton("OK") { dialog, which ->
+                                // Respond to positive button press
+                            }.show()
             }
         }
 
@@ -134,24 +128,24 @@ class Home : Fragment() {
                 }
                 else {
                     //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
-                    activity.runOnUiThread { MaterialAlertDialogBuilder(activity)
-                            .setTitle(resources.getString(R.string.error))
+                            MaterialAlertDialogBuilder(activity)
+                            .setTitle("Error")
                             .setMessage(modelResponse.mensaje)
-                            .setNeutralButton(resources.getString(R.string.ok)){ dialog, which ->
+                            .setNeutralButton("OK"){ dialog, which ->
                                 // Respond to positive button press
-                            }.show() }
+                            }.show()
                 }
 
             }
 
             override fun onErrorResponse(model: Any) {
                 //Toast.makeText(context, "Error al obtener las rutinas (Diálogo)", Toast.LENGTH_LONG).show()
-                activity.runOnUiThread { MaterialAlertDialogBuilder(activity)
-                        .setTitle(resources.getString(R.string.error))
-                        .setMessage(resources.getString(R.string.supporting_textRoutineError))
-                        .setNeutralButton(resources.getString(R.string.ok)){ dialog, which ->
+                MaterialAlertDialogBuilder(activity)
+                        .setTitle("Error")
+                        .setMessage("Error al obtener las rutinas")
+                        .setNeutralButton("OK"){ dialog, which ->
                             // Respond to positive button press
-                        }.show() }
+                        }.show()
             }
         }
 

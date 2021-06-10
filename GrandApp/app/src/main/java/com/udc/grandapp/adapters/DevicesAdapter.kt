@@ -112,6 +112,7 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activit
                                 if (modelResponse.error == "0") {
                                     //val device: CreateDeviceModel =  CreateDeviceModel.Parse(modelResponse.json)
                                     //TODO Capturar respuesta?
+                                    //TODO Insertar en BD, cambiar estructura de bd para almacenar rutinas asociadas a rutinas?
                                 }
                                 else {
                                     //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
