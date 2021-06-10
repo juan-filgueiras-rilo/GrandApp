@@ -46,10 +46,6 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activit
         return mItems.size
     }
 
-    fun getAllItems(): List<CustomerDevice> {
-        return items
-    }
-
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: CustomerDevice, listener: (ClipData.Item) -> Unit, mLayout: Int, activity: FragmentActivity, items: List<CustomerDevice>) = with(itemView) {
             when (mLayout) {
@@ -80,7 +76,7 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activit
                 }
                 R.layout.custom_dispositivosrutina -> {
                     nombreDisp.setText(item.nombre)
-                    descripciondisp.setText(item.url)
+                    descripciondisp.setText(item.descripcion)
                     eliminardisp.setOnClickListener {
                         //TODO eliminar dispositivo de lista
                     }
@@ -94,7 +90,7 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activit
                 }
                 R.layout.custom_lista -> {
                     nombreDispositivo.setText(item.nombre)
-                    descripcion.setText(item.url)
+                    descripcion.setText(item.descripcion)
                     r_customlista.setOnClickListener{
                         //CommonMethods.clearExistFragments(context as FragmentActivity)
                         // Al seleccionar un dispositivo deberíamos poder seguir configurando la rutina
@@ -104,7 +100,7 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activit
 
                 R.layout.custom_dispositivorutinaview -> {
                     nombreDispo.setText(item.nombre)
-                    descripciondispo.setText(item.url)
+                    descripciondispo.setText(item.descripcion)
                 }
 
                 R.layout.custom_nuevodispositivo -> {

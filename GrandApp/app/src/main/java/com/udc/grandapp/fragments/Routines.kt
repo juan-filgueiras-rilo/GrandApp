@@ -78,6 +78,7 @@ class Routines : Fragment() {
                     startActivity(Intent(MainScreenActivity::class.simpleName))
                 }
                 else {
+                    if (isAdded) {
                     //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
                     activity.runOnUiThread {
                         MaterialAlertDialogBuilder(activity)
@@ -87,18 +88,23 @@ class Routines : Fragment() {
                                     // Respond to positive button press
                                 }.show()
                     }
+                    }
                 }
 
             }
 
             override fun onErrorResponse(model: Any) {
-                //Toast.makeText(context, "Error al obtener las rutinas (Diálogo)", Toast.LENGTH_LONG).show()
-                activity.runOnUiThread { MaterialAlertDialogBuilder(activity)
-                        .setTitle(resources.getString(R.string.error))
-                        .setMessage(resources.getString(R.string.supporting_textRoutineError))
-                        .setNeutralButton(resources.getString(R.string.ok)){ dialog, which ->
-                            // Respond to positive button press
-                        }.show() }
+                if (isAdded) {
+                    //Toast.makeText(context, "Error al obtener las rutinas (Diálogo)", Toast.LENGTH_LONG).show()
+                    activity.runOnUiThread {
+                        MaterialAlertDialogBuilder(activity)
+                                .setTitle(resources.getString(R.string.error))
+                                .setMessage(resources.getString(R.string.supporting_textRoutineError))
+                                .setNeutralButton(resources.getString(R.string.ok)) { dialog, which ->
+                                    // Respond to positive button press
+                                }.show()
+                    }
+                }
             }
         }
 

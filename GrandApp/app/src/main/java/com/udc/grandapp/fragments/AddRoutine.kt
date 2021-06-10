@@ -34,6 +34,8 @@ import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.model.SignUpLoginModel
 import com.udc.grandapp.utils.CommonMethods
+import kotlinx.android.synthetic.main.custom_dispositivosrutina.*
+import kotlinx.android.synthetic.main.custom_dispositivosrutina.view.*
 import kotlinx.android.synthetic.main.custom_rutina.*
 import kotlinx.android.synthetic.main.edit_rutina.*
 
@@ -74,7 +76,7 @@ class AddRoutine : Fragment() {
             Toast.makeText(context, "Guardar Rutina", Toast.LENGTH_LONG).show()
             if (!validarRutina()){
                 addRutine()
-                //CommonMethods.clearExistFragments(context as FragmentActivity)
+                CommonMethods.clearExistFragments(context as FragmentActivity)
             }
         }
         cancelarRutina.setOnClickListener {
@@ -120,17 +122,32 @@ class AddRoutine : Fragment() {
                         //insertarRutinaBD(login)
                         CommonMethods.clearExistFragments(context as FragmentActivity)
                     }
-                    else Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                    else {//Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                        if (isAdded) {
+                            activity.runOnUiThread {
+                                MaterialAlertDialogBuilder(activity)
+                                        .setTitle(resources.getString(R.string.error))
+                                        .setMessage(modelResponse.mensaje)
+                                        .setNeutralButton(resources.getString(R.string.ok)) { dialog, which ->
+                                            // Respond to positive button press
+                                        }.show()
+                            }
+                        }
+                    }
                 }
 
                 override fun onErrorResponse(model: Any) {
                     //Toast.makeText(applicationContext, "Error al loguearse (Diálogo)", Toast.LENGTH_LONG).show()
-                    activity.runOnUiThread { MaterialAlertDialogBuilder(activity)
-                            .setTitle(resources.getString(R.string.error))
-                            .setMessage(resources.getString(R.string.supporting_textlogin))
-                            .setNeutralButton(resources.getString(R.string.ok)){ dialog, which ->
-                                // Respond to positive button press
-                            }.show() }
+                    if (isAdded) {
+                        activity.runOnUiThread {
+                            MaterialAlertDialogBuilder(activity)
+                                    .setTitle(resources.getString(R.string.error))
+                                    .setMessage(resources.getString(R.string.supporting_textlogin))
+                                    .setNeutralButton(resources.getString(R.string.ok)) { dialog, which ->
+                                        // Respond to positive button press
+                                    }.show()
+                        }
+                    }
                 }
             }
             val responseManager: IResponseManagerGeneric = ResponseManager()
@@ -139,14 +156,17 @@ class AddRoutine : Fragment() {
                 dias.add(i.toString())
             }
 
-
-            //DevicesModel(UserConfigManager.getUserInfoPersistente(context as Activity))
-            //TODO Coger los dispositivos seleccionados para la rutina
-
+            var devices: MutableList<DevicesModel> = mutableListOf()
+            var items:Int = recyclerView.adapter!!.getItemCount()
+            for (i in 0..items-1) {
+                devices.add(DevicesModel(UserConfigManager.getUserInfoPersistente(context as Activity)!!.userId,
+                        (recyclerView.Recycler().getViewForPosition(i).nombreDisp.text as String),
+                        (recyclerView.Recycler().getViewForPosition(i).descripciondisp.text as String)))
+            }
 
             CreateRoutineManager.realizarOperacion(responseManager, DatosCreateRoutine(editTextNombre.text.toString(),
                     editTextDescripcion.text.toString(), UserConfigManager.getUserInfoPersistente(context as Activity)!!.userId,
-                    dias, datePicker1.toString(), )
+                    dias, datePicker1.toString(), devices))
         }
     }
 
