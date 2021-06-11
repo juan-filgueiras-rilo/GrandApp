@@ -15,8 +15,11 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
+import com.udc.grandapp.adapters.DevicesAdapter
+import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.manager.UpdateDeviceManager
 import com.udc.grandapp.manager.UpdateRoutineManager
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
@@ -42,6 +45,19 @@ class UpdateRoutine(layout: Int) : Fragment() {
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
+
+        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1,"NombreProducto1", "loadURL"),
+                CustomerDevice(2, "NombreProducto2", "loadURL"),
+                CustomerDevice(3, "NombreProducto3", "loadURL")
+        )
+
+        recyclerView.adapter = context?.let {
+            activity?.let { it1 ->
+                DevicesAdapter(it, listaExample, it1, R.layout.custom_dispositivosrutina) {
+                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
 
         return rootView
     }
@@ -92,7 +108,7 @@ class UpdateRoutine(layout: Int) : Fragment() {
 
     fun updateRoutines(){
         val mUpdateRoutineManager: UpdateRoutineManager = UpdateRoutineManager(context as Activity)
-
+        val activity: Activity = context as Activity
         class ResponseManager() : IResponseManagerGeneric {
             override fun onSuccesResponse(model: Any) {
                 val modelResponse: GenericModel = model as GenericModel
@@ -101,12 +117,28 @@ class UpdateRoutine(layout: Int) : Fragment() {
                     //TODO login?
                     startActivity(Intent(MainScreenActivity::class.simpleName))
                 }
-                else Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                else {
+                    //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                        MaterialAlertDialogBuilder(activity)
+                                .setTitle("Error")
+                                .setMessage(modelResponse.mensaje)
+                                .setNeutralButton("OK") { dialog, which ->
+                                    // Respond to positive button press
+                                }.show()
+
+
+                }
 
             }
 
             override fun onErrorResponse(model: Any) {
-                Toast.makeText(context, "Error al actualizar los dispositivos (Diálogo)", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(context, "Error al actualizar los dispositivos (Diálogo)", Toast.LENGTH_LONG).show()
+                        MaterialAlertDialogBuilder(activity)
+                                .setTitle("Error")
+                                .setMessage("Error al actualizar las rutinas")
+                                .setNeutralButton("OK") { dialog, which ->
+                                    // Respond to positive button press
+                                }.show()
             }
         }
 

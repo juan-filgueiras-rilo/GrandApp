@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.RoutinesAdapter
@@ -67,7 +68,7 @@ class Routines : Fragment() {
 
     fun getRoutines(){
         val mGetRoutinesManager: GetRoutinesManager = GetRoutinesManager(context as Activity)
-
+        val activity: Activity = context as Activity
         class ResponseManager() : IResponseManagerGeneric {
             override fun onSuccesResponse(model: Any) {
                 val modelResponse: GenericModel = model as GenericModel
@@ -76,12 +77,26 @@ class Routines : Fragment() {
                     //TODO login?
                     startActivity(Intent(MainScreenActivity::class.simpleName))
                 }
-                else Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                else {
+                    //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                        MaterialAlertDialogBuilder(activity)
+                                .setTitle("Error")
+                                .setMessage(modelResponse.mensaje)
+                                .setNeutralButton("OK") { dialog, which ->
+                                    // Respond to positive button press
+                                }.show()
+                }
 
             }
 
             override fun onErrorResponse(model: Any) {
-                Toast.makeText(context, "Error al obtener las rutinas (Diálogo)", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(context, "Error al obtener las rutinas (Diálogo)", Toast.LENGTH_LONG).show()
+                        MaterialAlertDialogBuilder(activity)
+                                .setTitle("Error")
+                                .setMessage("Error al obtener las rutinas")
+                                .setNeutralButton("OK") { dialog, which ->
+                                    // Respond to positive button press
+                                }.show()
             }
         }
 

@@ -4,6 +4,7 @@ import com.udc.grandapp.model.UserInfoModel
 import android.content.Context
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteDatabase
+import android.view.View
 
 class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 2){
 
@@ -14,10 +15,10 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
                 infoPersistente = UserConfigManager(context).getUserInfoFromBD()
             return infoPersistente as UserInfoModel
         }
-
         fun reiniciarInfoPersistente(context: Context){
             infoPersistente = UserConfigManager(context).getUserInfoFromBD()
         }
+
     }
 
     fun getUserInfoFromBD(): UserInfoModel? {

@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DevicesAdapter
@@ -56,6 +57,7 @@ class DeviceList : Fragment() {
         val mGetDevicesManager: GetDevicesManager = GetDevicesManager(context as Activity)
 
         class ResponseManager() : IResponseManagerGeneric {
+            val activity: Activity = context as Activity
             override fun onSuccesResponse(model: Any) {
                 val modelResponse: GenericModel = model as GenericModel
                 if (modelResponse.error == "0") {
@@ -63,12 +65,29 @@ class DeviceList : Fragment() {
                     //TODO login?
                     startActivity(Intent(MainScreenActivity::class.simpleName))
                 }
-                else Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                else {
+                    //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                    MaterialAlertDialogBuilder(activity)
+                            .setTitle("Error")
+                            .setMessage(modelResponse.mensaje)
+                            .setNeutralButton("OK") { dialog, which ->
+                                // Respond to positive button press
+                            }.show()
+
+
+                }
 
             }
 
             override fun onErrorResponse(model: Any) {
-                Toast.makeText(context, "Error al obtener los dispositivos (Diálogo)", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(context, "Error al obtener los dispositivos (Diálogo)", Toast.LENGTH_LONG).show()
+                    MaterialAlertDialogBuilder(activity)
+                            .setTitle("Error")
+                            .setMessage("Error al obtener los dispositivos")
+                            .setNeutralButton("OK") { dialog, which ->
+                                // Respond to positive button press
+                            }.show()
+
             }
         }
 

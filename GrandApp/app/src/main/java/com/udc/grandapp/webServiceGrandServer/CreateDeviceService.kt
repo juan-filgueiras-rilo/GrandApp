@@ -11,9 +11,9 @@ class CreateDeviceService: GrandServer() {
         val datosPeticion: DatosCreateDevice = datos.mDatosOperaction as DatosCreateDevice
         try {
             val body: RequestBody = RequestBody.create(mediaType, "{\n" +
-                    "    \"name\": \"bombilla\",\n" +
-                    "    \"description\": \"bombilla molona\"\n" +
-                    "    \"userId\": \"1\"\n" +
+                    "    \"name\": \"" + datosPeticion.userId + "\",\n" +
+                    "    \"description\": \""+ datosPeticion.description + "\"\n" +
+                    "    \"userId\": \""+ datosPeticion.userId + "\"\n" +
                     "}")
 
             doPostRequest(body, MetodoCreateDevice, datos)
