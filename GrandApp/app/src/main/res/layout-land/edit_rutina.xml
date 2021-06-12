@@ -72,7 +72,7 @@
             android:textStyle="bold" />
 
         <ca.antonious.materialdaypicker.MaterialDayPicker
-            android:id="@+id/day_picker"
+            android:id="@+id/dayPicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

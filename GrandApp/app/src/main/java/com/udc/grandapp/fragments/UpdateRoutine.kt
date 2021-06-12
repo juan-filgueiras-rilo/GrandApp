@@ -29,6 +29,7 @@ import com.udc.grandapp.model.UpdateDeviceModel
 import com.udc.grandapp.model.UpdateRoutineModel
 import com.udc.grandapp.utils.CommonMethods
 import kotlinx.android.synthetic.main.edit_rutina.*
+import java.util.*
 
 class UpdateRoutine(layout: Int) : Fragment() {
 
@@ -99,6 +100,7 @@ class UpdateRoutine(layout: Int) : Fragment() {
 
             }
         }
+        dayPicker.locale = Locale("es", "ES")
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

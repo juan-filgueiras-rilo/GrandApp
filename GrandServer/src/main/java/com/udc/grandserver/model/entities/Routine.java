@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,6 +30,14 @@ public class Routine {
 	private String name;
 	private String description;
 	private Long userId;
+	private Integer hour;
+	private Integer minute;
+	
+	@ElementCollection(targetClass=DiaEnum.class)
+    @Enumerated(EnumType.STRING) // Possibly optional (I'm not sure) but defaults to ORDINAL.
+    @CollectionTable(name="routine_dia")
+    @Column(name="dias") // Column name in person_interest
+	private List<DiaEnum> dias;
 	
 	@JoinTable(
 			  name = "Routine_Device", 
@@ -38,13 +51,16 @@ public class Routine {
 		super();
 	}
 
-	public Routine(Long id, String name, String description, List<Device> deviceList, Long userId) {
+	public Routine(Long id, String name, String description, List<Device> deviceList, Long userId, Integer hour, Integer minute, List<DiaEnum> dias) {
 		super();
 		this.idRoutine = id;
 		this.name = name;
 		this.description = description;
 		this.deviceList = deviceList;
 		this.userId = userId;
+		this.hour = hour;
+		this.minute = minute;
+		this.dias = dias;
 	}
 
 	public Routine(RoutineDto routine) {
@@ -58,6 +74,9 @@ public class Routine {
 		}
 		this.deviceList = list;
 		this.userId = routine.getUserId();
+		this.hour = routine.getHour();
+		this.minute = routine.getMinute();
+		this.dias = routine.getDias();
 	}
 
 	public Long getIdRoutine() {
@@ -99,6 +118,29 @@ public class Routine {
 	public void setDeviceList(List<Device> deviceList) {
 		this.deviceList = deviceList;
 	}
-	
-	
+
+	public Integer getHour() {
+		return hour;
+	}
+
+	public void setHour(Integer hour) {
+		this.hour = hour;
+	}
+
+	public Integer getMinute() {
+		return minute;
+	}
+
+	public void setMinute(Integer minute) {
+		this.minute = minute;
+	}
+
+	public List<DiaEnum> getDias() {
+		return dias;
+	}
+
+	public void setDias(List<DiaEnum> dias) {
+		this.dias = dias;
+	}
+
 }

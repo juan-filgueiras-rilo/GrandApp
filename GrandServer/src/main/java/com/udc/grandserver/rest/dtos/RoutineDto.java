@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.udc.grandserver.model.entities.Device;
+import com.udc.grandserver.model.entities.DiaEnum;
 import com.udc.grandserver.model.entities.Routine;
 
 public class RoutineDto {
@@ -17,18 +18,22 @@ public class RoutineDto {
 	private String description;
 	private List<DeviceDto> deviceList;
 	private Long userId;
+	private Integer hour;
+	private Integer minute;
+	private List<DiaEnum> dias;
 	
 	public RoutineDto() {
 		super();
 	}
 	
-	public RoutineDto(Long id, String name, String description, List<DeviceDto> deviceList, Long userId) {
+	public RoutineDto(Long id, String name, String description, List<DeviceDto> deviceList, Long userId, List<DiaEnum> dias) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.deviceList = deviceList;
 		this.userId = userId;
+		this.dias = dias;
 	}
 	
 	public RoutineDto(Routine routine) {
@@ -42,6 +47,9 @@ public class RoutineDto {
 		}
 		this.deviceList = list;
 		this.userId = routine.getUserId();
+		this.hour = routine.getHour();
+		this.minute = routine.getMinute();
+		this.dias = routine.getDias();
 	}
 
 	public Long getId() {
@@ -83,5 +91,29 @@ public class RoutineDto {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	
+
+	public Integer getHour() {
+		return hour;
+	}
+
+	public void setHour(Integer hour) {
+		this.hour = hour;
+	}
+
+	public Integer getMinute() {
+		return minute;
+	}
+
+	public void setMinute(Integer minute) {
+		this.minute = minute;
+	}
+
+	public List<DiaEnum> getDias() {
+		return dias;
+	}
+
+	public void setDias(List<DiaEnum> dias) {
+		this.dias = dias;
+	}
+
 }

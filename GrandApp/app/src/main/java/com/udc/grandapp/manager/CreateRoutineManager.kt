@@ -16,7 +16,7 @@ class CreateRoutineManager(activity: Activity) : GenericManager(activity) {
             CreateRoutineService().createRoutine(datos, infoBd()!!.token)
         }catch (e: Exception){
             e.printStackTrace()
-            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
+           // datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
         }
     }
 }

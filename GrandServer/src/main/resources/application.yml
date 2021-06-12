@@ -10,9 +10,9 @@ spring:
       max-file-size: 10MB
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://ec2-54-72-155-238.eu-west-1.compute.amazonaws.com:5432/d8rdmjobe6mfbb?user=jlwiyyrlxzwrjg&password=e29b2b05af7e550e2aaac427752414b8801dad5edc069a126daf8f65bc28540d&sslmode=require
-    username: jlwiyyrlxzwrjg
-    password: e29b2b05af7e550e2aaac427752414b8801dad5edc069a126daf8f65bc28540d
+    url: jdbc:postgresql://ec2-52-211-158-144.eu-west-1.compute.amazonaws.com:5432/d6r1vf4b90ei0o?user=iavtzqavbajxsi&password=b4a0841b405ca149e78f731ceff90837be243ac8d4c0d56bf866925d93bf9300&sslmode=require
+    username: iavtzqavbajxsi
+    password: b4a0841b405ca149e78f731ceff90837be243ac8d4c0d56bf866925d93bf9300
     max-active: 4
     max-idle: 2
     max-wait: 10000

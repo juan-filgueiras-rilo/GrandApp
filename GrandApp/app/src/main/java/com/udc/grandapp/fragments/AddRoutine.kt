@@ -1,7 +1,6 @@
 package com.udc.grandapp.fragments
 
 import android.app.Activity
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
@@ -12,34 +11,24 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.view.get
-import androidx.core.view.iterator
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.manager.CreateRoutineManager
-import com.udc.grandapp.manager.LoginManager
 import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
-import com.udc.grandapp.manager.transferObjects.DatosCreateDevice
 import com.udc.grandapp.manager.transferObjects.DatosCreateRoutine
-import com.udc.grandapp.manager.transferObjects.DatosLogin
-import com.udc.grandapp.model.CreateRoutineModel
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
-import com.udc.grandapp.model.SignUpLoginModel
 import com.udc.grandapp.utils.CommonMethods
-import kotlinx.android.synthetic.main.custom_dispositivosrutina.*
 import kotlinx.android.synthetic.main.custom_dispositivosrutina.view.*
-import kotlinx.android.synthetic.main.custom_rutina.*
 import kotlinx.android.synthetic.main.edit_rutina.*
+import java.util.*
 
 class AddRoutine : Fragment() {
 
@@ -92,8 +81,8 @@ class AddRoutine : Fragment() {
             ft?.replace(R.id.crearRutina, DeviceList())
             ft?.addToBackStack("Add Routines")
             ft?.commit()
-
         }
+        dayPicker.locale = Locale("es", "ES")
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -134,8 +123,6 @@ class AddRoutine : Fragment() {
                                 .setNeutralButton("OK") { dialog, which ->
                                     // Respond to positive button press
                                 }.show()
-
-
                     }
                 }
 
@@ -146,13 +133,11 @@ class AddRoutine : Fragment() {
                         .setNeutralButton("OK") { dialog, which ->
                             // Respond to positive button press
                         }.show()
-
-
                 }
             }
             val responseManager: IResponseManagerGeneric = ResponseManager()
             var dias:  MutableList<String> = mutableListOf()
-            for (i in day_picker.selectedDays) {
+            for (i in dayPicker.selectedDays) {
                 dias.add(i.toString())
             }
 
@@ -167,10 +152,11 @@ class AddRoutine : Fragment() {
             println(recyclerView.Recycler().getViewForPosition(0).nombreDisp.text as String)
             println(datePicker1.hour.toString() + datePicker1.minute.toString())
             println(recyclerView.Recycler().getViewForPosition(0).descripciondisp.text as String)
+            println(dias.toString())
 
             CreateRoutineManager.realizarOperacion(responseManager, DatosCreateRoutine(editTextNombre.text.toString(),
                     editTextDescripcion.text.toString(), UserConfigManager.getUserInfoPersistente(context as Activity)!!.userId,
-                    dias, datePicker1.hour.toString() + ":" + datePicker1.minute.toString(), devices))
+                    dias, datePicker1.hour, datePicker1.minute, devices))
         }
     }
 

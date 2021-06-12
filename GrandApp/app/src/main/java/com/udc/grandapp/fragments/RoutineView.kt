@@ -19,6 +19,7 @@ import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.utils.CommonMethods
 import kotlinx.android.synthetic.main.edit_rutina.*
+import java.util.*
 
 class RoutineView : Fragment() {
 
