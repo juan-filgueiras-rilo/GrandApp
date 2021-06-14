@@ -75,4 +75,10 @@ public class DeviceDto {
 		this.userId = userId;
 	}
 
+	@Override
+	public String toString() {
+		return "DeviceDto [id=" + id + ", name=" + name + ", description=" + description + ", userId=" + userId + "]";
+	}
+
+	
 }

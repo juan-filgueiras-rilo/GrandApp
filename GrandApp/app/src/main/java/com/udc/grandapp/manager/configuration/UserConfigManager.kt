@@ -2,11 +2,13 @@ package com.udc.grandapp.manager.configuration
 
 import com.udc.grandapp.model.UserInfoModel
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteDatabase
 import android.view.View
+import com.udc.grandapp.model.DevicesModel
 
-class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 3){
+class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 4){
 
     companion object {
         var infoPersistente: UserInfoModel? = null
@@ -47,4 +49,25 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         TODO("Not yet implemented")
     }
+
+    fun getDevicesFromBD(): List<DevicesModel> {
+        val retval : MutableList<DevicesModel> =  arrayListOf()
+        try {
+            val db = this.writableDatabase
+            val res = db.rawQuery("SELECT * FROM DBDevice", null)
+            res.moveToFirst()
+            while (res.moveToNext()) {
+                retval.add(DevicesModel(res.getString(0), res.getString(2),res.getString(5)))
+            }
+        }catch (e:Exception){
+           e.printStackTrace()
+        }
+        return retval
+    }
+
+    fun deleteDevicesFromBD() {
+        val db = this.writableDatabase
+        db.rawQuery("DELETE FROM DBDevice WHERE id > 0", null)
+    }
+
 }

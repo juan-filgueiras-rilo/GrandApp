@@ -10,18 +10,12 @@ import java.net.SocketTimeoutException
 
 class GetDevicesManager(activity: Activity) : GenericManager(activity) {
     override fun onWorkerExecute(datos: Companion.DatosThreaded) {
-        var devices: GenericModel?
         try {
-            devices = GetDevicesService().getDevices(infoBd()!!.userId, infoBd()!!.token)
-        }catch (e: SocketTimeoutException){
-            e.printStackTrace()
-            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
-            devices = null
+            GetDevicesService().getDevices(datos, "1","eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzNzg2MTk3fQ.MZHKP2jMHVLRjs2rmZ7dMBVcK25_7dpkexhjo4Y7oNIeooQ7BOlbFOLdLC5o3CnmX5Kbj9yaVpVigd7gVA2ahQ")
+//            devices = GetDevicesService().getDevices(infoBd()!!.userId, infoBd()!!.token)
         }catch (e: Exception){
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
-            devices = null
         }
-        datos.mResultado = devices!!
     }
 }

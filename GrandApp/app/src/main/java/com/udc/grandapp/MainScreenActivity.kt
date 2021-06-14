@@ -1,15 +1,28 @@
 package com.udc.grandapp
 
+import android.app.Activity
+import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
+import com.activeandroid.annotation.Column
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.udc.grandapp.adapters.FragmentPageChanger
+import com.udc.grandapp.manager.GetDevicesManager
+import com.udc.grandapp.manager.GetRoutinesManager
+import com.udc.grandapp.manager.configuration.UserConfigManager
+import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
+import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
+import com.udc.grandapp.model.DevicesModel
+import com.udc.grandapp.model.GenericModel
+import com.udc.grandapp.model.RoutinesModel
 import com.udc.grandapp.services.RoutineAlarmService
 import com.udc.grandapp.utils.CommonMethods
+import java.lang.Exception
 
 class MainScreenActivity : AppCompatActivity() {
 
@@ -21,13 +34,24 @@ class MainScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //llamar a los getRutinas y getDevice
+        getDevices()
+        //getRoutines()
+
+        //Guardarlos en la SQLite en el onSuccess de los managers
+
+
+        //En el onCreateView se recuperan de la SQLite y se muestran
+
+
+
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         tabLayout = findViewById<TabLayout>(R.id.tabLayout)
         viewPager = findViewById<ViewPager>(R.id.view_pager)
 
         initTabLayout()
         Intent(this, RoutineAlarmService::class.java).also { intent ->
-            startService(intent)
+          //  startService(intent) TODO DESCOMENTAR ESTO
         }
     }
 
@@ -48,6 +72,102 @@ class MainScreenActivity : AppCompatActivity() {
 
         viewPager.adapter = FragmentPageChanger(supportFragmentManager, this)
         tabLayout.setupWithViewPager(viewPager)
+    }
+
+    fun getDevices(){
+        val mGetDevicesManager: GetDevicesManager = GetDevicesManager(this)
+        val activity: Activity = this
+        class ResponseManager() : IResponseManagerGeneric {
+            override fun onSuccesResponse(model: GenericModel) {
+                val modelResponse: GenericModel = model as GenericModel
+                if (modelResponse.error == "0") {
+                    val devices: List<DevicesModel> =  DevicesModel.Parse(modelResponse.json)
+                    insertarDeviceBBDD(devices)
+                }
+                else {
+                    //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                    MaterialAlertDialogBuilder(activity)
+                            .setTitle("Error")
+                            .setMessage(modelResponse.mensaje)
+                            .setNeutralButton("OK") { dialog, which ->
+                                // Respond to positive button press
+                            }.show()
+                }
+            }
+
+            override fun onErrorResponse(model: String) {
+                //Toast.makeText(context, "Error al obtener los dispositivos (Diálogo)", Toast.LENGTH_LONG).show()
+                MaterialAlertDialogBuilder(activity)
+                        .setTitle("Error")
+                        .setMessage("Al obtener los dispositivos")
+                        .setNeutralButton("OK") { dialog, which ->
+                            // Respond to positive button press
+                        }.show()
+            }
+        }
+
+        val responseManager: IResponseManagerGeneric = ResponseManager()
+        mGetDevicesManager.realizarOperacion(responseManager, DatosOperacionGeneric())
+
+    }
+
+    fun getRoutines(){
+        val mGetRoutinesManager: GetRoutinesManager = GetRoutinesManager(this)
+        val activity: Activity = this
+        class ResponseManager() : IResponseManagerGeneric {
+            override fun onSuccesResponse(model: GenericModel) {
+                val modelResponse: GenericModel = model as GenericModel
+                if (modelResponse.error == "0") {
+                    val devices: List<RoutinesModel> =  RoutinesModel.Parse(modelResponse.json)
+                }
+                else {
+                    //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                    MaterialAlertDialogBuilder(activity)
+                            .setTitle("Error")
+                            .setMessage(modelResponse.mensaje)
+                            .setNeutralButton("OK"){ dialog, which ->
+                                // Respond to positive button press
+                            }.show()
+                }
+            }
+
+            override fun onErrorResponse(model: String) {
+                //Toast.makeText(context, "Error al obtener las rutinas (Diálogo)", Toast.LENGTH_LONG).show()
+                MaterialAlertDialogBuilder(activity)
+                        .setTitle("Error")
+                        .setMessage("Error al obtener las rutinas")
+                        .setNeutralButton("OK"){ dialog, which ->
+                            // Respond to positive button press
+                        }.show()
+            }
+        }
+
+        val responseManager: IResponseManagerGeneric = ResponseManager()
+        mGetRoutinesManager.realizarOperacion(responseManager, DatosOperacionGeneric())
+    }
+
+    fun insertarDeviceBBDD(devices : List<DevicesModel>) {
+        val db = UserConfigManager(this).writableDatabase
+       // UserConfigManager(this).deleteDevicesFromBD() //Borramos lo que haya e insertamos de nuevo
+        try {
+            for (device in devices) {
+                val values = ContentValues().apply {
+                    put("deviceId", device.id)
+                    put("nombre", device.nombre)
+                    put("descripcion", device.descripcion)
+                    put("tipo", "")
+                    put("protocolo", "")
+                }
+                val newRowId = db?.insert("DBDevice", null, values)
+            }
+        } catch (e : Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    fun insertarRoutineBBDD() {
+
     }
 
 }

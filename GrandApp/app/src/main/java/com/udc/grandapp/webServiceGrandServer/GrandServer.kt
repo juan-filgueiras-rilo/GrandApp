@@ -11,7 +11,7 @@ open class GrandServer {
     val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8");
 
    //private val url: String = "https://iot-rangers-backend.herokuapp.com" // Esta es la URL de la maquina a la que conectarse
-   private val url: String = "http://192.168.0.20:8080" // Esta es la URL de la maquina a la que conectarse
+   private val url: String = "http://192.168.0.11:8080" // Esta es la URL de la maquina a la que conectarse
 
     //Aquí irían los nombres de todos los métodos del web service
     //Users
@@ -81,7 +81,7 @@ open class GrandServer {
             .header("Accept", "*/*")
             .header("Content-Type", "application/json")
             .header("Cache-Control", "no-cache")
-                .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzNjgzMTkwfQ.BHSuE57iYhVblgNVEd5LqTdKbdlV9ERl__BPLL7DFWcXfA4ibR6HCs1-y5HMJY3jp_qiNYz4Mefl1QGDV4Kkjw")
+            .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzNjgzMTkwfQ.BHSuE57iYhVblgNVEd5LqTdKbdlV9ERl__BPLL7DFWcXfA4ibR6HCs1-y5HMJY3jp_qiNYz4Mefl1QGDV4Kkjw")
             .build()
     }
 
@@ -99,30 +99,52 @@ open class GrandServer {
         })
     }
 
-    fun createGetRequest(body: RequestBody, metodo:String): Request {
+    fun createGetRequest(body: RequestBody, metodo:String, token: String): Request {
         val url = url.plus(metodo)
         return Request.Builder()
-            .post(body)
+            .get()
             .url(url)
             .header("Connection", "keep-alive")
             .header("Accept", "*/*")
             .header("Content-Type", "application/json")
             .header("Cache-Control", "no-cache")
-                .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzNjgzMTkwfQ.BHSuE57iYhVblgNVEd5LqTdKbdlV9ERl__BPLL7DFWcXfA4ibR6HCs1-y5HMJY3jp_qiNYz4Mefl1QGDV4Kkjw")
+            .header("Authorization", "Bearer " + token)
             .build()
     }
 
-    fun doGetRequest(body: RequestBody, metodo: String) {
+    fun doGetRequestS(body: RequestBody, metodo: String, token: String): GenericModel {
         val client: OkHttpClient = OkHttpClient()
         val mediaType = MediaType.parse("application/json; charset=utf-8")
 
-        client.newCall(createGetRequest(body, metodo)).enqueue(object : Callback {
+        client.newCall(createGetRequest(body, metodo, token)).execute().use { response ->
+            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+            return GenericModel("0","OK", response.body()!!.string())
+        }
+    }
+
+    fun doGetRequest(datos: GenericManager.Companion.DatosThreaded, body: RequestBody, metodo: String, token: String) {
+        val client: OkHttpClient = OkHttpClient()
+        val mediaType = MediaType.parse("application/json; charset=utf-8")
+
+        client.newCall(createGetRequest(body, metodo, token)).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
-            override fun onResponse(call: Call, response: Response) = println(
-                response.body()?.string()
-            )
+            override fun onResponse(call: Call, response: Response) {
+                var resultado: GenericModel? = null
+                var resp: String? = null
+                try {
+                    resp = response.body()!!.string()
+                }catch (e: Exception){
+                    resp = null
+                }
+
+                if (resp == null || resp.toLowerCase().contains("error"))
+                    resultado = GenericModel("1", resp!!, "")
+                else resultado = GenericModel("0", "", resp)
+                datos.mResultado = resultado!!
+                GenericManager.onPostExecute(datos)
+            }
         })
     }
 
@@ -135,7 +157,7 @@ open class GrandServer {
             .header("Accept", "*/*")
             .header("Content-Type", "application/json")
             .header("Cache-Control", "no-cache")
-                .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzNjgzMTkwfQ.BHSuE57iYhVblgNVEd5LqTdKbdlV9ERl__BPLL7DFWcXfA4ibR6HCs1-y5HMJY3jp_qiNYz4Mefl1QGDV4Kkjw")
+            .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzNjgzMTkwfQ.BHSuE57iYhVblgNVEd5LqTdKbdlV9ERl__BPLL7DFWcXfA4ibR6HCs1-y5HMJY3jp_qiNYz4Mefl1QGDV4Kkjw")
             .build()
     }
 

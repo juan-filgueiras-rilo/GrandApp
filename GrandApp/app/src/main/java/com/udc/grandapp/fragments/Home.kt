@@ -21,6 +21,7 @@ import com.udc.grandapp.items.CustomerDeviceSummary
 import com.udc.grandapp.items.CustomerRoutine
 import com.udc.grandapp.manager.GetDevicesManager
 import com.udc.grandapp.manager.GetRoutinesManager
+import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
 import com.udc.grandapp.model.GenericModel
@@ -36,13 +37,6 @@ class Home : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //llamar a los getRutinas y getDevice
-
-        //Guardarlos en la SQLite en el onSuccess de los managers
-
-        //En el onCreateView se recuperan de la SQLite y se muestran
-
     }
 
 
@@ -56,9 +50,7 @@ class Home : Fragment() {
         deviceRecyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, deviceRecyclerView)
 
-        val deviceSummaryListExample: List<CustomerDeviceSummary> = listOf(CustomerDeviceSummary(1, "NombreDispositivo1", "descripcion1", "url1"),
-            CustomerDeviceSummary(2, "NombreDispositivo2", "descripcion2", "url2"),
-            CustomerDeviceSummary(3, "NombreDispositivo3", "descripcion3", "url3"))
+        val deviceSummaryListExample: List<DevicesModel> = UserConfigManager(context as FragmentActivity).getDevicesFromBD()
         deviceRecyclerView.adapter = context?.let {
             activity?.let { it1 ->
                 DeviceSummaryAdapter(it, deviceSummaryListExample, it1) {
@@ -86,77 +78,5 @@ class Home : Fragment() {
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, deviceRecyclerView)
     }
 
-    fun getDevices(){
-        val mGetDevicesManager: GetDevicesManager = GetDevicesManager(context as Activity)
-        val activity: Activity = context as Activity
-        class ResponseManager() : IResponseManagerGeneric {
-            override fun onSuccesResponse(model: GenericModel) {
-                val modelResponse: GenericModel = model as GenericModel
-                if (modelResponse.error == "0") {
-                    val devices: List<DevicesModel> =  DevicesModel.Parse(modelResponse.json)
-                    //TODO login?
-                    startActivity(Intent(MainScreenActivity::class.simpleName))
-                }
-                else {
-                    //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
-                    MaterialAlertDialogBuilder(activity)
-                            .setTitle("Error")
-                            .setMessage(modelResponse.mensaje)
-                            .setNeutralButton("OK") { dialog, which ->
-                                // Respond to positive button press
-                            }.show()
-                }
-            }
 
-            override fun onErrorResponse(model: String) {
-                    //Toast.makeText(context, "Error al obtener los dispositivos (Diálogo)", Toast.LENGTH_LONG).show()
-                    MaterialAlertDialogBuilder(activity)
-                            .setTitle("Error")
-                            .setMessage("Al obtener los dispositivos")
-                            .setNeutralButton("OK") { dialog, which ->
-                                // Respond to positive button press
-                            }.show()
-            }
-        }
-
-        val responseManager: IResponseManagerGeneric = ResponseManager()
-        mGetDevicesManager.realizarOperacion(responseManager, DatosOperacionGeneric())
-    }
-
-    fun getRoutines(){
-        val mGetRoutinesManager: GetRoutinesManager = GetRoutinesManager(context as Activity)
-        val activity: Activity = context as Activity
-        class ResponseManager() : IResponseManagerGeneric {
-            override fun onSuccesResponse(model: GenericModel) {
-                val modelResponse: GenericModel = model as GenericModel
-                if (modelResponse.error == "0") {
-                    val devices: List<RoutinesModel> =  RoutinesModel.Parse(modelResponse.json)
-                    //TODO login?
-                    startActivity(Intent(MainScreenActivity::class.simpleName))
-                }
-                else {
-                    //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
-                            MaterialAlertDialogBuilder(activity)
-                            .setTitle("Error")
-                            .setMessage(modelResponse.mensaje)
-                            .setNeutralButton("OK"){ dialog, which ->
-                                // Respond to positive button press
-                            }.show()
-                }
-            }
-
-            override fun onErrorResponse(model: String) {
-                //Toast.makeText(context, "Error al obtener las rutinas (Diálogo)", Toast.LENGTH_LONG).show()
-                MaterialAlertDialogBuilder(activity)
-                        .setTitle("Error")
-                        .setMessage("Error al obtener las rutinas")
-                        .setNeutralButton("OK"){ dialog, which ->
-                            // Respond to positive button press
-                        }.show()
-            }
-        }
-
-        val responseManager: IResponseManagerGeneric = ResponseManager()
-        mGetRoutinesManager.realizarOperacion(responseManager, DatosOperacionGeneric())
-    }
 }

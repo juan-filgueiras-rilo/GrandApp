@@ -13,12 +13,13 @@ import com.udc.grandapp.fragments.DeviceView
 import com.udc.grandapp.fragments.UpdateDevice
 
 import com.udc.grandapp.items.CustomerDeviceSummary
+import com.udc.grandapp.model.DevicesModel
 import kotlinx.android.synthetic.main.custom_lista.view.*
 
-class DeviceSummaryAdapter(context : Context, val items: List<CustomerDeviceSummary>, activity : FragmentActivity, val listener: (ClipData.Item) -> Unit)  : RecyclerView.Adapter<DeviceSummaryAdapter.ViewHolder>(){
+class DeviceSummaryAdapter(context : Context, val items: List<DevicesModel>, activity : FragmentActivity, val listener: (ClipData.Item) -> Unit)  : RecyclerView.Adapter<DeviceSummaryAdapter.ViewHolder>(){
 
     private var mContext : Context = context
-    private var mItems : List<CustomerDeviceSummary> = items
+    private var mItems : List<DevicesModel> = items
     private var mActivity : FragmentActivity = activity
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,9 +36,9 @@ class DeviceSummaryAdapter(context : Context, val items: List<CustomerDeviceSumm
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: CustomerDeviceSummary, listener: (ClipData.Item) -> Unit, activity: FragmentActivity) = with(itemView) {
-            nombreDispositivo.text = item.name
-            descripcion.text = item.description
+        fun bind(item: DevicesModel, listener: (ClipData.Item) -> Unit, activity: FragmentActivity) = with(itemView) {
+            nombreDispositivo.text = item.nombre
+            descripcion.text = item.descripcion
 
             line1.setOnClickListener {
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()

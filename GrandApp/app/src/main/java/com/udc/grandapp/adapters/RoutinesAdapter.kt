@@ -78,32 +78,32 @@ class RoutinesAdapter(context : Context, val items: List<CustomerRoutine>, activ
         fun eliminarRutina(activity: FragmentActivity) {
             val deleteRoutineManager: DeleteRoutineManager = DeleteRoutineManager(activity)
             class ResponseManager() : IResponseManagerGeneric {
-            override fun onSuccesResponse(model: Any) {
-                val modelResponse: GenericModel = model as GenericModel
-                if (modelResponse.error == "0") {
-                    //val routine: CreateRoutineModel =  CreateRoutineModel.Parse(modelResponse.json)
-                    //insertarRutinaBD(login)
-                    //TODO Insertar en BD, cambiar estructura de bd para almacenar dispositivos asociados a rutina?
-                    CommonMethods.clearExistFragments(activity)
+                override fun onSuccesResponse(model: GenericModel) {
+                    val modelResponse: GenericModel = model as GenericModel
+                    if (modelResponse.error == "0") {
+                        //val routine: CreateRoutineModel =  CreateRoutineModel.Parse(modelResponse.json)
+                        //insertarRutinaBD(login)
+                        //TODO Insertar en BD, cambiar estructura de bd para almacenar dispositivos asociados a rutina?
+                        CommonMethods.clearExistFragments(activity)
+                    }
+                    else {//Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                        MaterialAlertDialogBuilder(activity)
+                                .setTitle("Error")
+                                .setMessage(modelResponse.mensaje)
+                                .setNeutralButton("OK") { dialog, which ->
+                                    // Respond to positive button press
+                                }.show()
+                    }
                 }
-                else {//Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+
+                override fun onErrorResponse(model: String) {
                     MaterialAlertDialogBuilder(activity)
                             .setTitle("Error")
-                            .setMessage(modelResponse.mensaje)
+                            .setMessage("Error al guardar la rutina")
                             .setNeutralButton("OK") { dialog, which ->
                                 // Respond to positive button press
                             }.show()
                 }
-            }
-
-            override fun onErrorResponse(model: Any) {
-                MaterialAlertDialogBuilder(activity)
-                        .setTitle("Error")
-                        .setMessage("Error al guardar la rutina")
-                        .setNeutralButton("OK") { dialog, which ->
-                            // Respond to positive button press
-                        }.show()
-            }
         }
             val responseManager: IResponseManagerGeneric = ResponseManager()
             deleteRoutineManager.realizarOperacion(responseManager, DatosDeleteRoutine("13"))

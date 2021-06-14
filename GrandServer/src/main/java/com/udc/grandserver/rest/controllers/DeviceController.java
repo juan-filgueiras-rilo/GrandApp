@@ -39,6 +39,10 @@ public class DeviceController {
 		for (Device dev : list) {
 			retval.add(toDeviceDto(dev));
 		}
+		for (DeviceDto device : retval) {
+			System.out.println(device.toString());
+		}
+		
 		return retval;
 	}
 	
