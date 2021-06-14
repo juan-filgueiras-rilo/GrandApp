@@ -15,7 +15,7 @@ class LoginService: GrandServer() {
                     "    \"password\": \""+ datosPeticion.pwd + "\"\n" +
                     "}")
 
-            doPostRequest(body, MetodoLogin, datos)
+            doPostRequest(body, MetodoLogin, datos, true)
         }catch (e:Exception){
             e.printStackTrace()
         }

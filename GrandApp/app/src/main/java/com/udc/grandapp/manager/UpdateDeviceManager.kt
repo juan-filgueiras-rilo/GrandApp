@@ -25,6 +25,6 @@ class UpdateDeviceManager(activity: Activity) : GenericManager(activity) {
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
             updateDevice = null
         }
-        datos.mResultado = updateDevice as Any
+        datos.mResultado = updateDevice!!
     }
 }

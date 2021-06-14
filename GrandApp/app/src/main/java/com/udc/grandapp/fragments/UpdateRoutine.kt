@@ -112,7 +112,7 @@ class UpdateRoutine(layout: Int) : Fragment() {
         val mUpdateRoutineManager: UpdateRoutineManager = UpdateRoutineManager(context as Activity)
         val activity: Activity = context as Activity
         class ResponseManager() : IResponseManagerGeneric {
-            override fun onSuccesResponse(model: Any) {
+            override fun onSuccesResponse(model: GenericModel) {
                 val modelResponse: GenericModel = model as GenericModel
                 if (modelResponse.error == "0") {
                     val devices: UpdateRoutineModel =  UpdateRoutineModel.Parse(modelResponse.json)
@@ -133,7 +133,7 @@ class UpdateRoutine(layout: Int) : Fragment() {
 
             }
 
-            override fun onErrorResponse(model: Any) {
+            override fun onErrorResponse(model: String) {
                     //Toast.makeText(context, "Error al actualizar los dispositivos (Diálogo)", Toast.LENGTH_LONG).show()
                         MaterialAlertDialogBuilder(activity)
                                 .setTitle("Error")

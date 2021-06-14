@@ -12,6 +12,7 @@ import com.udc.grandapp.R
 import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
+import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.model.UserInfoModel
 import com.udc.grandapp.utils.CommonMethods
 import java.lang.Exception
@@ -45,7 +46,7 @@ open class GenericManager(activity: Activity) {
                 var mCallBack: IResponseManagerGeneric,
                 var mDatosOperaction: DatosOperacionGeneric,
                 var mDialogPopup: AlertDialog?,
-                var mResultado: Any
+                var mResultado: GenericModel
         )
 
         fun onPreExecute(datos:DatosThreaded){
@@ -72,13 +73,13 @@ open class GenericManager(activity: Activity) {
                 if (!CommonMethods.isNullOrEmptyObject(datos.mResultado) || !CommonMethods.isNullOrEmptyObject(datos.mCallBack as Any)){
                     datos.mCallBack.onSuccesResponse(datos.mResultado)
                 }else if (!CommonMethods.isNullOrEmptyObject(error as Any) && !CommonMethods.isNullOrEmptyObject(datos.mCallBack as Any)){
-                    datos.mCallBack.onErrorResponse(datos.mResultado)
+                    datos.mCallBack.onErrorResponse(error)
                 }
             }catch (e:Exception){
                 e.printStackTrace()
                 //Toast.makeText(datos.mActivity, "Error procesando la petición", Toast.LENGTH_LONG).show()
                 if (!CommonMethods.isNullOrEmptyObject(datos.mCallBack as Any))
-                    datos.mCallBack.onErrorResponse("Error procesando la petición" as Any)
+                    datos.mCallBack.onErrorResponse("Error procesando la petición")
             }
 
         }
@@ -86,7 +87,7 @@ open class GenericManager(activity: Activity) {
 
     fun realizarOperacion(response: IResponseManagerGeneric, datosOperacion: DatosOperacionGeneric){
         try {
-            var datos: DatosThreaded = DatosThreaded(mActivity, response, datosOperacion, mDialogPopup, Object())
+            var datos: DatosThreaded = DatosThreaded(mActivity, response, datosOperacion, mDialogPopup, GenericModel())
 
             mActivity.runOnUiThread(Runnable {
                 try {
@@ -104,7 +105,7 @@ open class GenericManager(activity: Activity) {
                     }catch (e:Exception){
                         e.printStackTrace()
                     }
-                    mActivity.runOnUiThread(Runnable { onPostExecute(datos) })
+                    //mActivity.runOnUiThread(Runnable { onPostExecute(datos) })
                 }catch (e:Exception){
                     e.printStackTrace()
                 }

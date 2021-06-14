@@ -22,6 +22,6 @@ class GetDevicesManager(activity: Activity) : GenericManager(activity) {
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
             devices = null
         }
-        datos.mResultado = devices as Any
+        datos.mResultado = devices!!
     }
 }

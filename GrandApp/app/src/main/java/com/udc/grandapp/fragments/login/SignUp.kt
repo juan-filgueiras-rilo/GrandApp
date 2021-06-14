@@ -146,18 +146,17 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
             val mSingUpManager: SignUpManager = SignUpManager(this)
             val activity: Activity = this
             class ResponseManager() : IResponseManagerGeneric {
-                override fun onSuccesResponse(model: Any) {
-                    val modelResponse: GenericModel = model as GenericModel
-                    if (modelResponse.error == "0") {
-                        val singUp: SignUpLoginModel =  SignUpLoginModel.Parse(modelResponse.json)
-                        insertarUserBD(singUp)
+                override fun onSuccesResponse(model: GenericModel) {
+                    if (model.error == "0") {
+                        val singUp: SignUpLoginModel =  SignUpLoginModel.Parse(model.json)
+                        insertarUserBD(singUp, valuePwd)
                         val intent: Intent = Intent(activity, MainScreenActivity::class.java)
                         activity.startActivity(intent)
                     }
-                    else Toast.makeText(applicationContext, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                    else Toast.makeText(applicationContext, model.mensaje, Toast.LENGTH_LONG).show()
                 }
 
-                override fun onErrorResponse(model: Any) {
+                override fun onErrorResponse(model: String) {
                     //Toast.makeText(applicationContext, "Error al loguearse (Diálogo)", Toast.LENGTH_LONG).show()
                     activity.runOnUiThread { MaterialAlertDialogBuilder(activity)
                         .setTitle(resources.getString(R.string.error))
@@ -174,7 +173,7 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun insertarUserBD(singUp: SignUpLoginModel){
+    fun insertarUserBD(singUp: SignUpLoginModel, pwd: String){
         val db = UserConfigManager(this).writableDatabase
 
         val values = ContentValues().apply {
@@ -183,6 +182,7 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
             put("userName", singUp.userName)
             put("email", singUp.email)
             put("role", singUp.role)
+            put("pwd", pwd)
         }
 
         val newRowId = db?.insert("DBUser", null, values)

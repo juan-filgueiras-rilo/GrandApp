@@ -23,6 +23,6 @@ class DeleteDeviceManager(activity: Activity) : GenericManager(activity) {
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
             deleteDevice = null
         }
-        datos.mResultado = deleteDevice as Any
+        datos.mResultado = deleteDevice!!
     }
 }

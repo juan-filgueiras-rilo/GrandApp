@@ -6,7 +6,7 @@ import com.activeandroid.annotation.Table
 
 
 @Table(name = "DBUser")
-open class DBUser(userId: String, token: String, userName: String, email: String, role: String) : Model() {
+open class DBUser(userId: String, token: String, userName: String, email: String, role: String, pwd: String) : Model() {
     @Column(name = "userId")
     var userId: String = userId
     @Column(name = "token")
@@ -17,4 +17,6 @@ open class DBUser(userId: String, token: String, userName: String, email: String
     var email: String = email
     @Column(name = "role")
     var role: String = role
+    @Column(name = "pwd")
+    var pwd: String = pwd
 }

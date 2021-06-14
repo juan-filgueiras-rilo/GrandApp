@@ -26,6 +26,6 @@ class ChangePwdManager(activity: Activity) : GenericManager(activity) {
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
             changePwd = null
         }
-        datos.mResultado = changePwd as Any
+        datos.mResultado = changePwd!!
     }
 }

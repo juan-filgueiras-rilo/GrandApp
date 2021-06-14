@@ -23,6 +23,6 @@ class DeleteRoutineManager(activity: Activity) : GenericManager(activity) {
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
             deleteRoutine = null
         }
-        datos.mResultado = deleteRoutine as Any
+        datos.mResultado = deleteRoutine!!
     }
 }
