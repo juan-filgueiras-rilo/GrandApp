@@ -34,6 +34,18 @@ class Home : Fragment() {
     private lateinit var routineRecyclerView: RecyclerView
     private lateinit var deviceRecyclerView: RecyclerView
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        //llamar a los getRutinas y getDevice
+
+        //Guardarlos en la SQLite en el onSuccess de los managers
+
+        //En el onCreateView se recuperan de la SQLite y se muestran
+
+    }
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_principal, container, false)
         routineRecyclerView = rootView.findViewById<RelativeLayout>(R.id.routine_recycler).findViewById<RecyclerView>(R.id.recycler)
@@ -51,7 +63,7 @@ class Home : Fragment() {
             activity?.let { it1 ->
                 DeviceSummaryAdapter(it, deviceSummaryListExample, it1) {
                 Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
-            }
+                }
             }
         }
 
@@ -65,7 +77,6 @@ class Home : Fragment() {
                 }
             }
         }
-
         return rootView
     }
 
@@ -94,10 +105,7 @@ class Home : Fragment() {
                             .setNeutralButton("OK") { dialog, which ->
                                 // Respond to positive button press
                             }.show()
-
-
                 }
-
             }
 
             override fun onErrorResponse(model: Any) {
@@ -135,7 +143,6 @@ class Home : Fragment() {
                                 // Respond to positive button press
                             }.show()
                 }
-
             }
 
             override fun onErrorResponse(model: Any) {

@@ -189,4 +189,5 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
 
         UserConfigManager.reiniciarInfoPersistente(this)
     }
+
 }

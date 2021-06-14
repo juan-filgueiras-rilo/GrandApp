@@ -10,8 +10,6 @@ class GetRoutinesService: GrandServer() {
         try {
             val body: RequestBody = RequestBody.create(mediaType, "")
             doGetRequest(body, MetodoGetRoutinesByUserId)
-
-            val routine : CustomerRoutine = CustomerRoutine(1, "rutina", "Rutina molona", "as")
         }catch (e:Exception){
             e.printStackTrace()
         }

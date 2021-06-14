@@ -8,19 +8,8 @@ class DeleteRoutineService: GrandServer() {
     fun deleteRoutine(id: String, token: String): GenericModel {
         try {
             val body: RequestBody = RequestBody.create(mediaType, "{\n" +
-                    "    \"name\": \"Rutina bien molona\",\n" +
-                    "    \"description\": \"Esta rutina mola mogollon\"\n" +
-                    "    \"userId\": \"1\"\n" +
-                    "    \"deviceList\": \"[\"\n" +
-                    "    {" +
-                    "    \"name\": \"bombilla\",\n" +
-                    "    \"description\": \"bombilla molona\"\n" +
-                    "    \"userId\": \"1\"\n" +
-                    "    }" +
-                    "    ]" +
-                    "}")
-
-            doDeleteRequest(body, "")
+                    "    \"id\": " + id + "}")
+            doDeleteRequest(body, MetodoDeleteRoutine)
         }catch (e:Exception){
             e.printStackTrace()
         }

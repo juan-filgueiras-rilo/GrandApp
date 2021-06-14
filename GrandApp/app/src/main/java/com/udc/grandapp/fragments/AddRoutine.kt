@@ -148,11 +148,6 @@ class AddRoutine : Fragment() {
                         (recyclerView.Recycler().getViewForPosition(i).nombreDisp.text as String),
                         (recyclerView.Recycler().getViewForPosition(i).descripciondisp.text as String)))
             }
-            println(UserConfigManager.getUserInfoPersistente(context as Activity)!!.userId)
-            println(recyclerView.Recycler().getViewForPosition(0).nombreDisp.text as String)
-            println(datePicker1.hour.toString() + datePicker1.minute.toString())
-            println(recyclerView.Recycler().getViewForPosition(0).descripciondisp.text as String)
-            println(dias.toString())
 
             CreateRoutineManager.realizarOperacion(responseManager, DatosCreateRoutine(editTextNombre.text.toString(),
                     editTextDescripcion.text.toString(), UserConfigManager.getUserInfoPersistente(context as Activity)!!.userId,
