@@ -107,7 +107,7 @@ class Login : AppCompatActivity(), View.OnClickListener {
             val loginManager: LoginManager = LoginManager(this)
             val activity: Activity = this
             class ResponseManager() : IResponseManagerGeneric {
-                override fun onSuccesResponse(model: Any) {
+                override fun onSuccesResponse(model: GenericModel) {
                     val modelResponse: GenericModel = model as GenericModel
                     if (modelResponse.error == "0") {
                         val login: SignUpLoginModel =  SignUpLoginModel.Parse(modelResponse.json)
@@ -118,7 +118,7 @@ class Login : AppCompatActivity(), View.OnClickListener {
                     else Toast.makeText(applicationContext, modelResponse.mensaje, Toast.LENGTH_LONG).show()
                 }
 
-                override fun onErrorResponse(model: Any) {
+                override fun onErrorResponse(model: String) {
                     //Toast.makeText(applicationContext, "Error al loguearse (Diálogo)", Toast.LENGTH_LONG).show()
                     activity.runOnUiThread { MaterialAlertDialogBuilder(activity)
                             .setTitle(resources.getString(R.string.error))

@@ -4,4 +4,8 @@ data class GenericModel(
         var error: String,
         var mensaje: String,
         var json: String
-)
+) {
+
+        constructor() : this("", "", "") {}
+}
+

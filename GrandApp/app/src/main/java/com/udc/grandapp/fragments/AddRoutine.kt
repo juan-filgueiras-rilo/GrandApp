@@ -108,7 +108,7 @@ class AddRoutine : Fragment() {
             val CreateRoutineManager: CreateRoutineManager = CreateRoutineManager(context as Activity)
             val activity: Activity = context as Activity
             class ResponseManager() : IResponseManagerGeneric {
-                override fun onSuccesResponse(model: Any) {
+                override fun onSuccesResponse(model: GenericModel) {
                     val modelResponse: GenericModel = model as GenericModel
                     if (modelResponse.error == "0") {
                         //val routine: CreateRoutineModel =  CreateRoutineModel.Parse(modelResponse.json)
@@ -126,7 +126,7 @@ class AddRoutine : Fragment() {
                     }
                 }
 
-                override fun onErrorResponse(model: Any) {
+                override fun onErrorResponse(model: String) {
                     MaterialAlertDialogBuilder(activity)
                         .setTitle("Error")
                         .setMessage("Error al guardar la rutina")

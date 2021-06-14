@@ -18,7 +18,7 @@ class SingUpService(): GrandServer() {
                     "    \"email\": \"" + datosPeticion.mEmail + "\"\n" +
                     "}")
 
-            doPostRequest(body, MetodoSignUp, datos)
+            doPostRequest(body, MetodoSignUp, datos, false)
 
         }catch (e:Exception){
             e.printStackTrace()

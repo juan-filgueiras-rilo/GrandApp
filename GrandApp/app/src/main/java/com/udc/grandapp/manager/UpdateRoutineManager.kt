@@ -25,6 +25,6 @@ class UpdateRoutineManager(activity: Activity) : GenericManager(activity) {
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
             updateRoutine = null
         }
-        datos.mResultado = updateRoutine as Any
+        datos.mResultado = updateRoutine!!
     }
 }

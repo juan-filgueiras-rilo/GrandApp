@@ -1,6 +1,8 @@
 package com.udc.grandapp.manager.listeners
 
+import com.udc.grandapp.model.GenericModel
+
 interface IResponseManagerGeneric {
-    fun onSuccesResponse(model: Any)
-    fun onErrorResponse(model: Any)
+    fun onSuccesResponse(model: GenericModel)
+    fun onErrorResponse(model: String)
 }

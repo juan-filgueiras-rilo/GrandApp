@@ -58,7 +58,7 @@ class DeviceList : Fragment() {
 
         class ResponseManager() : IResponseManagerGeneric {
             val activity: Activity = context as Activity
-            override fun onSuccesResponse(model: Any) {
+            override fun onSuccesResponse(model: GenericModel) {
                 val modelResponse: GenericModel = model as GenericModel
                 if (modelResponse.error == "0") {
                     val devices: List<DevicesModel> =  DevicesModel.Parse(modelResponse.json)
@@ -79,7 +79,7 @@ class DeviceList : Fragment() {
 
             }
 
-            override fun onErrorResponse(model: Any) {
+            override fun onErrorResponse(model: String) {
                     //Toast.makeText(context, "Error al obtener los dispositivos (Diálogo)", Toast.LENGTH_LONG).show()
                     MaterialAlertDialogBuilder(activity)
                             .setTitle("Error")

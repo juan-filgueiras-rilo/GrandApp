@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteDatabase
 import android.view.View
 
-class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 2){
+class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 3){
 
     companion object {
         var infoPersistente: UserInfoModel? = null
@@ -26,12 +26,18 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         try {
             val db = this.writableDatabase
             val res = db.rawQuery("SELECT * FROM DBUser", null)
-            userInfoModel = UserInfoModel(res.getString(0), res.getString(1))
+            userInfoModel = UserInfoModel(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6))
         }catch (e:Exception){
-            userInfoModel = UserInfoModel("", "")
+            userInfoModel = UserInfoModel("", "", "", "", "", "")
         }
 
         return userInfoModel
+    }
+
+    fun actualizarTokenBD(user:UserInfoModel, token: String){
+        val db = this.writableDatabase
+        val userID: String = user.userId
+        db.rawQuery("UPDATE DBUser set token = $token WHERE userId = $userID", null)
     }
 
     override fun onCreate(db: SQLiteDatabase?) {

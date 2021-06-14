@@ -107,7 +107,7 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activit
                     enlazar.setOnClickListener {
                         val CreateDeviceManager: CreateDeviceManager = CreateDeviceManager(activity)
                         class ResponseManager() : IResponseManagerGeneric {
-                            override fun onSuccesResponse(model: Any) {
+                            override fun onSuccesResponse(model: GenericModel) {
                                 val modelResponse: GenericModel = model as GenericModel
                                 if (modelResponse.error == "0") {
                                     //val device: CreateDeviceModel =  CreateDeviceModel.Parse(modelResponse.json)
@@ -127,7 +127,7 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activit
                                 }
                             }
 
-                            override fun onErrorResponse(model: Any) {
+                            override fun onErrorResponse(model: String) {
                                 //Toast.makeText(applicationContext, "Error al loguearse (Diálogo)", Toast.LENGTH_LONG).show()
                                 activity.runOnUiThread { MaterialAlertDialogBuilder(activity)
                                         .setTitle(resources.getString(R.string.error))

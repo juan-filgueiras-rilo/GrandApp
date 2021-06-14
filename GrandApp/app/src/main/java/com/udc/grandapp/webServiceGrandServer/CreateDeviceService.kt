@@ -16,7 +16,7 @@ class CreateDeviceService: GrandServer() {
                     "    \"userId\": \""+ datosPeticion.userId + "\"\n" +
                     "}")
 
-            doPostRequest(body, MetodoCreateDevice, datos)
+            doPostRequest(body, MetodoCreateDevice, datos, true)
 
         }catch (e:Exception){
             e.printStackTrace()

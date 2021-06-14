@@ -70,7 +70,7 @@ class Routines : Fragment() {
         val mGetRoutinesManager: GetRoutinesManager = GetRoutinesManager(context as Activity)
         val activity: Activity = context as Activity
         class ResponseManager() : IResponseManagerGeneric {
-            override fun onSuccesResponse(model: Any) {
+            override fun onSuccesResponse(model: GenericModel) {
                 val modelResponse: GenericModel = model as GenericModel
                 if (modelResponse.error == "0") {
                     val devices: List<RoutinesModel> =  RoutinesModel.Parse(modelResponse.json)
@@ -89,7 +89,7 @@ class Routines : Fragment() {
 
             }
 
-            override fun onErrorResponse(model: Any) {
+            override fun onErrorResponse(model: String) {
                     //Toast.makeText(context, "Error al obtener las rutinas (Diálogo)", Toast.LENGTH_LONG).show()
                         MaterialAlertDialogBuilder(activity)
                                 .setTitle("Error")

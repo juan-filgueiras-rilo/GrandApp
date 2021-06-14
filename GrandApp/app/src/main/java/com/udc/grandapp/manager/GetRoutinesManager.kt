@@ -23,6 +23,6 @@ class GetRoutinesManager (activity: Activity) : GenericManager(activity) {
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
             routines = null
         }
-        datos.mResultado = routines as Any
+        datos.mResultado = routines!!
     }
 }
