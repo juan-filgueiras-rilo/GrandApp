@@ -46,7 +46,7 @@ class NewDevice : Fragment() {
         val all = SsdpRequest.builder().discoveryOptions(options).serviceType("wifi_bulb").build()
         client.discoverServices(all, object : DiscoveryListener {
             override fun onFailed(ex: Exception, response: SsdpResponse) {
-                Log.e("TAG", "Nada ${response.headers}")
+                Log.e("TAG", "ERROR ${response}")
             }
 
             override fun onServiceDiscovered(service: SsdpService) {

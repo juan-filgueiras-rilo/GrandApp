@@ -65,29 +65,29 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <TextView
+                        <Button
                             android:id="@+id/enlazar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="40dp"
-                            app:drawableTopCompat="@mipmap/enlazar" />
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:text="ENLAZAR"
+                            android:backgroundTint="@color/dark_green"
+                            app:drawableLeftCompat="@mipmap/enlace" />
 
-                        <TextView
+                        <Button
                             android:id="@+id/rechazar"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
                             android:layout_marginBottom="50dp"
-                            app:drawableTopCompat="@mipmap/rechazar" />
-                    </LinearLayout>
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:text="RECHAZAR"
+                            android:backgroundTint="@color/red"
+                            app:drawableLeftCompat="@mipmap/eliminar"
+                            />
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
