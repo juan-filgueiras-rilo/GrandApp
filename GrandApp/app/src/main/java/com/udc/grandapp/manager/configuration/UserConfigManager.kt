@@ -101,7 +101,7 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
 
         return retval
     }
-
+/*
     fun insertarRoutinesBBDD(routines : List<RoutinesModel>) {
         val db = this.writableDatabase
         try {
@@ -142,4 +142,6 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
             e.printStackTrace()
         }
     }
+
+ */
 }

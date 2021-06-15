@@ -117,8 +117,8 @@ class MainScreenActivity : AppCompatActivity() {
                 val modelResponse: GenericModel = model as GenericModel
                 if (modelResponse.error == "0") {
                     val routines: List<RoutinesModel> =  RoutinesModel.Parse(modelResponse.json)
-                    UserConfigManager(activity).deleteRoutinesFromBD()
-                    UserConfigManager(activity).insertarRoutinesBBDD(routines)
+           //         UserConfigManager(activity).deleteRoutinesFromBD()
+           //         UserConfigManager(activity).insertarRoutinesBBDD(routines)
                 }
                 else {
                     //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
