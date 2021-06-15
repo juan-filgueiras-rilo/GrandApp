@@ -15,6 +15,7 @@ public class DeviceDto {
 	private String name;
 	private String description;
 	private Long userId;
+	private String url;
 
 	public DeviceDto() {
 		super();
@@ -24,11 +25,13 @@ public class DeviceDto {
 			final Long id,
 			final String name,
 			final String description,
-			final Long userId) {
+			final Long userId,
+			final String url) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.url = url;
 	}
 	
 	public DeviceDto(Device device) {
@@ -37,6 +40,7 @@ public class DeviceDto {
 		this.name = device.getName();
 		this.description = device.getDescription();
 		this.userId = device.getUserId();
+		this.url = device.getUrl();
 	}
 	
 	public Long getId() {
@@ -73,6 +77,14 @@ public class DeviceDto {
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	@Override
