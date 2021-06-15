@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteDatabase
 import android.view.View
 import com.udc.grandapp.model.DevicesModel
+import com.udc.grandapp.model.RoutinesModel
 
 class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 6){
 
@@ -93,7 +94,52 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         } catch (e:Exception){
             e.printStackTrace()
         }
-
     }
 
+    fun getDevicesByRoutineFromBD(): List<DevicesModel> {
+        val retval : MutableList<DevicesModel> =  arrayListOf()
+
+        return retval
+    }
+
+    fun insertarRoutinesBBDD(routines : List<RoutinesModel>) {
+        val db = this.writableDatabase
+        try {
+            for (routine in routines) {
+                val values = ContentValues().apply {
+                    put("routineId", routine.id)
+                    put("nombre", routine.nombre)
+                    put("descripcion", routine.descripcion)
+                    put("hora", routine.hora)
+                    put("minuto", routine.minuto)
+                }
+                val newRowId = db?.insert("DBRoutine", null, values)
+            }
+        } catch (e : java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun getRoutinesFromBD(): List<RoutinesModel> {
+        val retval : MutableList<RoutinesModel> =  arrayListOf()
+        try {
+            val db = this.writableDatabase
+            val res = db.rawQuery("SELECT * FROM DBRoutine", null)
+            while (res.moveToNext()) {
+                retval.add(RoutinesModel(res.getString(0), res.getString(2),res.getString(5), getDevicesByRoutineFromBD()))
+            }
+        } catch (e:Exception){
+            e.printStackTrace()
+        }
+        return retval
+    }
+
+    fun deleteRoutinesFromBD() {
+        try {
+            val db = this.writableDatabase
+            db.delete("DBRoutine","id > 0", null)
+        } catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
 }

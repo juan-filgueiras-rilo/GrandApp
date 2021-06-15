@@ -36,15 +36,11 @@ class MainScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //llamar a los getRutinas y getDevice
-        //getDevices()
+        getDevices()
         //getRoutines()
-
         //Guardarlos en la SQLite en el onSuccess de los managers
 
-
         //En el onCreateView se recuperan de la SQLite y se muestran
-
-
 
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         tabLayout = findViewById<TabLayout>(R.id.tabLayout)
@@ -120,7 +116,9 @@ class MainScreenActivity : AppCompatActivity() {
             override fun onSuccesResponse(model: GenericModel) {
                 val modelResponse: GenericModel = model as GenericModel
                 if (modelResponse.error == "0") {
-                    val devices: List<RoutinesModel> =  RoutinesModel.Parse(modelResponse.json)
+                    val routines: List<RoutinesModel> =  RoutinesModel.Parse(modelResponse.json)
+                    UserConfigManager(activity).deleteRoutinesFromBD()
+                    UserConfigManager(activity).insertarRoutinesBBDD(routines)
                 }
                 else {
                     //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
@@ -147,11 +145,4 @@ class MainScreenActivity : AppCompatActivity() {
         val responseManager: IResponseManagerGeneric = ResponseManager()
         mGetRoutinesManager.realizarOperacion(responseManager, DatosOperacionGeneric())
     }
-
-
-
-    fun insertarRoutineBBDD() {
-
-    }
-
 }
