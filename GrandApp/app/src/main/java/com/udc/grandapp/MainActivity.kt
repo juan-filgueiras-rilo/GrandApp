@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                                 val modelResponse: GenericModel = model as GenericModel
                                 if (modelResponse.error == "0") {
                                         val login: SignUpLoginModel =  SignUpLoginModel.Parse(modelResponse.json)
-                                        UserConfigManager(activity).actualizarTokenBD(user, login.token)
+                                        UserConfigManager(activity).actualizarTokenBD(user, login.token, activity)
                                         startActivity(Intent(activity, MainScreenActivity::class.java))
                                 }else
                                         startActivity(Intent(activity, SplashActivity::class.java))
