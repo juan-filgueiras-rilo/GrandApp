@@ -19,6 +19,7 @@ public class Device {
 	private String name;
 	private String description;
 	private Long userId;
+	private String url;
 	
 	@ManyToMany (mappedBy = "deviceList")
 	private List<Routine> routines;
@@ -31,12 +32,14 @@ public class Device {
 			final Long id,
 			final String name,
 			final String description,
-			final Long userId) {
+			final Long userId,
+			final String url) {
 		super();
 		this.idDevice = id;
 		this.name = name;
 		this.description = description;
 		this.userId = userId;
+		this.url = url;
 	}
 
 	public Device(DeviceDto device) {
@@ -45,6 +48,7 @@ public class Device {
 		this.name = device.getName();
 		this.description = device.getDescription();
 		this.userId = device.getUserId();
+		this.url = device.getUrl();
 	}
 
 	public Long getIdDevice() {
@@ -86,4 +90,13 @@ public class Device {
 	public void setRoutines(List<Routine> routines) {
 		this.routines = routines;
 	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
 }
