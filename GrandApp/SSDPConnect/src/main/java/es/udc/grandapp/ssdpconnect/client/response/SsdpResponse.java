@@ -15,7 +15,8 @@ import es.udc.grandapp.ssdpconnect.model.SsdpServiceAnnouncement;
  * @author Loïc Ortola on 05/08/2017
  */
 public class SsdpResponse {
-  public Type getType() {
+
+    public Type getType() {
     return type;
   }
 
@@ -23,11 +24,11 @@ public class SsdpResponse {
     DISCOVERY_RESPONSE, PRESENCE_ANNOUNCEMENT
   }
 
-  private final Map<String, String> headers;
-  private final byte[] body;
-  private final InetAddress originAddress;
-  private final long expiry;
-  private final Type type;
+  private Map<String, String> headers;
+  private byte[] body;
+  private InetAddress originAddress;
+  private long expiry;
+  private Type type;
 
   /**
    * Constructor.
@@ -45,6 +46,7 @@ public class SsdpResponse {
     this.expiry = expiry;
     this.originAddress = originAddress;
   }
+  public SsdpResponse() {}
 
   // BEGIN GENERATED CODE
 

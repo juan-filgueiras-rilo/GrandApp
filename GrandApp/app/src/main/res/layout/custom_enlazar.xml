@@ -63,7 +63,7 @@
                             android:layout_marginBottom="10dp"
                             app:srcCompat="@mipmap/bombilla" />
                         <TextView
-                            android:id="@+id/nombreDispositivoEnlaceText"
+                            android:id="@+id/deprecated_view_nombre"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
                             android:layout_marginBottom="2dp"
@@ -91,7 +91,7 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/enlazar"
+                                android:id="@+id/deprecated_view_enlazar"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"

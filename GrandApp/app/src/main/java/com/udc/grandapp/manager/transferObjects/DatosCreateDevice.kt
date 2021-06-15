@@ -1,8 +1,9 @@
 package com.udc.grandapp.manager.transferObjects
 
-class DatosCreateDevice(name: String, url: String, description: String, userId:Long) : DatosOperacionGeneric() {
+class DatosCreateDevice(name: String, description: String, url: String, userId:String) : DatosOperacionGeneric() {
+
     var name: String = name
-    var url: String = url
     var description: String = description
-    var userId: Long = userId
+    var url: String = url
+    var userId: String = userId
 }

@@ -11,7 +11,7 @@ import java.net.SocketTimeoutException
 class GetDevicesManager(activity: Activity) : GenericManager(activity) {
     override fun onWorkerExecute(datos: Companion.DatosThreaded) {
         try {
-            GetDevicesService().getDevices(datos, "1","eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzNzg2MTk3fQ.MZHKP2jMHVLRjs2rmZ7dMBVcK25_7dpkexhjo4Y7oNIeooQ7BOlbFOLdLC5o3CnmX5Kbj9yaVpVigd7gVA2ahQ")
+            GetDevicesService().getDevices(datos, "1","eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzODc1MDYyfQ.KUnldMJR1SM2w8baWuCWMQKbH7OccCONfF69ouetBXy1bkNelm4SZLWvGq1dan7l8OZhz4R6QPXDUgwLgKP3-Q")
 //            devices = GetDevicesService().getDevices(infoBd()!!.userId, infoBd()!!.token)
         }catch (e: Exception){
             e.printStackTrace()

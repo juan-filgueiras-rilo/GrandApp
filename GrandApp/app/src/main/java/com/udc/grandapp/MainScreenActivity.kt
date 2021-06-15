@@ -38,7 +38,6 @@ class MainScreenActivity : AppCompatActivity() {
         //llamar a los getRutinas y getDevice
         //getDevices()
         //getRoutines()
-
         //Guardarlos en la SQLite en el onSuccess de los managers
 
 

@@ -128,7 +128,7 @@ public class SsdpClientImpl extends SsdpClient {
             // This could happen when closing socket. In that case, this is not an issue.
             return;
           }
-          callback.onFailed(e, null);
+          callback.onFailed(e, new SsdpResponse());
         }
       }
     });
@@ -175,7 +175,7 @@ public class SsdpClientImpl extends SsdpClient {
         // This could happen when closing socket. In that case, this is not an issue.
         return;
       }
-      callback.onFailed(e, null);
+      callback.onFailed(e, new SsdpResponse());
     }
   }
 
@@ -189,7 +189,7 @@ public class SsdpClientImpl extends SsdpClient {
       interfaces = Utils.getMulticastInterfaces();
       joinGroupOnAllInterfaces(SsdpParams.getSsdpMulticastAddress());
     } catch (IOException e) {
-      callback.onFailed(e, null);
+      callback.onFailed(e, new SsdpResponse());
     }
   }
 

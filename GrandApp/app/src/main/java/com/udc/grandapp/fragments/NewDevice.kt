@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
+import com.udc.grandapp.items.CustomerDeviceSummary
 import com.udc.grandapp.utils.CommonMethods
 import es.udc.grandapp.ssdpconnect.client.SsdpClient
 import es.udc.grandapp.ssdpconnect.client.response.SsdpResponse
