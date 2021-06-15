@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/dialog_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/cas_liner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingRight="30dp"
+        android:paddingLeft="30dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/add_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            android:hint="@string/nombre"
+            />
+
+        <EditText
+            android:id="@+id/add_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20sp"
+            android:hint="@string/descripcion"
+            />
+    </LinearLayout>
+</RelativeLayout>
