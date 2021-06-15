@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.ViewPager
 import com.activeandroid.annotation.Column
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -82,7 +83,8 @@ class MainScreenActivity : AppCompatActivity() {
                 val modelResponse: GenericModel = model as GenericModel
                 if (modelResponse.error == "0") {
                     val devices: List<DevicesModel> =  DevicesModel.Parse(modelResponse.json)
-                    insertarDeviceBBDD(devices)
+                    UserConfigManager(activity).deleteDevicesFromBD()
+                    UserConfigManager(activity).insertarDeviceBBDD(devices)
                 }
                 else {
                     //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
@@ -146,25 +148,7 @@ class MainScreenActivity : AppCompatActivity() {
         mGetRoutinesManager.realizarOperacion(responseManager, DatosOperacionGeneric())
     }
 
-    fun insertarDeviceBBDD(devices : List<DevicesModel>) {
-        val db = UserConfigManager(this).writableDatabase
-       // UserConfigManager(this).deleteDevicesFromBD() //Borramos lo que haya e insertamos de nuevo
-        try {
-            for (device in devices) {
-                val values = ContentValues().apply {
-                    put("deviceId", device.id)
-                    put("nombre", device.nombre)
-                    put("descripcion", device.descripcion)
-                    put("tipo", "")
-                    put("protocolo", "")
-                }
-                val newRowId = db?.insert("DBDevice", null, values)
-            }
-        } catch (e : Exception) {
-            e.printStackTrace()
-        }
 
-    }
 
     fun insertarRoutineBBDD() {
 
