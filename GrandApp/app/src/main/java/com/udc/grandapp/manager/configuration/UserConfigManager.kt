@@ -1,6 +1,7 @@
 package com.udc.grandapp.manager.configuration
 
 import android.content.ContentValues
+import android.app.Activity
 import com.udc.grandapp.model.UserInfoModel
 import android.content.Context
 import android.database.Cursor
@@ -37,10 +38,11 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         return userInfoModel
     }
 
-    fun actualizarTokenBD(user:UserInfoModel, token: String){
+    fun actualizarTokenBD(user:UserInfoModel, token: String, context: Activity){
         val db = this.writableDatabase
         val userID: String = user.userId
         db.rawQuery("UPDATE DBUser set token = $token WHERE userId = $userID", null)
+        reiniciarInfoPersistente(context)
     }
 
     override fun onCreate(db: SQLiteDatabase?) {

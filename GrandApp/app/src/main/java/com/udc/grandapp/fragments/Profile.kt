@@ -1,6 +1,5 @@
 package com.udc.grandapp.fragments
 
-import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,11 +9,9 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentTransaction
 import com.udc.grandapp.EulaActivity
-import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
-import com.udc.grandapp.SplashActivity
+import com.udc.grandapp.MainActivity
 import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.utils.CommonMethods
 import kotlinx.android.synthetic.main.profile.*
@@ -38,7 +35,7 @@ class Profile : Fragment() {
             val newRowId3 = db?.delete("DBRoutine", null, null)
             UserConfigManager.reiniciarInfoPersistente(context as FragmentActivity)
             CommonMethods.clearExistFragments(context as FragmentActivity)
-            val intent: Intent = Intent(activity, SplashActivity::class.java)
+            val intent: Intent = Intent(activity, MainActivity::class.java)
             activity?.startActivity(intent)
 
 
