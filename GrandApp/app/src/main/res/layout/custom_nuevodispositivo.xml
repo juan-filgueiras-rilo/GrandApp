@@ -45,7 +45,7 @@
                         android:layout_marginBottom="10dp"
                         app:srcCompat="@mipmap/bombilla" />
                     <TextView
-                        android:id="@+id/nombreRutinaDispositivo"
+                            android:id="@+id/nombreDispositivoEnlaceText"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:layout_marginBottom="2dp"

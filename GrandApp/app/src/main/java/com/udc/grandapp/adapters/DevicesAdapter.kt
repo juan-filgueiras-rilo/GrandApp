@@ -16,6 +16,7 @@ import com.udc.grandapp.fragments.UpdateDevice
 import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.utils.CommonMethods
 import kotlinx.android.synthetic.main.custom_dispositivo.view.*
+import kotlinx.android.synthetic.main.custom_enlazar.view.*
 import kotlinx.android.synthetic.main.custom_lista.view.*
 
 class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activity : FragmentActivity, layout: Int, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<DevicesAdapter.ViewHolder>(){
@@ -77,6 +78,7 @@ class DevicesAdapter(context : Context, val items: List<CustomerDevice>, activit
                     }
                 }
                 R.layout.custom_nuevodispositivo -> {
+                    nombreDispositivoEnlaceText.text = item.nombre
 
                 }
             }
