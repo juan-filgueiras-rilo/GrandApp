@@ -1,2 +1,3 @@
+include ':SSDPConnect'
 include ':app'
 rootProject.name = "GrandApp"

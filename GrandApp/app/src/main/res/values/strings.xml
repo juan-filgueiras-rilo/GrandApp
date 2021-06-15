@@ -80,5 +80,7 @@
     <string name="supporting_textConnection"><b>Error con la conexión a internet</b></string>
 
     <string name="cargando"><b>Cargando...</b></string>
+    <string name="guardar_dispositivo_dialog_title"><b>Guardar dispositivo</b></string>
+    <string name="guardar_dispositivo_dialog_desc"><b>¡Añade un nombre y una descripción!</b></string>
 
 </resources>
