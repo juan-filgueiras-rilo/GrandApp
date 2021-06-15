@@ -35,7 +35,7 @@ class MainScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //llamar a los getRutinas y getDevice
-        getDevices()
+        //getDevices()
         //getRoutines()
 
         //Guardarlos en la SQLite en el onSuccess de los managers
@@ -51,7 +51,7 @@ class MainScreenActivity : AppCompatActivity() {
 
         initTabLayout()
         Intent(this, RoutineAlarmService::class.java).also { intent ->
-          //  startService(intent) TODO DESCOMENTAR ESTO
+            startService(intent) //TODO DESCOMENTAR ESTO
         }
     }
 

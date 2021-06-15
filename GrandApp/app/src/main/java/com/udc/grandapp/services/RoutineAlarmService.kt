@@ -66,11 +66,11 @@ class RoutineAlarmService  : Service() {
     }
 
     private fun runService(startId: Int) {
-        var context = this;
+        var context = this
         Toast.makeText(context, "Soy un servicio y estoy iniciándome", Toast.LENGTH_SHORT).show()
         var intent:Intent = Intent(context, EnableRoutinesReceive::class.java)
         var alarmIntent:PendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0)
         var alarmManager:AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 3*1000, 10*1000, alarmIntent)
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime() + 1*1000, 10*1000, alarmIntent)
     }
 }
