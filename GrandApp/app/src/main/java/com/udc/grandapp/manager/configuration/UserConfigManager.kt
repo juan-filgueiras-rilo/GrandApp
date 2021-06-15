@@ -1,5 +1,7 @@
 package com.udc.grandapp.manager.configuration
 
+import android.content.ContentValues
+import android.app.Activity
 import com.udc.grandapp.model.UserInfoModel
 import android.content.Context
 import android.database.Cursor
@@ -36,10 +38,11 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         return userInfoModel
     }
 
-    fun actualizarTokenBD(user:UserInfoModel, token: String){
+    fun actualizarTokenBD(user:UserInfoModel, token: String, context: Activity){
         val db = this.writableDatabase
         val userID: String = user.userId
         db.rawQuery("UPDATE DBUser set token = $token WHERE userId = $userID", null)
+        reiniciarInfoPersistente(context)
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -50,24 +53,47 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         TODO("Not yet implemented")
     }
 
+    fun insertarDeviceBBDD(devices : List<DevicesModel>) {
+        val db = this.writableDatabase
+        // UserConfigManager(this).deleteDevicesFromBD() //Borramos lo que haya e insertamos de nuevo
+        try {
+            for (device in devices) {
+                val values = ContentValues().apply {
+                    put("deviceId", device.id)
+                    put("nombre", device.nombre)
+                    put("descripcion", device.descripcion)
+                    put("tipo", "")
+                    put("protocolo", "")
+                }
+                val newRowId = db?.insert("DBDevice", null, values)
+            }
+        } catch (e : java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
     fun getDevicesFromBD(): List<DevicesModel> {
         val retval : MutableList<DevicesModel> =  arrayListOf()
         try {
             val db = this.writableDatabase
             val res = db.rawQuery("SELECT * FROM DBDevice", null)
-            res.moveToFirst()
             while (res.moveToNext()) {
                 retval.add(DevicesModel(res.getString(0), res.getString(2),res.getString(5)))
             }
-        }catch (e:Exception){
+        } catch (e:Exception){
            e.printStackTrace()
         }
         return retval
     }
 
     fun deleteDevicesFromBD() {
-        val db = this.writableDatabase
-        db.rawQuery("DELETE FROM DBDevice WHERE id > 0", null)
+        try {
+            val db = this.writableDatabase
+            db.delete("DBDevice","id > 0", null)
+        } catch (e:Exception){
+            e.printStackTrace()
+        }
+
     }
 
 }
