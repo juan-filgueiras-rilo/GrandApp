@@ -1,14 +1,10 @@
 package com.udc.grandapp
 
 import android.app.Activity
-import android.content.ContentValues
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.ViewPager
-import com.activeandroid.annotation.Column
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -21,9 +17,7 @@ import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.model.RoutinesModel
-import com.udc.grandapp.services.RoutineAlarmService
 import com.udc.grandapp.utils.CommonMethods
-import java.lang.Exception
 
 class MainScreenActivity : AppCompatActivity() {
 
@@ -47,9 +41,9 @@ class MainScreenActivity : AppCompatActivity() {
         viewPager = findViewById<ViewPager>(R.id.view_pager)
 
         initTabLayout()
-        Intent(this, RoutineAlarmService::class.java).also { intent ->
+        /*Intent(this, RoutineAlarmService::class.java).also { intent ->
             startService(intent) //TODO DESCOMENTAR ESTO
-        }
+        }*/
     }
 
     fun initTabLayout(){
@@ -72,7 +66,7 @@ class MainScreenActivity : AppCompatActivity() {
     }
 
     fun getDevices(){
-        val mGetDevicesManager: GetDevicesManager = GetDevicesManager(this)
+        val mGetDevicesManager = GetDevicesManager(this)
         val activity: Activity = this
         class ResponseManager() : IResponseManagerGeneric {
             override fun onSuccesResponse(model: GenericModel) {

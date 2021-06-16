@@ -23,7 +23,6 @@ import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosSingUp
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.model.SignUpLoginModel
-import kotlin.math.sign
 
 
 class SignUp : AppCompatActivity(), View.OnClickListener {

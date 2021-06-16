@@ -142,11 +142,12 @@ class AddRoutine : Fragment() {
             }
 
             var devices: MutableList<DevicesModel> = mutableListOf()
-            var items:Int = recyclerView.adapter!!.getItemCount()
-            for (i in 0..items-1) {
+            var items:Int = recyclerView.adapter!!.itemCount
+            for (i in 0 until items) {
                 devices.add(DevicesModel(UserConfigManager.getUserInfoPersistente(context as Activity)!!.userId,
                         (recyclerView.Recycler().getViewForPosition(i).nombreDisp.text as String),
-                        (recyclerView.Recycler().getViewForPosition(i).descripciondisp.text as String)))
+                        (recyclerView.Recycler().getViewForPosition(i).descripciondisp.text as String),
+                        ""))
             }
 
             CreateRoutineManager.realizarOperacion(responseManager, DatosCreateRoutine(editTextNombre.text.toString(),

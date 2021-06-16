@@ -1,7 +1,5 @@
 package com.udc.grandapp.fragments
 
-import android.app.Activity
-import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,21 +10,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DeviceSummaryAdapter
 import com.udc.grandapp.adapters.RoutinesSummaryAdapter
-import com.udc.grandapp.items.CustomerDeviceSummary
 import com.udc.grandapp.items.CustomerRoutine
-import com.udc.grandapp.manager.GetDevicesManager
-import com.udc.grandapp.manager.GetRoutinesManager
 import com.udc.grandapp.manager.configuration.UserConfigManager
-import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
-import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
-import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.model.DevicesModel
-import com.udc.grandapp.model.RoutinesModel
 import com.udc.grandapp.utils.CommonMethods
 
 class Home : Fragment() {

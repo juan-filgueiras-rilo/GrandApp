@@ -1,23 +1,19 @@
 package com.udc.grandapp.adapters
 
 import android.content.ClipData
+import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.content.Intent
-import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
 import com.udc.grandapp.fragments.UpdateDevice
 import com.udc.grandapp.items.CustomerDevice
@@ -25,13 +21,12 @@ import com.udc.grandapp.manager.CreateDeviceManager
 import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosCreateDevice
+import com.udc.grandapp.model.CreateDeviceModel
+import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
-import com.udc.grandapp.model.SignUpLoginModel
-import kotlinx.android.synthetic.main.add_device_dialog.view.*
 import kotlinx.android.synthetic.main.custom_dispositivo.view.*
 import kotlinx.android.synthetic.main.custom_dispositivorutinaview.view.*
 import kotlinx.android.synthetic.main.custom_dispositivosrutina.view.*
-import kotlinx.android.synthetic.main.custom_enlazar.view.*
 import kotlinx.android.synthetic.main.custom_lista.view.*
 import kotlinx.android.synthetic.main.custom_lista.view.descripcion
 import kotlinx.android.synthetic.main.custom_nuevodispositivo.view.*
@@ -51,15 +46,20 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(mItems[position], listener, mLayout, mActivity, mItems)
+        holder.bind(mItems[position], listener, mLayout, mActivity, mItems, this)
     }
 
     override fun getItemCount(): Int {
         return mItems.size
     }
 
+    fun refresh(position: Int) {
+        mItems.drop(position)
+        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, mItems.size);
+    }
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: CustomerDevice, listener: (ClipData.Item) -> Unit, mLayout: Int, activity: FragmentActivity, items: List<CustomerDevice>) = with(itemView) {
+        fun bind(item: CustomerDevice, listener: (ClipData.Item) -> Unit, mLayout: Int, activity: FragmentActivity, items: List<CustomerDevice>, adapter: DevicesAdapter) = with(itemView) {
             when (mLayout) {
                 R.layout.custom_dispositivo -> {
                     nombreProducto_cd.text = item.nombre
@@ -133,20 +133,20 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
                                                    val modelResponse: GenericModel = model
                                                    Log.e(TAG, modelResponse.toString())
                                                    if (modelResponse.error == "0") {
-                                                       //val addDevice: CreateDeviceModel = CreateDeviceModel.Parse(modelResponse.json)
+                                                       val addDevice: CreateDeviceModel = CreateDeviceModel.Parse(modelResponse.json)
+                                                       insertarDeviceBD(context, addDevice)
+                                                       adapter.refresh(adapterPosition)
                                                    } else Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
                                                }
 
                                                override fun onErrorResponse(model: String) {
-                                                   Log.e(TAG, model)
-
                                                    activity.runOnUiThread {
                                                        MaterialAlertDialogBuilder(activity)
-                                                               .setTitle(resources.getString(R.string.error))
-                                                               .setMessage(model)
-                                                               .setNeutralButton(resources.getString(R.string.ok)) { dialog, which ->
-                                                                   // Respond to positive button press
-                                                               }.show()
+                                                           .setTitle(resources.getString(R.string.error))
+                                                           .setMessage(model)
+                                                           .setNeutralButton(resources.getString(R.string.ok)) { dialog, which ->
+                                                               // Respond to positive button press
+                                                           }.show()
                                                    }
                                                }
                                            }
@@ -161,8 +161,25 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
                                     .create().show()
                         }
                     }
+                    rechazar.setOnClickListener {
+                        adapter.refresh(adapterPosition)
+                    }
                 }
             }
+        }
+        fun insertarDeviceBD(context: Context, device: CreateDeviceModel){
+            val db = UserConfigManager(context).writableDatabase
+
+            val values = ContentValues().apply {
+                put("id", device.id)
+                put("nombre", device.nombre)
+                put("descripcion", device.descripcion)
+                put("url", device.url)
+            }
+
+            val newRowId = db?.insert("DBDevice", null, values)
+
+            UserConfigManager.reiniciarInfoPersistente(context)
         }
     }
 }

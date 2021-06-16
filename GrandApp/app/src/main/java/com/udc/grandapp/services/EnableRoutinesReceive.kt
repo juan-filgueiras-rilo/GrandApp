@@ -1,17 +1,13 @@
 package com.udc.grandapp.services
 
 import android.content.BroadcastReceiver
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.udc.grandapp.manager.configuration.UserConfigManager
-import com.udc.grandapp.model.DevicesModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.random.Random
 
 class EnableRoutinesReceive  : BroadcastReceiver() {
 
