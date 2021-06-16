@@ -9,9 +9,15 @@ class RoutinesModel() {
         lateinit var dias: String
         lateinit var devices: List<DevicesModel>
 
-        constructor(id: String, userName: String, descripcion: String, devices: List<DevicesModel>) : this() {
+        constructor(
+                id: String,
+                nombre: String,
+                descripcion: String,
+                hora: Int,
+                minuto: Int,
+                devices: List<DevicesModel>) : this() {
                 this.id = id
-                this.nombre = userName
+                this.nombre = nombre
                 this.descripcion = descripcion
                 this.hora = hora
                 this.minuto = minuto
@@ -20,7 +26,7 @@ class RoutinesModel() {
 
         companion object{
                 fun Parse(json: String): List<RoutinesModel>{
-                        return  listOf(RoutinesModel(), RoutinesModel(), RoutinesModel())
+                        return  listOf(RoutinesModel("1", "Rutina Bacana", "La rutina mas guapa", 16, 0, listOf() ))
                 }
         }
 }

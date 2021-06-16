@@ -11,18 +11,12 @@ import java.net.SocketTimeoutException
 
 class GetRoutinesManager (activity: Activity) : GenericManager(activity) {
     override fun onWorkerExecute(datos: Companion.DatosThreaded) {
-        var routines: GenericModel?
         try {
-            routines = GetRoutinesService().getRoutines(datos, infoBd()!!.userId, infoBd()!!.token)
-        }catch (e: SocketTimeoutException){
-            e.printStackTrace()
-            datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, "Servidores no disponibles", Toast.LENGTH_LONG).show() })
-            routines = null
+//            GetRoutinesService().getRoutines(datos, "1","eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzODc1MDYyfQ.KUnldMJR1SM2w8baWuCWMQKbH7OccCONfF69ouetBXy1bkNelm4SZLWvGq1dan7l8OZhz4R6QPXDUgwLgKP3-Q")
+            GetRoutinesService().getRoutines(datos, infoBd()!!.userId, infoBd()!!.token)
         }catch (e: Exception){
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
-            routines = null
         }
-        datos.mResultado = routines!!
     }
 }

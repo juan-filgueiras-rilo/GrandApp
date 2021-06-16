@@ -32,9 +32,11 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
             val db = this.writableDatabase
             val res = db.rawQuery("SELECT * FROM DBUser", null)
             if (res.moveToFirst())
-                userInfoModel = UserInfoModel(res.getString(1), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getString(2))
+            //    userInfoModel = UserInfoModel(res.getString(1), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getString(2))
+                userInfoModel = UserInfoModel(res.getString(4), res.getString(5), res.getString(1), res.getString(2), res.getString(3), "")//res.getString(6))
             else userInfoModel = UserInfoModel("", "", "", "", "", "")
         }catch (e:Exception){
+            e.printStackTrace()
             userInfoModel = UserInfoModel("", "", "", "", "", "")
         }
 
@@ -120,12 +122,27 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         }
     }
 
-    fun getDevicesByRoutineFromBD(): List<DevicesModel> {
+    fun getDevicesByRoutineFromBD(idRoutine : Int): List<DevicesModel> {
         val retval : MutableList<DevicesModel> =  arrayListOf()
 
+        try {
+            val db = this.writableDatabase
+            val res = db.rawQuery("SELECT * FROM DBDevice WHERE idRoutine = ?", arrayOf(idRoutine.toString()))
+            while (res.moveToNext()) {
+                retval.add(DevicesModel(
+                        res.getString(0),
+                        res.getString(2),
+                        res.getString(5),
+                        res.getString(6),
+                        res.getString(3),
+                        res.getString(4)))
+            }
+        } catch (e:Exception){
+            e.printStackTrace()
+        }
         return retval
     }
-/*
+
     fun insertarRoutinesBBDD(routines : List<RoutinesModel>) {
         val db = this.writableDatabase
         try {
@@ -134,8 +151,8 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
                     put("routineId", routine.id)
                     put("nombre", routine.nombre)
                     put("descripcion", routine.descripcion)
-                    put("hora", routine.hora)
-                    put("minuto", routine.minuto)
+                    put("hour", routine.hora)
+                    put("minute", routine.minuto)
                 }
                 val newRowId = db?.insert("DBRoutine", null, values)
             }
@@ -150,7 +167,13 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
             val db = this.writableDatabase
             val res = db.rawQuery("SELECT * FROM DBRoutine", null)
             while (res.moveToNext()) {
-                retval.add(RoutinesModel(res.getString(0), res.getString(2),res.getString(5), getDevicesByRoutineFromBD()))
+                retval.add(RoutinesModel(
+                        res.getString(6),
+                        res.getString(5),
+                        res.getString(8),
+                        res.getInt(9),
+                        res.getInt(10),
+                        getDevicesByRoutineFromBD(res.getInt(6))))
             }
         } catch (e:Exception){
             e.printStackTrace()
@@ -166,6 +189,4 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
             e.printStackTrace()
         }
     }
-
- */
 }
