@@ -147,7 +147,6 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
 
     fun getDevicesByRoutineFromBD(idRoutine : Int): List<DevicesModel> {
         val retval : MutableList<DevicesModel> =  arrayListOf()
-
         try {
             val db = this.writableDatabase
             val res = db.rawQuery("SELECT * FROM DBDevice WHERE idRoutine = ?", arrayOf(idRoutine.toString()))
@@ -159,6 +158,20 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
                         res.getString(6),
                         res.getString(3),
                         res.getString(4)))
+            }
+        } catch (e:Exception){
+            e.printStackTrace()
+        }
+        return retval
+    }
+
+    fun getDiasByRoutineFromBD(idRoutine : Int): List<String> {
+        val retval : MutableList<String> =  arrayListOf()
+        try {
+            val db = this.writableDatabase
+            val res = db.rawQuery("SELECT * FROM Routine_day WHERE idRoutine = ?", arrayOf(idRoutine.toString()))
+            while (res.moveToNext()) {
+                retval.add(res.getString(res.getColumnIndex("IdRoutine")))
             }
         } catch (e:Exception){
             e.printStackTrace()
@@ -196,7 +209,8 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
                         res.getString(7),
                         res.getInt(9),
                         res.getInt(10),
-                        getDevicesByRoutineFromBD(res.getInt(6))))
+                        getDevicesByRoutineFromBD(res.getInt(6)),
+                        getDiasByRoutineFromBD(res.getInt(6))))
             }
         } catch (e:Exception){
             e.printStackTrace()
