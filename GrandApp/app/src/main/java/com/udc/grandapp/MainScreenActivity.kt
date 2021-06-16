@@ -9,11 +9,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.udc.grandapp.adapters.FragmentPageChanger
-import com.udc.grandapp.fragments.Settings
-import com.udc.grandapp.items.SettingsDevice
 import com.udc.grandapp.manager.GetDevicesManager
 import com.udc.grandapp.manager.GetRoutinesManager
 import com.udc.grandapp.manager.configuration.SharedPreferenceManager
@@ -23,7 +19,6 @@ import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.model.RoutinesModel
-import com.udc.grandapp.services.RoutineAlarmService
 import com.udc.grandapp.utils.CommonMethods
 
 class MainScreenActivity : AppCompatActivity() {
