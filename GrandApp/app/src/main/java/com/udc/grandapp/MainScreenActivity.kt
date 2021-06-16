@@ -9,8 +9,6 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.udc.grandapp.adapters.FragmentPageChanger
 import com.udc.grandapp.fragments.Settings
 import com.udc.grandapp.items.SettingsDevice
@@ -49,9 +47,9 @@ class MainScreenActivity : AppCompatActivity() {
         viewPager = findViewById<ViewPager>(R.id.view_pager)
 
         initTabLayout()
-        /*Intent(this, RoutineAlarmService::class.java).also { intent ->
+        Intent(this, RoutineAlarmService::class.java).also { intent ->
             startService(intent) //TODO DESCOMENTAR ESTO
-        }*/
+        }
     }
 
     fun initTabLayout(){
