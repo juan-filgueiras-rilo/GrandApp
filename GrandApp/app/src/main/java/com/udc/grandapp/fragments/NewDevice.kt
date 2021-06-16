@@ -72,7 +72,7 @@ class NewDevice : Fragment() {
         findDevicesCoroutine(mSpinnerActive, mDeviceFound)
     }
 
-    fun findDevicesCoroutine(spinnerActive : MutableLiveData<Boolean>, deviceFound: MutableLiveData<CustomerDevice>) {
+    private fun findDevicesCoroutine(spinnerActive : MutableLiveData<Boolean>, deviceFound: MutableLiveData<CustomerDevice>) {
         viewLifecycleOwner.lifecycleScope.launch {
             spinnerActive.postValue(true)
             mDevicesList.clear()
@@ -86,10 +86,9 @@ class NewDevice : Fragment() {
                 }
 
                 override fun onServiceDiscovered(service: SsdpService) {
-                    deviceFound.postValue(CustomerDevice(
-                            service.serialNumber.split("x")[1].toLong(radix = 16),
-                            service.serviceType, service.remoteIp.hostAddress)
-                    )
+                    val id = service.serialNumber.split("x")[1].toLong(radix = 16)
+                    val puerto = service.location.split(":")[2].replace(",", "").toLong()
+                    deviceFound.postValue(CustomerDevice(id, "yeelight", "", service.remoteIp.hostAddress, puerto, "yeelight"))
                     Log.e("TAG", "Found service: $service")
                 }
 

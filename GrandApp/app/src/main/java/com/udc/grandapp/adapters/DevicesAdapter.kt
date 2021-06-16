@@ -1,5 +1,6 @@
 package com.udc.grandapp.adapters
 
+import android.bluetooth.BluetoothClass
 import android.content.ClipData
 import android.content.ContentValues
 import android.content.ContentValues.TAG
@@ -10,8 +11,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.MainThread
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.R
@@ -24,12 +27,15 @@ import com.udc.grandapp.manager.transferObjects.DatosCreateDevice
 import com.udc.grandapp.model.CreateDeviceModel
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
+import com.udc.grandapp.webServiceHandleDevice.DeviceServer
+import com.udc.grandapp.webServiceHandleDevice.HandleDeviceService
 import kotlinx.android.synthetic.main.custom_dispositivo.view.*
 import kotlinx.android.synthetic.main.custom_dispositivorutinaview.view.*
 import kotlinx.android.synthetic.main.custom_dispositivosrutina.view.*
 import kotlinx.android.synthetic.main.custom_lista.view.*
 import kotlinx.android.synthetic.main.custom_lista.view.descripcion
 import kotlinx.android.synthetic.main.custom_nuevodispositivo.view.*
+import kotlinx.coroutines.*
 
 
 class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity: FragmentActivity, layout: Int, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<DevicesAdapter.ViewHolder>() {
@@ -63,6 +69,10 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
             when (mLayout) {
                 R.layout.custom_dispositivo -> {
                     nombreProducto_cd.text = item.nombre
+                    val scope = CoroutineScope(Dispatchers.IO)
+                    scope.launch {
+                        val status = HandleDeviceService(item.url, item.puerto.toInt(), item.tipo).queryDevice()
+                    }
                     bombilla_cd.setBackgroundColor(context.resources.getColor(R.color.green))
                     consulta.setOnClickListener {
                         val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
@@ -71,7 +81,9 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
                         ft.commit()
                     }
                     encender.setOnClickListener {
-                        Toast.makeText(context, "Encender/Apagar", Toast.LENGTH_LONG).show()
+                        scope.launch {
+                            HandleDeviceService(item.url, item.puerto.toInt(), item.tipo).powerOnDevice()
+                        }
                     }
                     eliminar.setOnClickListener {
                         MaterialAlertDialogBuilder(context)
@@ -133,10 +145,10 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
                                                    val modelResponse: GenericModel = model
                                                    Log.e(TAG, modelResponse.toString())
                                                    if (modelResponse.error == "0") {
-                                                       val addDevice: CreateDeviceModel = CreateDeviceModel.Parse(modelResponse.json)
-                                                       insertarDeviceBD(context, addDevice)
+                                                       val addDevice: DevicesModel = DevicesModel.ParseOne(modelResponse.json)
+                                                       UserConfigManager(context).insertarDeviceBBDD(listOf(addDevice))
                                                        adapter.refresh(adapterPosition)
-                                                   } else Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                                                   } else activity.runOnUiThread {Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()}
                                                }
 
                                                override fun onErrorResponse(model: String) {
@@ -150,8 +162,7 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
                                                    }
                                                }
                                            }
-                                           /**/
-                                           createDeviceManager.realizarOperacion(responseManager, DatosCreateDevice(mView.findViewById<EditText>(R.id.add_name).text.toString(), mView.findViewById<EditText>(R.id.add_description).text.toString(), item.descripcion, "1"/*UserConfigManager.getUserInfoPersistente(activity)!!.userId*/))
+                                           createDeviceManager.realizarOperacion(responseManager, DatosCreateDevice(mView.findViewById<EditText>(R.id.add_name).text.toString(), mView.findViewById<EditText>(R.id.add_description).text.toString(), item.url, item.puerto.toString(), item.tipo))
                                        //}
                                     }
                                     .setNegativeButton(resources.getString(R.string.cancelar)) { dialog, which ->
@@ -166,20 +177,6 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
                     }
                 }
             }
-        }
-        fun insertarDeviceBD(context: Context, device: CreateDeviceModel){
-            val db = UserConfigManager(context).writableDatabase
-
-            val values = ContentValues().apply {
-                put("id", device.id)
-                put("nombre", device.nombre)
-                put("descripcion", device.descripcion)
-                put("url", device.url)
-            }
-
-            val newRowId = db?.insert("DBDevice", null, values)
-
-            UserConfigManager.reiniciarInfoPersistente(context)
         }
     }
 }
