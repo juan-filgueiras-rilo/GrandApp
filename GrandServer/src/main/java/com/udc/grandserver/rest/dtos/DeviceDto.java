@@ -16,6 +16,8 @@ public class DeviceDto {
 	private String description;
 	private Long userId;
 	private String url;
+	private Long puerto;
+	private String tipo;
 
 	public DeviceDto() {
 		super();
@@ -26,12 +28,16 @@ public class DeviceDto {
 			final String name,
 			final String description,
 			final Long userId,
-			final String url) {
+			final String url,
+			final Long puerto,
+			final String tipo) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.url = url;
+		this.puerto = puerto;
+		this.tipo = tipo;
 	}
 	
 	public DeviceDto(Device device) {
@@ -41,6 +47,8 @@ public class DeviceDto {
 		this.description = device.getDescription();
 		this.userId = device.getUserId();
 		this.url = device.getUrl();
+		this.puerto = device.getPuerto();
+		this.tipo = device.getTipo();
 	}
 	
 	public Long getId() {
@@ -85,6 +93,22 @@ public class DeviceDto {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public Long getPuerto() {
+		return puerto;
+	}
+
+	public void setPuerto(Long puerto) {
+		this.puerto = puerto;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	@Override

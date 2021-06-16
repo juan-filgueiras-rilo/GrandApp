@@ -81,6 +81,8 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
                     put("nombre", device.nombre)
                     put("descripcion", device.descripcion)
                     put("url", device.url)
+                    put("tipo", device.tipo)
+                    put("protocolo", device.puerto)
                 }
                 val newRowId = db?.insert("DBDevice", null, values)
             }
@@ -95,7 +97,13 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
             val db = this.writableDatabase
             val res = db.rawQuery("SELECT * FROM DBDevice", null)
             while (res.moveToNext()) {
-                retval.add(DevicesModel(res.getString(0), res.getString(2),res.getString(5), res.getString(6)))
+                retval.add(DevicesModel(
+                        res.getString(0),
+                        res.getString(2),
+                        res.getString(5),
+                        res.getString(6),
+                        res.getString(3),
+                        res.getString(4)))
             }
         } catch (e:Exception){
            e.printStackTrace()

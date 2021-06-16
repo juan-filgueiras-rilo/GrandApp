@@ -20,6 +20,8 @@ public class Device {
 	private String description;
 	private Long userId;
 	private String url;
+	private Long puerto;
+	private String tipo;
 	
 	@ManyToMany (mappedBy = "deviceList")
 	private List<Routine> routines;
@@ -33,13 +35,17 @@ public class Device {
 			final String name,
 			final String description,
 			final Long userId,
-			final String url) {
+			final String url,
+			final Long puerto,
+			final String tipo) {
 		super();
 		this.idDevice = id;
 		this.name = name;
 		this.description = description;
 		this.userId = userId;
 		this.url = url;
+		this.puerto = puerto;
+		this.tipo = tipo;
 	}
 
 	public Device(DeviceDto device) {
@@ -49,6 +55,8 @@ public class Device {
 		this.description = device.getDescription();
 		this.userId = device.getUserId();
 		this.url = device.getUrl();
+		this.puerto = device.getPuerto();
+		this.tipo = device.getTipo();		
 	}
 
 	public Long getIdDevice() {
@@ -98,5 +106,21 @@ public class Device {
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	
+
+	public Long getPuerto() {
+		return puerto;
+	}
+
+	public void setPuerto(Long puerto) {
+		this.puerto = puerto;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
 }
