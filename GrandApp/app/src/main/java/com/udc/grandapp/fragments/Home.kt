@@ -43,7 +43,7 @@ class Home : Fragment() {
         deviceRecyclerView.adapter = context?.let {
             activity?.let { it1 ->
                 DeviceSummaryAdapter(it, deviceSummaryListExample, it1) {
-                Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                //Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
                 }
             }
         }

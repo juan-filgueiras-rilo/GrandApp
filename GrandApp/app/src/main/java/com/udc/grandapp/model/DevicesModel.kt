@@ -9,12 +9,16 @@ class DevicesModel() {
     lateinit var nombre: String
     lateinit var descripcion: String
     lateinit var url: String
+    lateinit var puerto: String
+    lateinit var tipo: String
 
-    constructor(id: String, userName: String, descripcion: String, url: String) : this() {
+    constructor(id: String, userName: String, descripcion: String, url: String, puerto: String, tipo: String) : this() {
         this.id = id
         this.nombre = userName
         this.descripcion = descripcion
         this.url = url
+        this.puerto = puerto
+        this.tipo = tipo
     }
 
     companion object {
@@ -32,7 +36,9 @@ class DevicesModel() {
                         array.getJSONObject(i).get("id").toString(),
                         array.getJSONObject(i).get("name").toString(),
                         array.getJSONObject(i).get("description").toString(),
-                        url
+                        url,
+                        array.getJSONObject(i).get("puerto").toString(),
+                        array.getJSONObject(i).get("tipo").toString(),
                 ))
             }
 

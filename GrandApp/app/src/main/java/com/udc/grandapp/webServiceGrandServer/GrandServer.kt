@@ -10,8 +10,8 @@ open class GrandServer {
     private val namespace: String = "GrandApp"
     val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8");
 
-   private val url: String = "https://iot-rangers-backend.herokuapp.com" // Esta es la URL de la maquina a la que conectarse
-    //private val url: String = "http://192.168.0.11:8080" // Esta es la URL de la maquina a la que conectarse
+    //private val url: String = "https://iot-rangers-backend.herokuapp.com" // Esta es la URL de la maquina a la que conectarse
+   private val url: String = "http://192.168.0.11:8080" // Esta es la URL de la maquina a la que conectarse
 
     //Aquí irían los nombres de todos los métodos del web service
     //Users
@@ -39,7 +39,8 @@ open class GrandServer {
             .header("Cache-Control", "no-cache")
         if (token)
             return re!!
-                .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzODc1MDYyfQ.KUnldMJR1SM2w8baWuCWMQKbH7OccCONfF69ouetBXy1bkNelm4SZLWvGq1dan7l8OZhz4R6QPXDUgwLgKP3-Q")
+                .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzOTUzNzQxfQ.smhJ-U1rZY6hiGTUHZMpWUVHSM81Phy58CG40JRmS_xqz4qNhJTQ3LHqXEanREofjxA0lQI92Jnh3HOD2lSEaA")
+               //.header("Authorization", "Bearer " + token)
                 .build()
         else
             return re!!.build()
