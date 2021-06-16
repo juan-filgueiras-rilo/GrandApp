@@ -31,7 +31,9 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         try {
             val db = this.writableDatabase
             val res = db.rawQuery("SELECT * FROM DBUser", null)
-            userInfoModel = UserInfoModel(res.getString(1), res.getString(2), res.getString(3), res.getString(4), res.getString(5), res.getString(6))
+            if (res.moveToFirst())
+                userInfoModel = UserInfoModel(res.getString(1), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getString(2))
+            else userInfoModel = UserInfoModel("", "", "", "", "", "")
         }catch (e:Exception){
             userInfoModel = UserInfoModel("", "", "", "", "", "")
         }
@@ -42,7 +44,7 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
     fun actualizarTokenBD(user:UserInfoModel, token: String, context: Activity){
         val db = this.writableDatabase
         val userID: String = user.userId
-        db.rawQuery("UPDATE DBUser set token = $token WHERE userId = $userID", null)
+        db.rawQuery("UPDATE DBUser set token = '$token' WHERE userId = $userID", null)
         reiniciarInfoPersistente(context)
     }
 
