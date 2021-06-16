@@ -1,11 +1,14 @@
 package com.udc.grandapp.fragments
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -21,7 +24,16 @@ class Profile : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.profile, container, false)
-        rootView.findViewById<Button>(R.id.buttonGuardarCambios).setOnClickListener(View.OnClickListener { Toast.makeText(context, "Guardar cambios", Toast.LENGTH_LONG).show() })
+        var editText : EditText = rootView.findViewById<EditText>(R.id.editTextNombre)
+        editText.setText(UserConfigManager.infoPersistente!!.userName)
+        rootView.findViewById<Button>(R.id.buttonGuardarCambios).setOnClickListener(View.OnClickListener {
+            if (!editText.text.toString().equals(UserConfigManager.infoPersistente!!.userName)){
+                Toast.makeText(context, "Cambios guardados", Toast.LENGTH_LONG).show()
+                UserConfigManager(activity as Context).actualizarUserName(UserConfigManager.infoPersistente!!, editText.text!!.toString(), activity as Activity)
+            }else
+                Toast.makeText(context, "No hay cambios para guardar", Toast.LENGTH_LONG).show()
+        })
+        rootView.findViewById<EditText>(R.id.editTextNombre).setText(UserConfigManager.infoPersistente!!.userName)
         return rootView
     }
 

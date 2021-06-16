@@ -42,10 +42,25 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
     }
 
     fun actualizarTokenBD(user:UserInfoModel, token: String, context: Activity){
-        val db = this.writableDatabase
-        val userID: String = user.userId
-        db.rawQuery("UPDATE DBUser set token = '$token' WHERE userId = $userID", null)
-        reiniciarInfoPersistente(context)
+        try {
+            val db = this.writableDatabase
+            val userID: String = user.userId
+            db.execSQL("UPDATE DBUser set token = '$token' WHERE userId = '$userID'")
+            reiniciarInfoPersistente(context)
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
+
+    fun actualizarUserName(user: UserInfoModel, userName: String, context: Activity){
+        try {
+            val db = this.writableDatabase
+            val userID: String = user.userId
+            db.execSQL("UPDATE DBUser set userName = '$userName' WHERE userId = '$userID'")
+            reiniciarInfoPersistente(context)
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -67,7 +82,7 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
                     put("descripcion", device.descripcion)
                     put("url", device.url)
                 }
-                val newRowId = db?.insert("DBDevice", null, values)
+                //val newRowId = db?.insert("DBDevice", null, values)
             }
         } catch (e : java.lang.Exception) {
             e.printStackTrace()
