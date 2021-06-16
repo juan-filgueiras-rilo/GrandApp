@@ -89,7 +89,8 @@
         <meta-data android:name="AA_DB_NAME" android:value="GrandApp"/>
         <meta-data android:name="AA_DB_VERSION" android:value="6"/>
         <meta-data android:name="AA_MODELS" android:value="com.udc.grandapp.dbmodel.DBUser, com.udc.grandapp.dbmodel.DBRoutine,
-                                                           com.udc.grandapp.dbmodel.DBDevice"/>
+                                                           com.udc.grandapp.dbmodel.DBDevice, com.udc.grandapp.dbmodel.DiaEnum,
+                                                           com.udc.grandapp.dbmodel.Routine_day, com.udc.grandapp.dbmodel.Routine_devices"/>
 
         <provider
             android:authorities="com.udc.grandapp"

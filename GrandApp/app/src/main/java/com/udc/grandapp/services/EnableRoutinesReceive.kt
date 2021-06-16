@@ -1,6 +1,7 @@
 package com.udc.grandapp.services
 
 import android.content.BroadcastReceiver
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -21,12 +22,12 @@ class EnableRoutinesReceive  : BroadcastReceiver() {
         var currentDateTime= LocalDateTime.now()
         var hour:String = currentDateTime.format(DateTimeFormatter.ofPattern("HH"))
         var minute:String = currentDateTime.format(DateTimeFormatter.ofPattern("mm"))
-        var day:String = currentDateTime.format(DateTimeFormatter.ofPattern("e"))
+        var day:String = currentDateTime.format(DateTimeFormatter.ofPattern("EEEE"))
 
 
         val db = UserConfigManager(context).writableDatabase
 
-        /*val values = ContentValues().apply {
+        val values = ContentValues().apply {
             put("userId", "1")
             put("token","1")
             put("userName", "nombre")
@@ -39,7 +40,7 @@ class EnableRoutinesReceive  : BroadcastReceiver() {
             put("hour", "12")
             put("minute", "00")
             put("nombre", "hila")
-            put("rutineId", "1")
+            put("routineId", "2")
         }
         val values2 = ContentValues().apply {
             put("descripcion", "descripcion")
@@ -47,7 +48,7 @@ class EnableRoutinesReceive  : BroadcastReceiver() {
             put("hour", "13")
             put("minute", "00")
             put("nombre", "hila")
-            put("rutineId", "1")
+            put("routineId", "1")
         }
 
         val values3 = ContentValues().apply {
@@ -67,23 +68,29 @@ class EnableRoutinesReceive  : BroadcastReceiver() {
         val newRowId4 = db?.insert("Routine_day", null, values3)
         val newRowId5 = db?.insert("Routine_day", null, values4)
 
-        UserConfigManager.reiniciarInfoPersistente(context)
-
-*/
-        var result = db!!.rawQuery("SELECT Id FROM Routine_day WHERE day = " + day.toUpperCase(), null)
+        var result = db!!.rawQuery("SELECT IdRoutine FROM Routine_day WHERE day = \"" + day + "\"", null)
         var toExecute: MutableList<String> = mutableListOf()
         if(result.moveToFirst()) {
             while (!result.isAfterLast) {
-                var cursor = db!!.rawQuery("SELECT routineId FROM DBRoutine WHERE hour = " + hour + "AND minute = " + minute, null)
-                if (cursor.getString(0) != "") {
-                    toExecute.add(cursor.getString(0))
+                //println(result.getString(result.getColumnIndex("IdRoutine")))
+                    hour = "12"
+                minute = "00"
+                var cursor = db!!.rawQuery("SELECT routineId FROM DBRoutine WHERE hour = \"" +
+                        hour + "\"" + "AND minute = \"" + minute  + "\"" +"AND routineId = \"" +
+                        result.getString(result.getColumnIndex("IdRoutine")) +"\"", null)
+                if(cursor.moveToFirst()) {
+                    while (!cursor.isAfterLast) {
+                        if (cursor.getString(cursor.getColumnIndex("routineId")) != null) {
+                            //TODO ejecutar rutina con id i
+                            println("Tengo la rutina " + cursor.getString(cursor.getColumnIndex("routineId")))
+                        }
+
+                    }
+                    cursor.close()
+                    result.close()
                 }
             }
-        }
-        if (!toExecute.isEmpty()) {
-            for (i in toExecute) {
-                //TODO ejecutar rutina con id i
-            }
+
         }
 
     }

@@ -6,7 +6,8 @@ import com.activeandroid.annotation.Table
 import java.util.*
 
 @Table(name = "DBRoutine")
-class DBRoutine(routineId: String, nombre: String, fecha_inicio: Date, fecha_fin: Date, dispositivo: String, accion: String): Model(){
+class DBRoutine(routineId: String, nombre: String, fecha_inicio: Date, fecha_fin: Date, dispositivo: String, accion: String,
+descripcion: String, userId: Integer, hour: Integer, minute: Integer): Model(){
     @Column(name = "routineId")
     var routineId: String = routineId
     @Column(name = "nombre")
@@ -19,6 +20,14 @@ class DBRoutine(routineId: String, nombre: String, fecha_inicio: Date, fecha_fin
     var dispositivo: String = dispositivo
     @Column(name = "accion")
     var accion: String = accion
+    @Column(name = "descripcion")
+    var descripcion: String = descripcion
+    @Column(name = "userId")
+    var userId: Integer = userId
+    @Column(name = "hour")
+    var hour: Integer = hour
+    @Column(name = "minute")
+    var minute: Integer = minute
 
 
 
