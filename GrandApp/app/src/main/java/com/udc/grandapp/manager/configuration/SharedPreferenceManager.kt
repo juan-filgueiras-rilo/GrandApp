@@ -8,12 +8,16 @@ class SharedPreferenceManager() {
     var mContext: Context? = null
 
     companion object {
-        val KEY_TOKEN: String = "KEY_TOKEN"
+        private val SETTINGS: String = "SETTINGS"
         var prefs: SharedPreferenceManager? = null
         fun self(): SharedPreferenceManager{
             if (prefs == null)
                 prefs = SharedPreferenceManager()
             return prefs as SharedPreferenceManager
+        }
+
+        fun getSettings(): String{
+            return SETTINGS
         }
     }
 
@@ -58,7 +62,7 @@ class SharedPreferenceManager() {
                 editor.apply()
             }
         }catch (e: Exception){
-
+            e.printStackTrace()
         }
     }
 
