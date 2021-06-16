@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.view.View
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.RoutinesModel
+import com.udc.grandapp.model.SignUpLoginModel
 
 class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 6){
 
@@ -24,6 +25,28 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
             infoPersistente = UserConfigManager(context).getUserInfoFromBD()
         }
 
+    }
+
+    fun deleteUsersBD() {
+        try {
+            val db = this.writableDatabase
+            db.delete("DBUser","id > 0", null)
+        } catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
+
+    fun insertarUserBD(singUp: SignUpLoginModel){
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put("userId", singUp.id)
+            put("token",singUp.token)
+            put("userName", singUp.userName)
+            put("email", singUp.email)
+            put("role", singUp.role)
+        }
+
+        val newRowId = db?.insert("DBUser", null, values)
     }
 
     fun getUserInfoFromBD(): UserInfoModel? {
@@ -170,7 +193,7 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
                 retval.add(RoutinesModel(
                         res.getString(6),
                         res.getString(5),
-                        res.getString(8),
+                        res.getString(7),
                         res.getInt(9),
                         res.getInt(10),
                         getDevicesByRoutineFromBD(res.getInt(6))))

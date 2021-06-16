@@ -11,6 +11,7 @@ import com.google.android.material.button.MaterialButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -111,7 +112,8 @@ class Login : AppCompatActivity(), View.OnClickListener {
                     val modelResponse: GenericModel = model as GenericModel
                     if (modelResponse.error == "0") {
                         val login: SignUpLoginModel =  SignUpLoginModel.Parse(modelResponse.json)
-                        insertarUserBD(login)
+                        UserConfigManager(activity).insertarUserBD(login)
+                        UserConfigManager.reiniciarInfoPersistente(activity)
                         val intent: Intent = Intent(activity, MainScreenActivity::class.java)
                         activity.startActivity(intent)
                     }
@@ -134,20 +136,5 @@ class Login : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun insertarUserBD(singUp: SignUpLoginModel){
-        val db = UserConfigManager(this).writableDatabase
-
-        val values = ContentValues().apply {
-            put("userId", singUp.id)
-            put("token",singUp.token)
-            put("userName", singUp.userName)
-            put("email", singUp.email)
-            put("role", singUp.role)
-        }
-
-        val newRowId = db?.insert("DBUser", null, values)
-
-        UserConfigManager.reiniciarInfoPersistente(this)
-    }
 
 }

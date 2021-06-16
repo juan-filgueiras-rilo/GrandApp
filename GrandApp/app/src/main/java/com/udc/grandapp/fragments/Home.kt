@@ -50,7 +50,7 @@ class Home : Fragment() {
         }
 
         val routineListExample: List<RoutinesModel> = UserConfigManager(context as FragmentActivity).getRoutinesFromBD()
-        deviceRecyclerView.adapter = context?.let {
+        routineRecyclerView.adapter = context?.let {
             activity?.let { it1 ->
                 RoutinesSummaryAdapter(it, routineListExample, it1) {
                     //Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
