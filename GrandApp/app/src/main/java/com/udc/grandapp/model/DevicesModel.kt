@@ -44,5 +44,23 @@ class DevicesModel() {
 
             return retval
         }
+
+        fun ParseOne(json: String): DevicesModel {
+            val json = JSONObject(json)
+            val url: String = try {
+                json.get("url").toString()
+            } catch (e: JSONException) {
+                ""
+            }
+
+            return DevicesModel(
+                    json.get("id").toString(),
+                    json.get("name").toString(),
+                    json.get("description").toString(),
+                    url,
+                    json.get("puerto").toString(),
+                    json.get("tipo").toString(),
+            )
+        }
     }
 }

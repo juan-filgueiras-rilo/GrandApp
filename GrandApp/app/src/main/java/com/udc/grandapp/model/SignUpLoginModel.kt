@@ -1,5 +1,7 @@
 package com.udc.grandapp.model
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import org.json.JSONObject
 
 class SignUpLoginModel() {
@@ -19,6 +21,7 @@ class SignUpLoginModel() {
 
         companion object{
                 fun Parse(json: String): SignUpLoginModel{
+                        Log.e(TAG, json)
                         return SignUpLoginModel(
                                 JSONObject(JSONObject(json)["user"].toString())["id"].toString(),
                                 JSONObject(JSONObject(json)["user"].toString())["userName"].toString(),

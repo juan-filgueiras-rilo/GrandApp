@@ -13,7 +13,7 @@ class CreateDeviceManager(activity: Activity) : GenericManager(activity) {
     override fun onWorkerExecute(datos: Companion.DatosThreaded) {
         try {
             CreateDeviceService().createDevice(datos, infoBd()!!.token)
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             datos.mActivity.runOnUiThread(Runnable { Toast.makeText(datos.mActivity, e.message, Toast.LENGTH_LONG).show() })
         }

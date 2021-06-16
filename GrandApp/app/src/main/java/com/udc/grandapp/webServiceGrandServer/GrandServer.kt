@@ -10,8 +10,8 @@ open class GrandServer {
     private val namespace: String = "GrandApp"
     val mediaType: MediaType? = MediaType.parse("application/json; charset=utf-8");
 
-    //private val url: String = "https://iot-rangers-backend.herokuapp.com" // Esta es la URL de la maquina a la que conectarse
-   private val url: String = "http://192.168.0.11:8080" // Esta es la URL de la maquina a la que conectarse
+    private val url: String = "https://iot-rangers-backend.herokuapp.com" // Esta es la URL de la maquina a la que conectarse
+    //private val url: String = "http://192.168.0.11:8080" // Esta es la URL de la maquina a la que conectarse
 
     //Aquí irían los nombres de todos los métodos del web service
     //Users
@@ -29,19 +29,19 @@ open class GrandServer {
     val MetodoCreateRoutine: String = "/routines/create"
     val MetodoDeleteRoutine: String = "/routines"
 
-    fun createPostRequest(body: RequestBody, metodo:String, token: Boolean): Request {
+    fun createPostRequest(body: RequestBody, metodo: String, token: Boolean): Request {
         val url = url.plus(metodo)
         val re: Request.Builder? = Request.Builder().post(body)
-            .url(url)
-            .header("Connection", "keep-alive")
-            .header("Accept", "*/*")
-            .header("Content-Type", "application/json")
-            .header("Cache-Control", "no-cache")
+                .url(url)
+                .header("Connection", "keep-alive")
+                .header("Accept", "*/*")
+                .header("Content-Type", "application/json")
+                .header("Cache-Control", "no-cache")
         if (token)
             return re!!
-                .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzOTUzNzQxfQ.smhJ-U1rZY6hiGTUHZMpWUVHSM81Phy58CG40JRmS_xqz4qNhJTQ3LHqXEanREofjxA0lQI92Jnh3HOD2lSEaA")
-               //.header("Authorization", "Bearer " + token)
-                .build()
+                    .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzOTUzNzQxfQ.smhJ-U1rZY6hiGTUHZMpWUVHSM81Phy58CG40JRmS_xqz4qNhJTQ3LHqXEanREofjxA0lQI92Jnh3HOD2lSEaA")
+                    //.header("Authorization", "Bearer " + token)
+                    .build()
         else
             return re!!.build()
     }
@@ -54,12 +54,13 @@ open class GrandServer {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
+
             override fun onResponse(call: Call, response: Response) {
                 var resultado: GenericModel? = null
                 var resp: String? = null
                 try {
                     resp = response.body()!!.string()
-                }catch (e: Exception){
+                } catch (e: Exception) {
                     resp = null
                 }
 
@@ -73,17 +74,17 @@ open class GrandServer {
 
     }
 
-    fun createPutRequest(body: RequestBody, metodo:String): Request {
+    fun createPutRequest(body: RequestBody, metodo: String): Request {
         val url = url.plus(metodo)
         return Request.Builder()
-            .put(body)
-            .url(url)
-            .header("Connection", "keep-alive")
-            .header("Accept", "*/*")
-            .header("Content-Type", "application/json")
-            .header("Cache-Control", "no-cache")
-            .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzNjgzMTkwfQ.BHSuE57iYhVblgNVEd5LqTdKbdlV9ERl__BPLL7DFWcXfA4ibR6HCs1-y5HMJY3jp_qiNYz4Mefl1QGDV4Kkjw")
-            .build()
+                .put(body)
+                .url(url)
+                .header("Connection", "keep-alive")
+                .header("Accept", "*/*")
+                .header("Content-Type", "application/json")
+                .header("Cache-Control", "no-cache")
+                .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzOTUzNzQxfQ.smhJ-U1rZY6hiGTUHZMpWUVHSM81Phy58CG40JRmS_xqz4qNhJTQ3LHqXEanREofjxA0lQI92Jnh3HOD2lSEaA")
+                .build()
     }
 
     fun doPutRequest(body: RequestBody, metodo: String) {
@@ -94,23 +95,24 @@ open class GrandServer {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
+
             override fun onResponse(call: Call, response: Response) = println(
-                response.body()?.string()
+                    response.body()?.string()
             )
         })
     }
 
-    fun createGetRequest(body: RequestBody, metodo:String, token: String): Request {
+    fun createGetRequest(body: RequestBody, metodo: String, token: String): Request {
         val url = url.plus(metodo)
         return Request.Builder()
-            .get()
-            .url(url)
-            .header("Connection", "keep-alive")
-            .header("Accept", "*/*")
-            .header("Content-Type", "application/json")
-            .header("Cache-Control", "no-cache")
-            .header("Authorization", "Bearer " + token)
-            .build()
+                .get()
+                .url(url)
+                .header("Connection", "keep-alive")
+                .header("Accept", "*/*")
+                .header("Content-Type", "application/json")
+                .header("Cache-Control", "no-cache")
+                .header("Authorization", "Bearer " + token)
+                .build()
     }
 
     fun doGetRequestS(body: RequestBody, metodo: String, token: String): GenericModel {
@@ -119,7 +121,7 @@ open class GrandServer {
 
         client.newCall(createGetRequest(body, metodo, token)).execute().use { response ->
             if (!response.isSuccessful) throw IOException("Unexpected code $response")
-            return GenericModel("0","OK", response.body()!!.string())
+            return GenericModel("0", "OK", response.body()!!.string())
         }
     }
 
@@ -131,12 +133,13 @@ open class GrandServer {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
+
             override fun onResponse(call: Call, response: Response) {
                 var resultado: GenericModel? = null
                 var resp: String? = null
                 try {
                     resp = response.body()!!.string()
-                }catch (e: Exception){
+                } catch (e: Exception) {
                     resp = null
                 }
 
@@ -149,17 +152,17 @@ open class GrandServer {
         })
     }
 
-    fun createDeleteRequest(body: RequestBody, metodo:String): Request {
+    fun createDeleteRequest(body: RequestBody, metodo: String): Request {
         val url = url.plus(metodo)
         return Request.Builder()
-            .delete(body)
-            .url(url)
-            .header("Connection", "keep-alive")
-            .header("Accept", "*/*")
-            .header("Content-Type", "application/json")
-            .header("Cache-Control", "no-cache")
-            .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzODc1MDYyfQ.KUnldMJR1SM2w8baWuCWMQKbH7OccCONfF69ouetBXy1bkNelm4SZLWvGq1dan7l8OZhz4R6QPXDUgwLgKP3-Q")
-            .build()
+                .delete(body)
+                .url(url)
+                .header("Connection", "keep-alive")
+                .header("Accept", "*/*")
+                .header("Content-Type", "application/json")
+                .header("Cache-Control", "no-cache")
+                .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzOTUzNzQxfQ.smhJ-U1rZY6hiGTUHZMpWUVHSM81Phy58CG40JRmS_xqz4qNhJTQ3LHqXEanREofjxA0lQI92Jnh3HOD2lSEaA")
+                .build()
     }
 
     fun doDeleteRequest(body: RequestBody, metodo: String) {
@@ -170,8 +173,9 @@ open class GrandServer {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
+
             override fun onResponse(call: Call, response: Response) = println(
-                response.body()?.string()
+                    response.body()?.string()
             )
         })
     }

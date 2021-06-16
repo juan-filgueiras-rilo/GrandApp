@@ -122,23 +122,27 @@ class MainScreenActivity : AppCompatActivity() {
                 }
                 else {
                     //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
-                    MaterialAlertDialogBuilder(activity)
+                    activity.runOnUiThread {
+                        MaterialAlertDialogBuilder(activity)
                             .setTitle("Error")
                             .setMessage(modelResponse.mensaje)
                             .setNeutralButton("OK"){ dialog, which ->
                                 // Respond to positive button press
                             }.show()
+                    }
                 }
             }
 
             override fun onErrorResponse(model: String) {
                 //Toast.makeText(context, "Error al obtener las rutinas (Diálogo)", Toast.LENGTH_LONG).show()
-                MaterialAlertDialogBuilder(activity)
-                        .setTitle("Error")
-                        .setMessage("Error al obtener las rutinas")
-                        .setNeutralButton("OK"){ dialog, which ->
-                            // Respond to positive button press
-                        }.show()
+                activity.runOnUiThread {
+                    MaterialAlertDialogBuilder(activity)
+                            .setTitle("Error")
+                            .setMessage("Error al obtener las rutinas")
+                            .setNeutralButton("OK"){ dialog, which ->
+                                // Respond to positive button press
+                            }.show()
+                }
             }
         }
 

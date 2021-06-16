@@ -1,6 +1,8 @@
 package com.udc.grandapp.fragments
 
 import android.app.Activity
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -17,8 +19,10 @@ import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.manager.GetDevicesManager
+import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
+import com.udc.grandapp.model.CreateDeviceModel
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.utils.CommonMethods
@@ -33,10 +37,9 @@ class DeviceList : Fragment() {
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
-
-        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1, "NombreProducto1", "loadURL"),
-                CustomerDevice(2, "NombreProducto2", "loadURL"),
-                CustomerDevice(3, "NombreProducto3", "loadURL"))
+        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1,"NombreProducto1", "loadURL", "", 1, ""),
+                CustomerDevice(2, "NombreProducto2", "loadURL", "", 1, ""),
+                CustomerDevice(3, "NombreProducto3", "loadURL", "", 1, ""))
 
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
@@ -94,4 +97,5 @@ class DeviceList : Fragment() {
         val responseManager: IResponseManagerGeneric = ResponseManager()
         mGetDevicesManager.realizarOperacion(responseManager, DatosOperacionGeneric())
     }
+
 }
