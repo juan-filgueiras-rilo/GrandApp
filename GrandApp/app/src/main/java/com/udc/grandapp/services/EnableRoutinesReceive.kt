@@ -12,13 +12,8 @@ import java.time.format.DateTimeFormatter
 
 class EnableRoutinesReceive  : BroadcastReceiver() {
 
-    /*var list = listOf<String>("Somos IoT Rangers y sabemos hacer servicios :D",
-        "Te estoy vigilando",
-        "Estoy recopilando información de tu gato para anuncios",
-        "0.2 puntos semanales, porfa")*/
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onReceive(context: Context, intent: Intent) {
-        //Toast.makeText(context, list[Random.nextInt(0,4)], Toast.LENGTH_SHORT).show()
         var currentDateTime= LocalDateTime.now()
         var hour:String = currentDateTime.format(DateTimeFormatter.ofPattern("HH"))
         var minute:String = currentDateTime.format(DateTimeFormatter.ofPattern("mm"))
@@ -27,7 +22,8 @@ class EnableRoutinesReceive  : BroadcastReceiver() {
 
         val db = UserConfigManager(context).writableDatabase
 
-        val values = ContentValues().apply {
+        /*****************************PRUEBAS***********************************/
+        /*val values = ContentValues().apply {
             put("userId", "1")
             put("token","1")
             put("userName", "nombre")
@@ -40,58 +36,88 @@ class EnableRoutinesReceive  : BroadcastReceiver() {
             put("hour", "12")
             put("minute", "00")
             put("nombre", "hila")
-            put("routineId", "2")
+            put("routineId", "1")
         }
         val values2 = ContentValues().apply {
+            put("descripcion", "descripcion")
+            put("userId","1")
+            put("hour", "12")
+            put("minute", "00")
+            put("nombre", "hila")
+            put("routineId", "2")
+        }
+        val values3 = ContentValues().apply {
+            put("descripcion", "descripcion")
+            put("userId","1")
+            put("hour", "12")
+            put("minute", "00")
+            put("nombre", "hila")
+            put("routineId", "3")
+        }
+        val values4 = ContentValues().apply {
             put("descripcion", "descripcion")
             put("userId","1")
             put("hour", "13")
             put("minute", "00")
             put("nombre", "hila")
-            put("routineId", "1")
+            put("routineId", "4")
         }
 
-        val values3 = ContentValues().apply {
-            put("IdRoutine", "1")
-            put("day","Tuesday")
-        }
 
-        val values4 = ContentValues().apply {
+        val values11 = ContentValues().apply {
             put("IdRoutine", "1")
             put("day","Wednesday")
         }
 
+        val values12 = ContentValues().apply {
+            put("IdRoutine", "2")
+            put("day","Wednesday")
+        }
+        val values13 = ContentValues().apply {
+            put("IdRoutine", "3")
+            put("day","Tuesday")
+        }
+        val values14 = ContentValues().apply {
+            put("IdRoutine", "4")
+            put("day","Tuesday")
+        }
+
         val newRowId = db?.insert("DBUser", null, values)
 
-        val newRowId2 = db?.insert("DBRoutine", null, values1)
-        val newRowId3 = db?.insert("DBRoutine", null, values2)
-        val newRowId4 = db?.insert("Routine_day", null, values3)
-        val newRowId5 = db?.insert("Routine_day", null, values4)
+        val newRowId1 = db?.insert("DBRoutine", null, values1)
+        val newRowId2 = db?.insert("DBRoutine", null, values2)
+        val newRowId3 = db?.insert("DBRoutine", null, values3)
+        val newRowId4 = db?.insert("DBRoutine", null, values4)
+        val newRowId5 = db?.insert("Routine_day", null, values11)
+        val newRowId6 = db?.insert("Routine_day", null, values12)
+        val newRowId7 = db?.insert("Routine_day", null, values13)
+        val newRowId8 = db?.insert("Routine_day", null, values14)*/
 
         var result = db!!.rawQuery("SELECT IdRoutine FROM Routine_day WHERE day = \"" + day + "\"", null)
         var toExecute: MutableList<String> = mutableListOf()
         if(result.moveToFirst()) {
             while (!result.isAfterLast) {
-                //println(result.getString(result.getColumnIndex("IdRoutine")))
-                    hour = "12"
-                minute = "00"
-                var cursor = db!!.rawQuery("SELECT routineId FROM DBRoutine WHERE hour = \"" +
-                        hour + "\"" + "AND minute = \"" + minute  + "\"" +"AND routineId = \"" +
-                        result.getString(result.getColumnIndex("IdRoutine")) +"\"", null)
-                if(cursor.moveToFirst()) {
-                    while (!cursor.isAfterLast) {
-                        if (cursor.getString(cursor.getColumnIndex("routineId")) != null) {
-                            //TODO ejecutar rutina con id i
-                            println("Tengo la rutina " + cursor.getString(cursor.getColumnIndex("routineId")))
+                if (result.getString(result.getColumnIndex("IdRoutine")) != null) {
+                    var cursor = db!!.rawQuery(
+                        "SELECT routineId FROM DBRoutine WHERE hour = \"" +
+                                hour + "\"" + "AND minute = \"" + minute + "\"" + "AND routineId = \"" +
+                                result.getString(result.getColumnIndex("IdRoutine")) + "\"", null
+                    )
+                    if (cursor.moveToFirst()) {
+                        var j = 0
+                        while (!cursor.isAfterLast) {
+                            if (cursor.getString(cursor.getColumnIndex("routineId")) != null) {
+                                //TODO ejecutar rutina con id i
+                                println("Tengo la rutina " + cursor.getString(cursor.getColumnIndex("routineId")))
+                            }
+                            cursor.moveToNext()
                         }
-
+                        cursor.close()
                     }
-                    cursor.close()
-                    result.close()
                 }
+                result.moveToNext()
             }
-
         }
-
+        result.close()
     }
 }
