@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +23,7 @@ import com.udc.grandapp.utils.CommonMethods
 import kotlinx.android.synthetic.main.custom_rutina.view.*
 import kotlinx.android.synthetic.main.custom_rutina.view.descripcion
 
-class RoutinesAdapter(context : Context, val items: List<CustomerRoutine>, activity: FragmentActivity, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<RoutinesAdapter.ViewHolder>(){
+class RoutinesAdapter(context : Context, val items: List<CustomerRoutine>, activity: FragmentActivity, val listener: (ClipData.Item) -> Unit,val fragment: Fragment) : RecyclerView.Adapter<RoutinesAdapter.ViewHolder>(){
 
     private var mContext : Context = context
     private var mItems : List<CustomerRoutine> = items
@@ -63,13 +64,13 @@ class RoutinesAdapter(context : Context, val items: List<CustomerRoutine>, activ
             }
             modificar.setOnClickListener {
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                ft.replace(R.id.fragmentRoutines, UpdateRoutine(1))
+                ft.replace(R.id.fragmentRoutines, UpdateRoutine(1, item.id.toInt()))
                 ft.addToBackStack("RoutinesAdapter")
                 ft.commit()
             }
             custom_rutina_parent.setOnClickListener {
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                ft.replace(R.id.fragmentRoutines, UpdateRoutine(1))
+                ft.replace(R.id.fragmentRoutines, UpdateRoutine(1, item.id.toInt()))
                 ft.addToBackStack("RoutinesAdapter")
                 ft.commit()
             }

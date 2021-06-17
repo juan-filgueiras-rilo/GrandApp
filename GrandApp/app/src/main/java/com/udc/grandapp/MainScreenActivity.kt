@@ -11,6 +11,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.udc.grandapp.adapters.FragmentPageChanger
 import com.udc.grandapp.fragments.Devices
+import com.udc.grandapp.fragments.Routines
 import com.udc.grandapp.manager.GetDevicesManager
 import com.udc.grandapp.manager.GetRoutinesManager
 import com.udc.grandapp.manager.configuration.SharedPreferenceManager
@@ -63,10 +64,11 @@ class MainScreenActivity : AppCompatActivity() {
         if (fragClassName == Devices::class.java.getName()) {
             (fragClassName as Devices).reload()
             //set selected item position, etc
-        } /*else if (fragClassName == B::class.java.getName()) {
-            title = "B"
+        }
+        else if (fragClassName == Routines::class.java.getName()) {
+            (fragClassName as Routines).reload()
             //set selected item position, etc
-        } else if (fragClassName == C::class.java.getName()) {
+        }/* else if (fragClassName == C::class.java.getName()) {
             title = "C"
             //set selected item position, etc
         }*/

@@ -51,7 +51,7 @@ class ViewRoutineAdapter(context : Context, val items: List<RoutinesDevice>, fra
 
                     }
                     2 -> {
-                        ft.replace(R.id.drawerLayout, UpdateRoutine(2))
+                        ft.replace(R.id.drawerLayout, UpdateRoutine(2, item.id.toInt()))
                     }
                 }
                 ft.addToBackStack("ViewRoutineAdapter")

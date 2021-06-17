@@ -1,6 +1,7 @@
 package com.udc.grandapp.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -19,20 +20,25 @@ import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
+import com.udc.grandapp.items.CustomerRoutine
 import com.udc.grandapp.manager.UpdateRoutineManager
+import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
+import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
+import com.udc.grandapp.model.RoutinesModel
 import com.udc.grandapp.model.UpdateRoutineModel
 import com.udc.grandapp.utils.CommonMethods
 import kotlinx.android.synthetic.main.edit_rutina.*
 import java.util.*
 
-class UpdateRoutine(layout: Int) : Fragment() {
+class UpdateRoutine(layout: Int, idRoutine: Int) : Fragment() {
 
     private var layout : Int = layout
     private lateinit var rootView : View
     private lateinit var recyclerView: RecyclerView
+    private val idRoutine : Int = idRoutine
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.edit_rutina, container, false)
@@ -44,14 +50,11 @@ class UpdateRoutine(layout: Int) : Fragment() {
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
-        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1,"NombreProducto1", "loadURL", "", 1, ""),
-                CustomerDevice(2, "NombreProducto2", "loadURL", "", 1, ""),
-                CustomerDevice(3, "NombreProducto3", "loadURL", "", 1, "")
-        )
+        val listaExample: MutableList<CustomerDevice> = getDevicesFromByIdRutinaBD(context as FragmentActivity, idRoutine)
 
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
-                DevicesAdapter(it, listaExample, it1, R.layout.custom_dispositivosrutina, {
+                DevicesAdapter(it, listaExample as ArrayList<CustomerDevice>, it1, R.layout.custom_dispositivosrutina, {
                     Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
                 }, this)
             }
@@ -144,4 +147,16 @@ class UpdateRoutine(layout: Int) : Fragment() {
         val responseManager: IResponseManagerGeneric = ResponseManager()
         mUpdateRoutineManager.realizarOperacion(responseManager, DatosOperacionGeneric())
     }
+
+    private fun getDevicesFromByIdRutinaBD(context: Context, idRoutine: Int): MutableList<CustomerDevice> {
+        val dbManager = UserConfigManager(context)
+        val devicesModel: List<DevicesModel> = dbManager.getDevicesByRoutineFromBD(idRoutine)
+        val customerDevices: MutableList<CustomerDevice> = arrayListOf<CustomerDevice>()
+        for (device in devicesModel) {
+            customerDevices.add(CustomerDevice(device.id.toLong(), device.nombre, device.descripcion, device.url, device.puerto.toLong(), device.tipo))
+        }
+        UserConfigManager.reiniciarInfoPersistente(context)
+        return customerDevices
+    }
+
 }
