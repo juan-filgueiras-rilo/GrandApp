@@ -9,10 +9,7 @@ import android.view.InputDevice
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -47,16 +44,12 @@ class UpdateDevice(val id: Long, val nombre: String, val descripcion: String, va
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
         if(readOnly) {
-            rootView.findViewById<EditText>(R.id.editTextNombre).visibility = View.GONE
+            rootView.findViewById<LinearLayout>(R.id.editNombreLayout).visibility = View.GONE
             rootView.findViewById<TextView>(R.id.viewNombre).visibility = View.VISIBLE
-            rootView.findViewById<EditText>(R.id.editTextDescripcion).visibility = View.GONE
+            rootView.findViewById<LinearLayout>(R.id.editDescripcionLayout).visibility = View.GONE
             rootView.findViewById<TextView>(R.id.viewDescripcion).visibility = View.VISIBLE
             rootView.findViewById<TextView>(R.id.nombrePersonalizado).visibility = View.GONE
-            rootView.findViewById<Button>(R.id.aceptar).visibility = View.GONE
-            rootView.findViewById<Button>(R.id.cancelar).visibility = View.GONE
-        } else {
-            rootView.findViewById<Button>(R.id.aceptar).visibility = View.VISIBLE
-            rootView.findViewById<Button>(R.id.cancelar).visibility = View.VISIBLE
+            rootView.findViewById<LinearLayout>(R.id.dosBotones).visibility = View.GONE
         }
         return rootView
     }
