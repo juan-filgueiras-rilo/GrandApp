@@ -21,12 +21,15 @@ import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.manager.CreateRoutineManager
 import com.udc.grandapp.manager.configuration.UserConfigManager
+import com.udc.grandapp.manager.listeners.IResponseFragmentManagerGeneric
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosCreateRoutine
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.utils.CommonMethods
 import kotlinx.android.synthetic.main.custom_dispositivosrutina.view.*
+import kotlinx.android.synthetic.main.custom_lista.*
+import kotlinx.android.synthetic.main.custom_lista.view.*
 import kotlinx.android.synthetic.main.edit_rutina.*
 import java.util.*
 
@@ -34,6 +37,8 @@ class AddRoutine : Fragment() {
 
     private lateinit var rootView : View
     private lateinit var recyclerView: RecyclerView
+    private lateinit var responseManager: IResponseFragmentManagerGeneric
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.edit_rutina, container, false)
@@ -45,18 +50,33 @@ class AddRoutine : Fragment() {
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
-        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1,"NombreProducto1", "loadURL", "", 1, ""),
+        /*var listaExample = mutableListOf(CustomerDevice(1,"NombreProducto1", "loadURL", "", 1, ""),
                 CustomerDevice(2, "NombreProducto2", "loadURL", "", 1, ""),
-                CustomerDevice(3, "NombreProducto3", "loadURL", "", 1, "")
-        )
+                CustomerDevice(3, "NombreProducto3", "loadURL", "", 1, "")*/
 
-        recyclerView.adapter = context?.let {
-            activity?.let { it1 ->
-                DevicesAdapter(it, listaExample, it1, R.layout.custom_dispositivosrutina) {
-                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+        var listaExample = mutableListOf<CustomerDevice>()
+
+
+        class ResponseManager() : IResponseFragmentManagerGeneric {
+            lateinit var dispositivo: CustomerDevice
+            override  fun onSuccesResponse(model: CustomerDevice) {
+                listaExample.add(model)
+                recyclerView.adapter = context?.let {
+                    activity?.let { it1 ->
+                        DevicesAdapter(it, listaExample, it1, R.layout.custom_dispositivosrutina) {
+                            Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                            Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
+
+            }
+            override fun onErrorResponse(model: String) {
+
             }
         }
+        responseManager = ResponseManager()
+
 
         return rootView
     }
@@ -79,7 +99,7 @@ class AddRoutine : Fragment() {
         addDispositivoButton.setOnClickListener {
             Toast.makeText(context, "Añadir dispositivo", Toast.LENGTH_LONG).show()
             val ft: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
-            ft?.replace(R.id.crearRutina, DeviceList())
+            ft?.replace(R.id.crearRutina, DeviceList(responseManager))
             ft?.addToBackStack("Add Routines")
             ft?.commit()
         }

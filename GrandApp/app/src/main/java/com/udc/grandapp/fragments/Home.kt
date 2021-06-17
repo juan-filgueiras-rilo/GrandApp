@@ -45,7 +45,7 @@ class Home : Fragment() {
         val deviceSummaryListExample: List<DevicesModel> = UserConfigManager(context as FragmentActivity).getDevicesFromBD()
         deviceRecyclerView.adapter = context?.let {
             activity?.let { it1 ->
-                DeviceSummaryAdapter(it, deviceSummaryListExample, R.layout.fragment_principal, it1) {
+                DeviceSummaryAdapter(it, deviceSummaryListExample, it1) {
                 //Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
                 }
             }
