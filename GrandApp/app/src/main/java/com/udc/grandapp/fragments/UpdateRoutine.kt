@@ -10,11 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
+import ca.antonious.materialdaypicker.MaterialDayPicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
@@ -51,7 +53,6 @@ class UpdateRoutine(layout: Int, idRoutine: Int) : Fragment() {
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
         val listaExample: MutableList<CustomerDevice> = getDevicesFromByIdRutinaBD(context as FragmentActivity, idRoutine)
-
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
                 DevicesAdapter(it, listaExample as ArrayList<CustomerDevice>, it1, R.layout.custom_dispositivosrutina, {
@@ -100,6 +101,17 @@ class UpdateRoutine(layout: Int, idRoutine: Int) : Fragment() {
 
             }
         }
+        val routine: RoutinesModel = getRoutineByIdRutinaBD(context as FragmentActivity, idRoutine)
+
+        rootView.findViewById<TextView>(R.id.editTextNombre).text = routine.nombre
+        rootView.findViewById<TextView>(R.id.editTextDescripcion).text = routine.descripcion
+        rootView.findViewById<TimePicker>(R.id.datePicker1).hour = routine.hora
+        rootView.findViewById<TimePicker>(R.id.datePicker1).minute = routine.minuto
+
+        for (dia in routine.dias) {
+            rootView.findViewById<MaterialDayPicker>(R.id.dayPicker).selectDay(getWeekDay(dia))
+        }
+
         dayPicker.locale = Locale("es", "ES")
     }
 
@@ -157,6 +169,31 @@ class UpdateRoutine(layout: Int, idRoutine: Int) : Fragment() {
         }
         UserConfigManager.reiniciarInfoPersistente(context)
         return customerDevices
+    }
+
+    private fun getRoutineByIdRutinaBD(context: Context, idRoutine: Int): RoutinesModel {
+        val dbManager = UserConfigManager(context)
+        val routine: RoutinesModel = dbManager.getRoutineFromBD(idRoutine)
+        return routine
+    }
+
+    fun getWeekDay(dia : String) : MaterialDayPicker.Weekday {
+        if (dia == (MaterialDayPicker.Weekday.SUNDAY.name)) {
+            return MaterialDayPicker.Weekday.SUNDAY
+        } else if (dia == (MaterialDayPicker.Weekday.MONDAY.name)) {
+            return MaterialDayPicker.Weekday.MONDAY
+        } else if (dia == MaterialDayPicker.Weekday.TUESDAY.name) {
+            return MaterialDayPicker.Weekday.TUESDAY
+        } else if (dia == (MaterialDayPicker.Weekday.WEDNESDAY.name)) {
+            return MaterialDayPicker.Weekday.WEDNESDAY
+        } else if (dia == (MaterialDayPicker.Weekday.THURSDAY.name)) {
+            return MaterialDayPicker.Weekday.THURSDAY
+        } else if (dia == (MaterialDayPicker.Weekday.FRIDAY.name)) {
+            return MaterialDayPicker.Weekday.FRIDAY
+        } else if (dia == (MaterialDayPicker.Weekday.SATURDAY.name)) {
+            return MaterialDayPicker.Weekday.SATURDAY
+        }
+        return MaterialDayPicker.Weekday.SATURDAY;
     }
 
 }

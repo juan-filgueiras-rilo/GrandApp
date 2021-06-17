@@ -192,6 +192,27 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         return retval
     }
 
+    fun getRoutineFromBD(idRoutine: Int): RoutinesModel {
+        var retval: RoutinesModel = RoutinesModel()
+        try {
+            val db = this.writableDatabase
+            val res = db.rawQuery("SELECT * FROM DBRoutine WHERE routineId = ?", arrayOf(idRoutine.toString()))
+            while (res.moveToNext()) {
+                retval = RoutinesModel(
+                        res.getString(res.getColumnIndex("routineId")),
+                        res.getString(res.getColumnIndex("nombre")),
+                        res.getString(res.getColumnIndex("descripcion")),
+                        res.getInt(res.getColumnIndex("hour")),
+                        res.getInt(res.getColumnIndex("minute")),
+                        getDevicesByRoutineFromBD(res.getString(res.getColumnIndex("routineId")).toInt()),
+                        getDiasByRoutineFromBD(res.getString(res.getColumnIndex("routineId")).toInt()))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return retval
+    }
+
     fun getDiasByRoutineFromBD(idRoutine: Int): List<String> {
         val retval: MutableList<String> = arrayListOf()
         try {
