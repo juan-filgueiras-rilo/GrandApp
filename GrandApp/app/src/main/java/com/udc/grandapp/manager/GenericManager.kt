@@ -86,8 +86,8 @@ open class GenericManager(activity: Activity) {
     }
 
     fun realizarOperacion(response: IResponseManagerGeneric, datosOperacion: DatosOperacionGeneric){
+        var datos: DatosThreaded = DatosThreaded(mActivity, response, datosOperacion, mDialogPopup, GenericModel())
         try {
-            var datos: DatosThreaded = DatosThreaded(mActivity, response, datosOperacion, mDialogPopup, GenericModel())
 
             mActivity.runOnUiThread(Runnable {
                 try {
@@ -115,6 +115,7 @@ open class GenericManager(activity: Activity) {
 
         }catch (e:Exception){
             e.printStackTrace()
+            mActivity.runOnUiThread(Runnable { onPostExecute(datos) })
         }
     }
 

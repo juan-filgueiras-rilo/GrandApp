@@ -66,18 +66,6 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         }
     }
 
-    fun insertarUserBD(singUp: SignUpLoginModel) {
-        val db = this.writableDatabase
-        val values = ContentValues().apply {
-            put("userId", singUp.id)
-            put("token", singUp.token)
-            put("userName", singUp.userName)
-            put("email", singUp.email)
-            put("role", singUp.role)
-        }
-
-        val newRowId = db?.insert("DBUser", null, values)
-    }
 
     fun getUserInfoFromBD(): UserInfoModel? {
         var userInfoModel: UserInfoModel?
@@ -85,8 +73,8 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
             val db = this.writableDatabase
             val result = db.rawQuery("SELECT * FROM DBUser", null)
             if (result.moveToFirst())
-            //userInfoModel = UserInfoModel(res.getString(1), res.getString(3), res.getString(4), res.getString(5), res.getString(6), res.getString(2))
-                UserInfoModel(result.getString(result.getColumnIndex("email")), result.getString(result.getColumnIndex("role")), result.getString(result.getColumnIndex("token")), result.getString(result.getColumnIndex("userId")), result.getString(result.getColumnIndex("userName")), "")//res.getString(6))
+                UserInfoModel(result.getString(result.getColumnIndex("email")), result.getString(result.getColumnIndex("role")), result.getString(result.getColumnIndex("token")),
+                    result.getString(result.getColumnIndex("userId")), result.getString(result.getColumnIndex("userName")), result.getString(result.getColumnIndex("pwd")))
             else UserInfoModel("", "", "", "", "", "")
         } catch (e: Exception) {
             e.printStackTrace()
