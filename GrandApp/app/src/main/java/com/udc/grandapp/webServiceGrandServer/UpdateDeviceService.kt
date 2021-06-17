@@ -18,7 +18,7 @@ class UpdateDeviceService(): GrandServer() {
                     "    \"description\": \"${datosPeticion.description}\"\n" +
                     "}")
 
-            doPutRequest(body, MetodoUpdateDevice, datos)
+            doPutRequest(body, MetodoUpdateDevice, datos, token)
         }catch (e:Exception){
             e.printStackTrace()
         }
