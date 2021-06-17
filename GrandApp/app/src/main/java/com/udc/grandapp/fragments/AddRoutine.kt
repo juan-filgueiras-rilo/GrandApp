@@ -64,6 +64,7 @@ class AddRoutine : Fragment() {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         guardarRutina.setOnClickListener {
             Toast.makeText(context, "Guardar Rutina", Toast.LENGTH_LONG).show()
             if (!validarRutina()){

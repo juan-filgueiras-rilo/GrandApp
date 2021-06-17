@@ -44,9 +44,9 @@ class MainScreenActivity : AppCompatActivity() {
         viewPager = findViewById<ViewPager>(R.id.view_pager)
 
         initTabLayout()
-        Intent(this, RoutineAlarmService::class.java).also { intent ->
+        /*Intent(this, RoutineAlarmService::class.java).also { intent ->
             startService(intent) //TODO DESCOMENTAR ESTO
-        }
+        }*/
     }
 
     fun initTabLayout(){

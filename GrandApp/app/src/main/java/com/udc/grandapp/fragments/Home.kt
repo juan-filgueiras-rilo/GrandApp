@@ -9,6 +9,7 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DeviceSummaryAdapter
@@ -39,10 +40,11 @@ class Home : Fragment() {
         deviceRecyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, deviceRecyclerView)
 
+
         val deviceSummaryListExample: List<DevicesModel> = UserConfigManager(context as FragmentActivity).getDevicesFromBD()
         deviceRecyclerView.adapter = context?.let {
             activity?.let { it1 ->
-                DeviceSummaryAdapter(it, deviceSummaryListExample, it1) {
+                DeviceSummaryAdapter(it, deviceSummaryListExample, R.layout.fragment_principal, it1) {
                 //Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
                 }
             }
