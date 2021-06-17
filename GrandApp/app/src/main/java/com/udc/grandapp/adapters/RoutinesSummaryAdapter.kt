@@ -27,8 +27,7 @@ class RoutinesSummaryAdapter(context: Context, val items: List<RoutinesModel>, a
     private var mLayout: Int = layout
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoutinesSummaryAdapter.ViewHolder {
-        val view = LayoutInflater.from(mContext).inflate(R.layout.custom_rutina, parent, false)
-        view.findViewById<TextView>(R.id.modificar).visibility = View.GONE
+        val view = LayoutInflater.from(mContext).inflate(mLayout, parent, false)
         return RoutinesSummaryAdapter.ViewHolder(view)
     }
 
@@ -46,6 +45,7 @@ class RoutinesSummaryAdapter(context: Context, val items: List<RoutinesModel>, a
                 R.layout.custom_rutina -> {
                     nombreRutina.text = item.nombre
                     descripcion.text = item.descripcion
+                    modificar.visibility = View.GONE
                     ejecutar.setOnClickListener {
                         Toast.makeText(context, "Ejecutar rutina", Toast.LENGTH_LONG).show()
                     }
@@ -69,8 +69,12 @@ class RoutinesSummaryAdapter(context: Context, val items: List<RoutinesModel>, a
                     }
                 }
                 R.layout.custom_rutina_dispositivo -> {
-                    nombreRutinaDispositivo.text = item.nombre
-                    descripcion.text = item.descripcion
+                    routineName.text = item.nombre
+                    routineDescription.text = item.descripcion
+                }
+                R.layout.custom_rutina_dispositivo_read_only -> {
+                    routineName.text = item.nombre
+                    routineDescription.text = item.descripcion
                 }
             }
         }

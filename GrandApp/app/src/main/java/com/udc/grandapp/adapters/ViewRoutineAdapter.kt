@@ -40,8 +40,8 @@ class ViewRoutineAdapter(context : Context, val items: List<RoutinesDevice>, fra
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: RoutinesDevice, listener: (ClipData.Item) -> Unit, activity: FragmentActivity, layout: Int) = with(itemView) {
-            nombreRutinaDispositivo.text = item.nombre
-            descripcion.text = item.descripcion
+            routineName.text = item.nombre
+            routineDescription.text = item.descripcion
             ver.setOnClickListener {
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
                 when(layout){

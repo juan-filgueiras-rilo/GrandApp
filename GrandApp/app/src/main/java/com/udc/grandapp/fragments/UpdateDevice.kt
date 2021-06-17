@@ -51,22 +51,28 @@ class UpdateDevice(val id: Long, val nombre: String, val descripcion: String, va
             rootView.findViewById<TextView>(R.id.viewNombre).visibility = View.VISIBLE
             rootView.findViewById<EditText>(R.id.editTextDescripcion).visibility = View.GONE
             rootView.findViewById<TextView>(R.id.viewDescripcion).visibility = View.VISIBLE
+            rootView.findViewById<TextView>(R.id.nombrePersonalizado).visibility = View.GONE
             rootView.findViewById<Button>(R.id.aceptar).visibility = View.GONE
             rootView.findViewById<Button>(R.id.cancelar).visibility = View.GONE
         } else {
             rootView.findViewById<Button>(R.id.aceptar).visibility = View.VISIBLE
             rootView.findViewById<Button>(R.id.cancelar).visibility = View.VISIBLE
         }
+        return rootView
+    }
+
+    override fun onResume() {
+        super.onResume()
         val routineList: List<RoutinesModel> = UserConfigManager(context as FragmentActivity).getRoutinesFromBD()
 
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
-                RoutinesSummaryAdapter(it, routineList, it1, R.layout.custom_rutina_dispositivo) { Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show() }
+                RoutinesSummaryAdapter(it, routineList, it1, (if(readOnly) R.layout.custom_rutina_dispositivo_read_only else R.layout.custom_rutina_dispositivo)) {
+                    //Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                }
             }
         }
-        return rootView
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if(readOnly) {

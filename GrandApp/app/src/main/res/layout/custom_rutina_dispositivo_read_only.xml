@@ -24,14 +24,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:weightSum="26">
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:id="@+id/line1"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="17"
                     android:orientation="vertical">
 
                     <TextView
@@ -52,38 +50,6 @@
                         android:textSize="16sp"
                         android:gravity="center"
                         android:text="Descripción" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/line"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="9"
-                    android:gravity="center">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:weightSum="4">
-
-                        <TextView
-                            android:id="@+id/ver"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            app:drawableTopCompat="@mipmap/ver" />
-
-                        <TextView
-                            android:id="@+id/borrar"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            app:drawableTopCompat="@mipmap/papelera" />
-                    </LinearLayout>
 
                 </LinearLayout>
             </LinearLayout>
