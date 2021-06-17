@@ -7,13 +7,12 @@ import okhttp3.RequestBody
 
 class GetRoutinesService: GrandServer() {
 
-    fun getRoutines(datos: GenericManager.Companion.DatosThreaded, userId: String, token: String): GenericModel {
+    fun getRoutines(datos: GenericManager.Companion.DatosThreaded, userId: String, token: String) {
         try {
             val body: RequestBody = RequestBody.create(mediaType, "")
             doGetRequest(datos, body, MetodoGetRoutinesByUserId, token)
         }catch (e:Exception){
             e.printStackTrace()
         }
-        return GenericModel("0", "", "")
     }
 }

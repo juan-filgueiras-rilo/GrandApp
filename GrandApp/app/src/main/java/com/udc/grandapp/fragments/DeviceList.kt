@@ -1,5 +1,9 @@
 package com.udc.grandapp.fragments
 
+import android.app.Activity
+import android.content.ContentValues
+import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,31 +11,33 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DeviceSummaryAdapter
 import com.udc.grandapp.items.CustomerDevice
+import com.udc.grandapp.manager.GetDevicesManager
 import com.udc.grandapp.manager.configuration.UserConfigManager
+import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
+import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
 import com.udc.grandapp.model.DevicesModel
+import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.utils.CommonMethods
-import java.nio.channels.Selector
 
 class DeviceList : Fragment() {
 
     private lateinit var rootView : View
     private lateinit var recyclerView: RecyclerView
-    private lateinit var itemSelector: Selector
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_w_recycler, container, false)
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
-
-        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1, "NombreProducto1", "loadURL"),
-                CustomerDevice(2, "NombreProducto2", "loadURL"),
-                CustomerDevice(3, "NombreProducto3", "loadURL"))
+        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1,"NombreProducto1", "loadURL", "", 1, ""),
+                CustomerDevice(2, "NombreProducto2", "loadURL", "", 1, ""),
+                CustomerDevice(3, "NombreProducto3", "loadURL", "", 1, ""))
 
 
         val deviceSummaryListExample: List<DevicesModel> = UserConfigManager(context as FragmentActivity).getDevicesFromBD()
@@ -50,7 +56,7 @@ class DeviceList : Fragment() {
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
     }
 
-    /*fun getDevices(){
+    fun getDevices(){
         val mGetDevicesManager: GetDevicesManager = GetDevicesManager(context as Activity)
 
         class ResponseManager() : IResponseManagerGeneric {
@@ -90,5 +96,6 @@ class DeviceList : Fragment() {
 
         val responseManager: IResponseManagerGeneric = ResponseManager()
         mGetDevicesManager.realizarOperacion(responseManager, DatosOperacionGeneric())
-    }*/
+    }
+
 }

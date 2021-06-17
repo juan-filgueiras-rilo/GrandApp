@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.R
 import com.udc.grandapp.fragments.RoutineView
-import com.udc.grandapp.items.CustomerRoutine
+import com.udc.grandapp.model.RoutinesModel
 import kotlinx.android.synthetic.main.custom_rutina.view.*
 
-class RoutinesSummaryAdapter(context : Context, val items: List<CustomerRoutine>, activity: FragmentActivity, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<RoutinesSummaryAdapter.ViewHolder>(){
+class RoutinesSummaryAdapter(context : Context, val items: List<RoutinesModel>, activity: FragmentActivity, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<RoutinesSummaryAdapter.ViewHolder>(){
     private var mContext : Context = context
-    private var mItems : List<CustomerRoutine> = items
+    private var mItems : List<RoutinesModel> = items
     private var mActivity : FragmentActivity = activity
 
 
@@ -37,9 +37,9 @@ class RoutinesSummaryAdapter(context : Context, val items: List<CustomerRoutine>
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: CustomerRoutine, listener: (ClipData.Item) -> Unit, activity: FragmentActivity) = with(itemView) {
-            nombreRutina.text = item.name
-            descripcion.text = item.description
+        fun bind(item: RoutinesModel, listener: (ClipData.Item) -> Unit, activity: FragmentActivity) = with(itemView) {
+            nombreRutina.text = item.nombre
+            descripcion.text = item.descripcion
             ejecutar.setOnClickListener {
                 Toast.makeText(context, "Ejecutar rutina", Toast.LENGTH_LONG).show()
             }
@@ -57,7 +57,7 @@ class RoutinesSummaryAdapter(context : Context, val items: List<CustomerRoutine>
             }
             custom_rutina_parent.setOnClickListener {
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                ft.replace(R.id.mainFragment, RoutineView())
+                ft.replace(R.id.mainFragment, RoutineView(item))
                 ft.addToBackStack("RoutinesSummaryAdapter")
                 ft.commit()
             }

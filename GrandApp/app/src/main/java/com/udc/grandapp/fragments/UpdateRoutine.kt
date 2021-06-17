@@ -47,9 +47,9 @@ class UpdateRoutine(layout: Int) : Fragment() {
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
-        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1,"NombreProducto1", "loadURL"),
-                CustomerDevice(2, "NombreProducto2", "loadURL"),
-                CustomerDevice(3, "NombreProducto3", "loadURL")
+        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1,"NombreProducto1", "loadURL", "", 1, ""),
+                CustomerDevice(2, "NombreProducto2", "loadURL", "", 1, ""),
+                CustomerDevice(3, "NombreProducto3", "loadURL", "", 1, "")
         )
 
         recyclerView.adapter = context?.let {

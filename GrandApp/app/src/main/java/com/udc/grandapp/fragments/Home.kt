@@ -17,6 +17,7 @@ import com.udc.grandapp.adapters.RoutinesSummaryAdapter
 import com.udc.grandapp.items.CustomerRoutine
 import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.model.DevicesModel
+import com.udc.grandapp.model.RoutinesModel
 import com.udc.grandapp.utils.CommonMethods
 
 class Home : Fragment() {
@@ -50,13 +51,11 @@ class Home : Fragment() {
             }
         }
 
-        val routineListExample: List<CustomerRoutine> = listOf(CustomerRoutine(1, "NombreRutina1", "descripcion1", "url1"),
-                CustomerRoutine(2, "NombreRutina2", "descripcion2", "url2"),
-                CustomerRoutine(3, "NombreRutina3", "descripcion3", "url3"))
+        val routineListExample: List<RoutinesModel> = UserConfigManager(context as FragmentActivity).getRoutinesFromBD()
         routineRecyclerView.adapter = context?.let {
             activity?.let { it1 ->
                 RoutinesSummaryAdapter(it, routineListExample, it1) {
-                Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
                 }
             }
         }

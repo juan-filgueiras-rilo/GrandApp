@@ -2,11 +2,9 @@ package com.udc.grandapp.adapters
 
 import android.content.ClipData
 import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +13,7 @@ import com.udc.grandapp.R
 import com.udc.grandapp.fragments.RoutineView
 import com.udc.grandapp.fragments.UpdateRoutine
 import com.udc.grandapp.items.RoutinesDevice
+import com.udc.grandapp.model.RoutinesModel
 import kotlinx.android.synthetic.main.custom_rutina_dispositivo.view.*
 
 
@@ -47,7 +46,9 @@ class ViewRoutineAdapter(context : Context, val items: List<RoutinesDevice>, fra
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
                 when(layout){
                     1 -> {
-                        ft.replace(R.id.mainFragment, RoutineView())
+                        //ft.replace(R.id.mainFragment, RoutineView(item))
+                        ft.replace(R.id.mainFragment, RoutineView(RoutinesModel()))
+
                     }
                     2 -> {
                         ft.replace(R.id.drawerLayout, UpdateRoutine(2))

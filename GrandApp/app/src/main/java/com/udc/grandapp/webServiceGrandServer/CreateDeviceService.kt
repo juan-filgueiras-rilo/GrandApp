@@ -11,10 +11,11 @@ class CreateDeviceService: GrandServer() {
         val datosPeticion: DatosCreateDevice = datos.mDatosOperaction as DatosCreateDevice
         try {
             val body: RequestBody = RequestBody.create(mediaType, "{\n" +
-                    //"    \"id\": \"" + datosPeticion.id + "\",\n" +
                     "    \"name\": \"" + datosPeticion.name + "\",\n" +
                     "    \"description\": \""+ datosPeticion.description + "\",\n" +
-                    "    \"url\": \""+ datosPeticion.url + "\"\n" +
+                    "    \"url\": \""+ datosPeticion.url + "\",\n" +
+                    "    \"puerto\": \""+ datosPeticion.puerto + "\",\n" +
+                    "    \"tipo\": \""+ datosPeticion.tipo + "\"\n" +
                     "}")
 
             doPostRequest(body, MetodoCreateDevice, datos, true)
