@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteDatabase
 import com.udc.grandapp.items.CustomerRoutine
 import com.udc.grandapp.model.*
+import org.json.JSONObject
 
 class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 6) {
 
@@ -344,5 +345,24 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
     fun deleteDeviceById(id: Long) {
         val db = this.writableDatabase
         db.delete("DBDevice", "Id = $id", null)
+    }
+
+    fun insertarRutinaBD(model: CreateRoutineModel){
+        val db = this.writableDatabase
+        try {
+            val values = ContentValues().apply {
+                put("id", model.id)
+                put("nombre", model.name)
+                put("descripcion", model.description)
+                put("dispositivo", model.dispositivo)
+                put("userId", model.userId)
+                put("hour", model.hour)
+                put("minute", model.minute)
+                put("days", model.days)
+            }
+            val newRowId = db?.insert("DBDevice", null, values)
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
     }
 }

@@ -24,6 +24,7 @@ import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.manager.listeners.IResponseFragmentManagerGeneric
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosCreateRoutine
+import com.udc.grandapp.model.CreateRoutineModel
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.utils.CommonMethods
@@ -122,18 +123,19 @@ class AddRoutine : Fragment() {
                 override fun onSuccesResponse(model: GenericModel) {
                     val modelResponse: GenericModel = model as GenericModel
                     if (modelResponse.error == "0") {
-                        //val routine: CreateRoutineModel =  CreateRoutineModel.Parse(modelResponse.json)
-                        //insertarRutinaBD(login)
-                            //TODO Insertar en BD, cambiar estructura de bd para almacenar dispositivos asociados a rutina?
+                        val routine: CreateRoutineModel =  CreateRoutineModel.Parse(modelResponse.json)
+                        UserConfigManager(activity).insertarRutinaBD(routine)
                         CommonMethods.clearExistFragments(context as FragmentActivity)
                     }
                     else {//Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
-                        MaterialAlertDialogBuilder(activity)
+                        activity.runOnUiThread {
+                            MaterialAlertDialogBuilder(activity)
                                 .setTitle("Error")
                                 .setMessage(modelResponse.mensaje)
                                 .setNeutralButton("OK") { dialog, which ->
                                     // Respond to positive button press
                                 }.show()
+                        }
                     }
                 }
 
@@ -153,7 +155,9 @@ class AddRoutine : Fragment() {
             }
 
             var devices: MutableList<DevicesModel> = mutableListOf()
-            var items:Int = recyclerView.adapter!!.itemCount
+            var items:Int = 0
+            if (recyclerView.adapter != null)
+                items = recyclerView.adapter!!.itemCount
             for (i in 0 until items) {
                 devices.add(DevicesModel(
                         UserConfigManager.getUserInfoPersistente(context as Activity)!!.userId,
