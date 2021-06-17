@@ -24,6 +24,23 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
 
     }
 
+    fun insertarUserBD(singUp: SignUpLoginModel, pwd: String, context: Context){
+        val db = UserConfigManager(context).writableDatabase
+
+        val values = ContentValues().apply {
+            put("userId", singUp.id)
+            put("token",singUp.token)
+            put("userName", singUp.userName)
+            put("email", singUp.email)
+            put("role", singUp.role)
+            put("pwd", pwd)
+        }
+
+        val newRowId = db?.insert("DBUser", null, values)
+
+        UserConfigManager.reiniciarInfoPersistente(context)
+    }
+
     fun getUniqueIPs(): MutableList<String> {
         val retval: MutableList<String> = arrayListOf()
         try {

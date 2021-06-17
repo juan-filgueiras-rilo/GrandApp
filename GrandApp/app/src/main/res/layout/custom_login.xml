@@ -144,22 +144,6 @@
                 android:background="@color/white"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/identificarseGoogle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginBottom="0dp"
-                    android:backgroundTint="@color/cleargrey"
-                    android:textColor="@color/black"
-                    app:cornerRadius="50dp"
-                    android:text="@string/GOOGLE"
-                    android:drawableRight="@drawable/googleicon"
-                    android:paddingRight="50dip"/>
-
-
             </RelativeLayout>
 
             <TextView

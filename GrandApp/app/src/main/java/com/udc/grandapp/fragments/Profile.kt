@@ -50,6 +50,10 @@ class Profile : Fragment() {
             val intent: Intent = Intent(activity, MainActivity::class.java)
             activity?.startActivity(intent)
 
+            if (MainActivity.mGoogleSignInClientStatic != null){
+                MainActivity.mGoogleSignInClientStatic!!.signOut()
+            }
+
 
         }
         tagAcuerdoUsuario.setOnClickListener {
