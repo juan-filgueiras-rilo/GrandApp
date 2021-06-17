@@ -23,6 +23,7 @@ open class GrandServer {
     //Devices
     val MetodoGetDevicesByUserId: String = "/devices/getDevicesByUserId"
     val MetodoCreateDevice: String = "/devices/create"
+    val MetodoUpdateDevice: String = "/devices"
 
     //Routines
     val MetodoGetRoutinesByUserId: String = "/routines/getRoutinesByUserId"
@@ -87,18 +88,31 @@ open class GrandServer {
                 .build()
     }
 
-    fun doPutRequest(body: RequestBody, metodo: String) {
+    fun doPutRequest(body: RequestBody, metodo: String, datos: GenericManager.Companion.DatosThreaded) {
         val client: OkHttpClient = OkHttpClient()
         val mediaType = MediaType.parse("application/json; charset=utf-8")
+
 
         client.newCall(createPutRequest(body, metodo)).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
 
-            override fun onResponse(call: Call, response: Response) = println(
-                    response.body()?.string()
-            )
+            override fun onResponse(call: Call, response: Response) {
+                var resultado: GenericModel? = null
+                var resp: String? = null
+                try {
+                    resp = response.body()!!.string()
+                } catch (e: Exception) {
+                    resp = null
+                }
+
+                if (resp == null || resp.toLowerCase().contains("error"))
+                    resultado = GenericModel("1", resp!!, "")
+                else resultado = GenericModel("0", "", resp)
+                datos.mResultado = resultado!!
+                GenericManager.onPostExecute(datos)
+            }
         })
     }
 

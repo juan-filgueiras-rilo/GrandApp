@@ -12,7 +12,7 @@ class ChangePwdService: GrandServer() {
                     "    \"newpassword\": \"juan2\"\n" +
                     "}")
 
-            doPutRequest(body, MetodoChangePass)
+            //doPutRequest(body, MetodoChangePass)
         }catch (e:Exception){
             e.printStackTrace()
         }

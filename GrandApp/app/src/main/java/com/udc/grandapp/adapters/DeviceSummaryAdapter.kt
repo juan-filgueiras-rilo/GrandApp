@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.fragments.DeviceView
+import com.udc.grandapp.fragments.UpdateDevice
 import com.udc.grandapp.model.DevicesModel
 import kotlinx.android.synthetic.main.custom_lista.view.*
 
@@ -41,7 +42,7 @@ class DeviceSummaryAdapter(context : Context, val items: List<DevicesModel>, act
                     line1.setOnClickListener {
                         val ft: FragmentTransaction =
                             activity.supportFragmentManager.beginTransaction()
-                        ft.replace(R.id.mainFragment, DeviceView())
+                        ft.replace(R.id.mainFragment, UpdateDevice(item.id.toLong(), item.nombre, item.descripcion, true))
                         ft.addToBackStack("Summary")
                         ft.commit()
                     }

@@ -20,6 +20,7 @@ import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.items.CustomerDeviceSummary
+import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.utils.CommonMethods
 import es.udc.grandapp.ssdpconnect.client.SsdpClient
 import es.udc.grandapp.ssdpconnect.client.response.SsdpResponse
@@ -88,7 +89,10 @@ class NewDevice : Fragment() {
                 override fun onServiceDiscovered(service: SsdpService) {
                     val id = service.serialNumber.split("x")[1].toLong(radix = 16)
                     val puerto = service.location.split(":")[2].replace(",", "").toLong()
-                    deviceFound.postValue(CustomerDevice(id, "yeelight", "", service.remoteIp.hostAddress, puerto, "yeelight"))
+                    val currentIPs = UserConfigManager(context as FragmentActivity).getUniqueIPs()
+                    if (!currentIPs.contains(service.remoteIp.hostAddress)) {
+                        deviceFound.postValue(CustomerDevice(id, "yeelight", "", service.remoteIp.hostAddress, puerto, "yeelight"))
+                    }
                     Log.e("TAG", "Found service: $service")
                 }
 

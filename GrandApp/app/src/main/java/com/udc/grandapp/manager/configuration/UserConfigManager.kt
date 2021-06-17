@@ -8,10 +8,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteDatabase
 import android.view.View
-import com.udc.grandapp.model.CreateDeviceModel
-import com.udc.grandapp.model.DevicesModel
-import com.udc.grandapp.model.RoutinesModel
-import com.udc.grandapp.model.SignUpLoginModel
+import com.udc.grandapp.model.*
 
 class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 6) {
 
@@ -27,6 +24,21 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
             infoPersistente = UserConfigManager(context).getUserInfoFromBD()
         }
 
+    }
+
+    fun getUniqueIPs(): MutableList<String> {
+        val retval: MutableList<String> = arrayListOf()
+        try {
+            val db = this.writableDatabase
+            val result = db.rawQuery("SELECT DISTINCT url FROM DBDevice", null)
+            while (result.moveToNext()) {
+                retval.add(result.getString(result.getColumnIndex("url")))
+            }
+            result.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return retval
     }
 
     fun deleteUsersBD() {
@@ -84,6 +96,16 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
             val db = this.writableDatabase
             val userID: String = user.userId
             db.execSQL("UPDATE DBUser set userName = '$userName' WHERE userId = '$userID'")
+            reiniciarInfoPersistente(context)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun actualizarDevice(device: UpdateDeviceModel, context: Activity) {
+        try {
+            val db = this.writableDatabase
+            db.execSQL("UPDATE DBDevice set nombre = '${device.nombre}', descripcion = '${device.descripcion}' WHERE Id = '${device.id}'")
             reiniciarInfoPersistente(context)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -155,7 +177,6 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         try {
             val db = this.writableDatabase
             val result = db.rawQuery("SELECT * FROM DBDevice d join Routine_devices rd on d.id = rd.IdDevice WHERE idRoutine = ?", arrayOf(idRoutine.toString()))
-
             while (result.moveToNext()) {
                 retval.add(DevicesModel(
                         result.getString(result.getColumnIndex("Id")),
@@ -173,21 +194,21 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         return retval
     }
 
-    fun getDiasByRoutineFromBD(idRoutine : Int): List<String> {
-        val retval : MutableList<String> =  arrayListOf()
+    fun getDiasByRoutineFromBD(idRoutine: Int): List<String> {
+        val retval: MutableList<String> = arrayListOf()
         try {
             val db = this.writableDatabase
             val res = db.rawQuery("SELECT * FROM Routine_day WHERE idRoutine = ?", arrayOf(idRoutine.toString()))
             while (res.moveToNext()) {
                 retval.add(res.getString(res.getColumnIndex("day")))
             }
-        } catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
         return retval
     }
 
-    fun insertarRoutinesBBDD(routines : List<RoutinesModel>) {
+    fun insertarRoutinesBBDD(routines: List<RoutinesModel>) {
         val db = this.writableDatabase
         try {
             for (routine in routines) {
