@@ -77,7 +77,6 @@ class UpdateDevice(val id: Long, val nombre: String, val descripcion: String, va
         }
         aceptar.setOnClickListener {
             updateDevices()
-            CommonMethods.clearExistFragments(context as FragmentActivity)
         }
         cancelar.setOnClickListener {
             CommonMethods.clearExistFragments(context as FragmentActivity)
@@ -100,7 +99,9 @@ class UpdateDevice(val id: Long, val nombre: String, val descripcion: String, va
                 if (modelResponse.error == "0") {
                     val device: UpdateDeviceModel = UpdateDeviceModel.Parse(modelResponse.json)
                     UserConfigManager(activity).actualizarDevice(device, activity)
-
+                    activity.runOnUiThread {
+                        CommonMethods.clearExistFragments(context as FragmentActivity)
+                    }
                 } else {
                     MaterialAlertDialogBuilder(activity)
                             .setTitle("Error")

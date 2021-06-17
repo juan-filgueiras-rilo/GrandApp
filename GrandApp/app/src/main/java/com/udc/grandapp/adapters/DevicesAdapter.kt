@@ -10,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.R
+import com.udc.grandapp.fragments.Devices
 import com.udc.grandapp.fragments.UpdateDevice
 import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.manager.CreateDeviceManager
@@ -30,13 +32,13 @@ import kotlinx.android.synthetic.main.custom_dispositivo.view.*
 import kotlinx.android.synthetic.main.custom_dispositivorutinaview.view.*
 import kotlinx.android.synthetic.main.custom_dispositivosrutina.view.*
 import kotlinx.android.synthetic.main.custom_lista.view.*
-import kotlinx.android.synthetic.main.custom_lista.view.descripcion
 import kotlinx.android.synthetic.main.custom_nuevodispositivo.view.*
-import kotlinx.android.synthetic.main.fragment_devices.view.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
-class DevicesAdapter(context: Context, items: List<CustomerDevice>, activity: FragmentActivity, layout: Int, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<DevicesAdapter.ViewHolder>() {
+class DevicesAdapter(context: Context, items: List<CustomerDevice>, activity: FragmentActivity, layout: Int, val listener: (ClipData.Item) -> Unit, val fragment: Fragment) : RecyclerView.Adapter<DevicesAdapter.ViewHolder>() {
 
     private var mContext: Context = context
     private var mItems: ArrayList<CustomerDevice> = items as ArrayList<CustomerDevice>
@@ -50,7 +52,7 @@ class DevicesAdapter(context: Context, items: List<CustomerDevice>, activity: Fr
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(mItems[position], listener, mLayout, mActivity, mItems, this)
+        holder.bind(mItems[position], listener, mLayout, mActivity, mItems, this, fragment)
     }
 
     override fun getItemCount(): Int {
@@ -64,7 +66,7 @@ class DevicesAdapter(context: Context, items: List<CustomerDevice>, activity: Fr
         notifyItemRangeChanged(position, mItems.size)*/
     }
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: CustomerDevice, listener: (ClipData.Item) -> Unit, mLayout: Int, activity: FragmentActivity, items: List<CustomerDevice>, adapter: DevicesAdapter) = with(itemView) {
+        fun bind(item: CustomerDevice, listener: (ClipData.Item) -> Unit, mLayout: Int, activity: FragmentActivity, items: List<CustomerDevice>, adapter: DevicesAdapter, fragment: Fragment) = with(itemView) {
             when (mLayout) {
                 R.layout.custom_dispositivo -> {
                     nombreProducto_cd.text = item.nombre
@@ -79,7 +81,8 @@ class DevicesAdapter(context: Context, items: List<CustomerDevice>, activity: Fr
                     }
                     consulta.setOnClickListener {
                         val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                        ft.replace(R.id.fragmentDevices, UpdateDevice(item.id, item.nombre, item.descripcion, false))
+                        ft?.detach(fragment)
+                        ft.replace(R.id.main_container, UpdateDevice(item.id, item.nombre, item.descripcion, false))
                         ft.addToBackStack("DevicesAdapter")
                         ft.commit()
                     }
@@ -141,6 +144,7 @@ class DevicesAdapter(context: Context, items: List<CustomerDevice>, activity: Fr
                     modificardisp.setOnClickListener {
                         val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
                         ft.replace(R.id.crearRutina, UpdateDevice(item.id, item.nombre, item.descripcion, false))
+                        ft?.detach(fragment)
                         ft.addToBackStack("DevicesAdapter")
                         ft.commit()
                     }

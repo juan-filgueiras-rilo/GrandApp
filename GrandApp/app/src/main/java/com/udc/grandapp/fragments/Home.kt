@@ -41,12 +41,16 @@ class Home : Fragment() {
         deviceRecyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, deviceRecyclerView)
 
+        return rootView
+    }
 
+    override fun onResume() {
+        super.onResume()
         val deviceSummaryListExample: List<DevicesModel> = UserConfigManager(context as FragmentActivity).getDevicesFromBD()
         deviceRecyclerView.adapter = context?.let {
             activity?.let { it1 ->
                 DeviceSummaryAdapter(it, deviceSummaryListExample, it1) {
-                //Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                    //Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -59,9 +63,8 @@ class Home : Fragment() {
                 }
             }
         }
-        return rootView
-    }
 
+    }
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, routineRecyclerView)
