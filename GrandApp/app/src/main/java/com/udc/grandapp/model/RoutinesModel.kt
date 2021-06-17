@@ -36,11 +36,6 @@ class RoutinesModel() {
 
                         val array: JSONArray = JSONArray(json)
                         for (i in 0 until array.length()) {
-                                val url: String = try {
-                                        array.getJSONObject(i).get("url").toString()
-                                } catch (e: JSONException) {
-                                        ""
-                                }
                                 retval.add(RoutinesModel(
                                         array.getJSONObject(i).get("id").toString(),
                                         array.getJSONObject(i).get("name").toString(),
@@ -54,10 +49,12 @@ class RoutinesModel() {
 
                         return retval
                 }
-
+                fun ParseList(json: String): List<RoutinesModel>{
+                        return Parse("[$json]")
+                }
                 fun getDispositivos(routine : JSONObject): MutableList<DevicesModel> {
                         val retval: MutableList<DevicesModel> = arrayListOf()
-                                retval.addAll(DevicesModel.Parse(routine.get("deviceList").toString()))
+                                retval.addAll(DevicesModel.ParseIds(routine.get("deviceList").toString()))
                         return retval
                 }
 

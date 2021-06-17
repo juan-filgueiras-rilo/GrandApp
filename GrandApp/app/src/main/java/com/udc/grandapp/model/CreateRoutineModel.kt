@@ -18,13 +18,13 @@ data class CreateRoutineModel(
                 fun Parse(json: String): CreateRoutineModel {
                         return CreateRoutineModel(
                                 JSONObject(json)["id"].toString(),
-                                JSONObject(json)["nombre"].toString(),
+                                JSONObject(json)["name"].toString(),
                                 JSONObject(json)["description"].toString(),
-                                JSONObject(json)["dispositivo"].toString(),
+                                JSONObject(json)["deviceList"].toString(),
                                 JSONObject(json)["userId"].toString(),
                                 JSONObject(json)["hour"].toString(),
                                 JSONObject(json)["minute"].toString(),
-                                JSONObject(json)["days"].toString()
+                                JSONObject(json)["dias"].toString()
                         )
                 }
         }

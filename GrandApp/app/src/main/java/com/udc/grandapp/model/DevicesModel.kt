@@ -1,5 +1,6 @@
 package com.udc.grandapp.model
 
+import android.util.JsonReader
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -61,6 +62,16 @@ class DevicesModel() {
                     json.get("puerto").toString(),
                     json.get("tipo").toString(),
             )
+        }
+
+        fun ParseIds(json:String): List<DevicesModel> {
+            val array = JSONArray(json)
+            val retVal = arrayListOf<DevicesModel>()
+            for (i in 0 until array.length()) {
+                val obj = JSONObject(array.get(i).toString())
+                retVal.add(DevicesModel(obj.get("id").toString(), "", "", "", "", ""))
+            }
+            return retVal
         }
     }
 }

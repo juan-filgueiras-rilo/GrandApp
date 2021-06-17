@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
@@ -19,6 +20,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
+import com.udc.grandapp.items.RoutinesDevice
 import com.udc.grandapp.manager.CreateRoutineManager
 import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.manager.listeners.IResponseFragmentManagerGeneric
@@ -27,6 +29,7 @@ import com.udc.grandapp.manager.transferObjects.DatosCreateRoutine
 import com.udc.grandapp.model.CreateRoutineModel
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
+import com.udc.grandapp.model.RoutinesModel
 import com.udc.grandapp.utils.CommonMethods
 import kotlinx.android.synthetic.main.custom_dispositivosrutina.view.*
 import kotlinx.android.synthetic.main.custom_lista.*
@@ -40,7 +43,7 @@ class AddRoutine : Fragment() {
     private lateinit var rootView : View
     private lateinit var recyclerView: RecyclerView
     private lateinit var responseManager: IResponseFragmentManagerGeneric
-
+    private val mDeviceList: ArrayList<Int> = arrayListOf()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.edit_rutina, container, false)
@@ -59,6 +62,7 @@ class AddRoutine : Fragment() {
                 var repetido = listaExample.find { disp -> model.equals(disp) }
                 if (repetido == null) {
                     listaExample.add(model)
+                    mDeviceList.add(model.id.toInt())
                 }
                 refresh(listaExample)
             }
@@ -123,9 +127,9 @@ class AddRoutine : Fragment() {
                 override fun onSuccesResponse(model: GenericModel) {
                     val modelResponse: GenericModel = model as GenericModel
                     if (modelResponse.error == "0") {
-                        val routine: CreateRoutineModel =  CreateRoutineModel.Parse(modelResponse.json)
-                        UserConfigManager(activity).insertarRutinaBD(routine)
-                        CommonMethods.clearExistFragments(context as FragmentActivity)
+                        val routine: List<RoutinesModel> =  RoutinesModel.ParseList(modelResponse.json)
+                        UserConfigManager(activity).insertarRoutinesBBDD(routine)
+                        activity.runOnUiThread{goBack()}
                     }
                     else {//Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
                         activity.runOnUiThread {
@@ -140,12 +144,12 @@ class AddRoutine : Fragment() {
                 }
 
                 override fun onErrorResponse(model: String) {
-                    MaterialAlertDialogBuilder(activity)
+                    activity.runOnUiThread{MaterialAlertDialogBuilder(activity)
                         .setTitle("Error")
-                        .setMessage("Error al guardar la rutina")
+                        .setMessage(model)
                         .setNeutralButton("OK") { dialog, which ->
                             // Respond to positive button press
-                        }.show()
+                        }.show()}
                 }
             }
             val responseManager: IResponseManagerGeneric = ResponseManager()
@@ -155,14 +159,11 @@ class AddRoutine : Fragment() {
             }
 
             var devices: MutableList<DevicesModel> = mutableListOf()
-            var items:Int = 0
-            if (recyclerView.adapter != null)
-                items = recyclerView.adapter!!.itemCount
-            for (i in 0 until items) {
+            for (id in mDeviceList) {
                 devices.add(DevicesModel(
-                        UserConfigManager.getUserInfoPersistente(context as Activity)!!.userId,
-                        (recyclerView.Recycler().getViewForPosition(i).nombreDisp.text as String),
-                        (recyclerView.Recycler().getViewForPosition(i).descripciondisp.text as String),
+                        id.toString(),
+                        "",
+                        "",
                         "",
                         "",
                         "")) //TODO CORREGIR ESTA VAINA
@@ -184,5 +185,7 @@ class AddRoutine : Fragment() {
             }
         }
     }
-
+    fun goBack() {
+        //CommonMethods.clearExistFragments(context as FragmentActivity)
+    }
 }

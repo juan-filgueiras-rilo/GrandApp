@@ -14,22 +14,27 @@ public class CreateRoutineService(): GrandServer() {
             println(datosPeticion.userId)
             println(datosPeticion.dayList)
             println(datosPeticion.description)
-            println(datosPeticion.deviceList)
+            for (device in datosPeticion.deviceList) {
+                println(device)
+            }
             println(datosPeticion.name)
             println(datosPeticion.hour)
             println(datosPeticion.minute)
 
             var dispositivosParseAux: String = "\"id\" : 1"
 
-            var dispositivosParse: String = ""
-
+            var dispositivosParse = StringBuilder("")
+            var i = 0
             for (device in datosPeticion.deviceList) {
-                dispositivosParse.plus( "    {" +
-                        "    \"name\": \"" + device.nombre + "\",\n" +
-                        "    \"description\": \"" + device.descripcion + "\"\n" +
-                        "    \"userId\": \"" + device.id + "\"\n" +
-                        "    },\n")
-
+                i += 1
+                dispositivosParse = dispositivosParse.append( "    {" +
+                        "    \"id\": \"" + device.id + "\"\n" +
+                        "    }")
+                if (i == datosPeticion.deviceList.size) {
+                    dispositivosParse.append("\n")
+                } else {
+                    dispositivosParse.append(",\n")
+                }
             }
 
             val daysBuilder = StringBuilder("")
@@ -43,9 +48,7 @@ public class CreateRoutineService(): GrandServer() {
             bodySB.append("    \"description\": \"" + datosPeticion.description + "\",\n")
             bodySB.append("    \"userId\": \"" + datosPeticion.userId + "\",\n")
             bodySB.append("    \"deviceList\": [\n")
-            bodySB.append("        {\n")
-            bodySB.append("            " + dispositivosParseAux + "\n")
-            bodySB.append("        }\n")
+            bodySB.append("            " + dispositivosParse + "\n")
             bodySB.append("    ],\n")
             bodySB.append("    \"dias\": [\n")
             bodySB.append("            " + daysBuilder.toString().dropLast(1) + " ],\n")
