@@ -46,7 +46,6 @@ class MainScreenActivity : AppCompatActivity() {
         tabLayout = findViewById<TabLayout>(R.id.tabLayout)
         viewPager = findViewById<ViewPager>(R.id.view_pager)
 
-        initTabLayout()
         /*Intent(this, RoutineAlarmService::class.java).also { intent ->
             startService(intent) //TODO DESCOMENTAR ESTO
         }*/
@@ -146,6 +145,7 @@ class MainScreenActivity : AppCompatActivity() {
                     val routines: List<RoutinesModel> =  RoutinesModel.Parse(modelResponse.json)
                     UserConfigManager(activity).deleteRoutinesFromBD()
                     UserConfigManager(activity).insertarRoutinesBBDD(routines)
+                    activity.runOnUiThread({initTabLayout()})
                 }
                 else {
                     //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
@@ -169,6 +169,7 @@ class MainScreenActivity : AppCompatActivity() {
                             .setNeutralButton("OK"){ dialog, which ->
                                 // Respond to positive button press
                             }.show()
+                    initTabLayout()
                 }
             }
         }
