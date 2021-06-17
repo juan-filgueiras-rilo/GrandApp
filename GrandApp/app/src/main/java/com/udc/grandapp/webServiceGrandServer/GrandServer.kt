@@ -24,6 +24,7 @@ open class GrandServer {
     val MetodoGetDevicesByUserId: String = "/devices/getDevicesByUserId"
     val MetodoCreateDevice: String = "/devices/create"
     val MetodoUpdateDevice: String = "/devices"
+    val MetodoDeleteDevice: String = "/devices"
 
     //Routines
     val MetodoGetRoutinesByUserId: String = "/routines/getRoutinesByUserId"
@@ -179,7 +180,7 @@ open class GrandServer {
                 .build()
     }
 
-    fun doDeleteRequest(body: RequestBody, metodo: String) {
+    fun doDeleteRequest(body: RequestBody, metodo: String, datos: GenericManager.Companion.DatosThreaded) {
         val client: OkHttpClient = OkHttpClient()
         val mediaType = MediaType.parse("application/json; charset=utf-8")
 
@@ -188,9 +189,21 @@ open class GrandServer {
                 e.printStackTrace()
             }
 
-            override fun onResponse(call: Call, response: Response) = println(
-                    response.body()?.string()
-            )
+            override fun onResponse(call: Call, response: Response) {
+                var resultado: GenericModel? = null
+                var resp: String? = null
+                try {
+                    resp = response.body()!!.string()
+                } catch (e: Exception) {
+                    resp = null
+                }
+
+                if (resp == null || resp.toLowerCase().contains("error"))
+                    resultado = GenericModel("1", resp!!, "")
+                else resultado = GenericModel("0", "", resp)
+                datos.mResultado = resultado!!
+                GenericManager.onPostExecute(datos)
+            }
         })
     }
 }

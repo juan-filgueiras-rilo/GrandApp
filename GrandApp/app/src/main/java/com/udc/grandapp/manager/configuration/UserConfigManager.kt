@@ -4,10 +4,8 @@ import android.content.ContentValues
 import android.app.Activity
 import com.udc.grandapp.model.UserInfoModel
 import android.content.Context
-import android.database.Cursor
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteDatabase
-import android.view.View
 import com.udc.grandapp.model.*
 
 class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 6) {
@@ -285,4 +283,8 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         val newRowId = db?.insert("Routine_day", null, values)
     }
 
+    fun deleteDeviceById(id: Long) {
+        val db = this.writableDatabase
+        db.delete("DBDevice", "Id = $id", null)
+    }
 }

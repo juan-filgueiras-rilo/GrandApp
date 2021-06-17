@@ -62,7 +62,7 @@ class Devices : Fragment() {
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
                 mCustomerDevices = getDevicesFromBD(it)
-                DevicesAdapter(it, mCustomerDevices, it1, R.layout.custom_dispositivo) {
+                DevicesAdapter(it, mCustomerDevices as ArrayList<CustomerDevice>, it1, R.layout.custom_dispositivo) {
                     Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
                 }
             }

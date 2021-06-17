@@ -1,8 +1,6 @@
 package com.udc.grandapp.adapters
 
-import android.bluetooth.BluetoothClass
 import android.content.ClipData
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
@@ -11,24 +9,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import androidx.annotation.MainThread
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.R
 import com.udc.grandapp.fragments.UpdateDevice
 import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.manager.CreateDeviceManager
+import com.udc.grandapp.manager.DeleteDeviceManager
 import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosCreateDevice
-import com.udc.grandapp.model.CreateDeviceModel
+import com.udc.grandapp.manager.transferObjects.DatosDeleteDevice
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
-import com.udc.grandapp.webServiceHandleDevice.DeviceServer
 import com.udc.grandapp.webServiceHandleDevice.HandleDeviceService
 import kotlinx.android.synthetic.main.custom_dispositivo.view.*
 import kotlinx.android.synthetic.main.custom_dispositivorutinaview.view.*
@@ -36,13 +32,14 @@ import kotlinx.android.synthetic.main.custom_dispositivosrutina.view.*
 import kotlinx.android.synthetic.main.custom_lista.view.*
 import kotlinx.android.synthetic.main.custom_lista.view.descripcion
 import kotlinx.android.synthetic.main.custom_nuevodispositivo.view.*
+import kotlinx.android.synthetic.main.fragment_devices.view.*
 import kotlinx.coroutines.*
 
 
-class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity: FragmentActivity, layout: Int, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<DevicesAdapter.ViewHolder>() {
+class DevicesAdapter(context: Context, items: List<CustomerDevice>, activity: FragmentActivity, layout: Int, val listener: (ClipData.Item) -> Unit) : RecyclerView.Adapter<DevicesAdapter.ViewHolder>() {
 
     private var mContext: Context = context
-    private var mItems: List<CustomerDevice> = items
+    private var mItems: ArrayList<CustomerDevice> = items as ArrayList<CustomerDevice>
     private var mActivity: FragmentActivity = activity
     private var mLayout: Int = layout
 
@@ -61,9 +58,10 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
     }
 
     fun refresh(position: Int) {
-        mItems.drop(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, mItems.size);
+        mItems.removeAt(position)
+        notifyDataSetChanged()
+/*        notifyItemRemoved(position)
+        notifyItemRangeChanged(position, mItems.size)*/
     }
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: CustomerDevice, listener: (ClipData.Item) -> Unit, mLayout: Int, activity: FragmentActivity, items: List<CustomerDevice>, adapter: DevicesAdapter) = with(itemView) {
@@ -79,9 +77,6 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
                             encender.backgroundTintList = ContextCompat.getColorStateList(context,R.color.cleargrey);
                         }
                     }
-/*
-                    bombilla_cd.setBackgroundColor(context.resources.getColor(R.color.green))
-*/
                     consulta.setOnClickListener {
                         val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
                         ft.replace(R.id.fragmentDevices, UpdateDevice(item.id, item.nombre, item.descripcion, false))
@@ -108,7 +103,31 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
                                     // Respond to negative button press
                                 }
                                 .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
-                                    // Respond to positive button press
+                                    val deleteDeviceManager = DeleteDeviceManager(activity)
+                                    val responseManager: IResponseManagerGeneric = object : IResponseManagerGeneric {
+                                        override fun onSuccesResponse(model: GenericModel) {
+                                            val modelResponse: GenericModel = model
+                                            Log.e(TAG, modelResponse.toString())
+                                            if (modelResponse.error == "0") {
+                                                UserConfigManager(context).deleteDeviceById(item.id)
+                                                activity.runOnUiThread {
+                                                    adapter.refresh(adapterPosition)
+                                                }
+                                            } else activity.runOnUiThread {Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()}
+                                        }
+
+                                        override fun onErrorResponse(model: String) {
+                                            activity.runOnUiThread {
+                                                MaterialAlertDialogBuilder(activity)
+                                                        .setTitle(resources.getString(R.string.error))
+                                                        .setMessage(model)
+                                                        .setNeutralButton(resources.getString(R.string.ok)) { dialog, which ->
+                                                            // Respond to positive button press
+                                                        }.show()
+                                            }
+                                        }
+                                    }
+                                    deleteDeviceManager.realizarOperacion(responseManager, DatosDeleteDevice(item.id.toString()))
                                 }
                                 .show()
                     }
@@ -162,7 +181,9 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
                                                    if (modelResponse.error == "0") {
                                                        val addDevice: DevicesModel = DevicesModel.ParseOne(modelResponse.json)
                                                        UserConfigManager(context).insertarDeviceBBDD(listOf(addDevice))
-                                                       adapter.refresh(adapterPosition)
+                                                       activity.runOnUiThread {
+                                                           adapter.refresh(adapterPosition)
+                                                       }
                                                    } else activity.runOnUiThread {Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()}
                                                }
 

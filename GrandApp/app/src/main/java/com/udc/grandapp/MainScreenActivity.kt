@@ -1,7 +1,6 @@
 package com.udc.grandapp
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +18,6 @@ import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.model.RoutinesModel
-import com.udc.grandapp.services.RoutineAlarmService
 import com.udc.grandapp.utils.CommonMethods
 
 class MainScreenActivity : AppCompatActivity() {

@@ -54,7 +54,7 @@ class RoutineView(item: RoutinesModel) : Fragment() {
         }
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
-                DevicesAdapter(it, listaDispositivos, it1, R.layout.custom_dispositivorutinaview) {
+                DevicesAdapter(it, listaDispositivos as ArrayList<CustomerDevice>, it1, R.layout.custom_dispositivorutinaview) {
                     Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
                 }
             }
