@@ -1,5 +1,7 @@
 package com.udc.grandapp.model
 
+import org.json.JSONObject
+
 class UpdateDeviceModel() {
     lateinit var id: String
     lateinit var nombre: String
@@ -14,8 +16,13 @@ class UpdateDeviceModel() {
     }
 
     companion object{
-        fun Parse(json: String): UpdateDeviceModel{
-            return UpdateDeviceModel("1", "bombilla", "bombilla", "user1")
+        fun Parse(json: String): UpdateDeviceModel {
+            return UpdateDeviceModel(
+                    JSONObject(json)["id"].toString(),
+                    JSONObject(json)["name"].toString(),
+                    JSONObject(json)["description"].toString(),
+                    JSONObject(json)["url"].toString(),
+            )
         }
     }
 }

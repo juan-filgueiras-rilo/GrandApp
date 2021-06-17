@@ -42,7 +42,7 @@ class DeviceSummaryAdapter(context : Context, val items: List<DevicesModel>, act
 
             line1.setOnClickListener {
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                ft.replace(R.id.mainFragment, DeviceView())
+                ft.replace(R.id.mainFragment, UpdateDevice(item.id.toLong(), item.nombre, item.descripcion, true))
                 ft.addToBackStack("Summary")
                 ft.commit()
             }

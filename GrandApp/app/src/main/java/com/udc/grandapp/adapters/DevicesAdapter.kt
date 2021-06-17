@@ -84,7 +84,7 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
 */
                     consulta.setOnClickListener {
                         val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                        ft.replace(R.id.fragmentDevices, UpdateDevice())
+                        ft.replace(R.id.fragmentDevices, UpdateDevice(item.id, item.nombre, item.descripcion, false))
                         ft.addToBackStack("DevicesAdapter")
                         ft.commit()
                     }
@@ -114,22 +114,22 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
                     }
                 }
                 R.layout.custom_dispositivosrutina -> {
-                    nombreDisp.setText(item.nombre)
-                    descripciondisp.setText(item.descripcion)
+                    nombreDisp.text = item.nombre
+                    descripciondisp.text = item.descripcion
                     eliminardisp.setOnClickListener {
                         //TODO eliminar dispositivo de lista
                     }
                     modificardisp.setOnClickListener {
                         val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                        ft.replace(R.id.crearRutina, UpdateDevice())
+                        ft.replace(R.id.crearRutina, UpdateDevice(item.id, item.nombre, item.descripcion, false))
                         ft.addToBackStack("DevicesAdapter")
                         ft.commit()
                     }
 
                 }
                 R.layout.custom_lista -> {
-                    nombreDispositivo.setText(item.nombre)
-                    descripcion.setText(item.descripcion)
+                    nombreDispositivo.text = item.nombre
+                    descripcion.text = item.descripcion
                     r_customlista.setOnClickListener {
                         //CommonMethods.clearExistFragments(context as FragmentActivity)
                         // Al seleccionar un dispositivo deberíamos poder seguir configurando la rutina

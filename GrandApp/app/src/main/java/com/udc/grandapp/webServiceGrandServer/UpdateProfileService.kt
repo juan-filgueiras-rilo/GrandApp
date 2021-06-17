@@ -13,7 +13,7 @@ class UpdateProfileService: GrandServer() {
                     "    \"email\": \"juan@juan.com\"\n" +
                     "}")
 
-            doPutRequest(body, MetodoChangePass)
+            //doPutRequest(body, MetodoChangePass)
         }catch (e:Exception){
             e.printStackTrace()
         }

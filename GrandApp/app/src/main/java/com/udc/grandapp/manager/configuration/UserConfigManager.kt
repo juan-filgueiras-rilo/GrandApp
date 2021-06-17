@@ -2,16 +2,12 @@ package com.udc.grandapp.manager.configuration
 
 import android.content.ContentValues
 import android.app.Activity
-import com.udc.grandapp.model.UserInfoModel
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteDatabase
 import android.view.View
-import com.udc.grandapp.model.CreateDeviceModel
-import com.udc.grandapp.model.DevicesModel
-import com.udc.grandapp.model.RoutinesModel
-import com.udc.grandapp.model.SignUpLoginModel
+import com.udc.grandapp.model.*
 
 class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 6) {
 
@@ -27,6 +23,21 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
             infoPersistente = UserConfigManager(context).getUserInfoFromBD()
         }
 
+    }
+
+    fun getUniqueIPs(): MutableList<String> {
+        val retval: MutableList<String> = arrayListOf()
+        try {
+            val db = this.writableDatabase
+            val result = db.rawQuery("SELECT DISTINCT url FROM DBDevice", null)
+            while (result.moveToNext()) {
+                retval.add(result.getString(result.getColumnIndex("url")))
+            }
+            result.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return retval
     }
 
     fun deleteUsersBD() {
@@ -90,6 +101,16 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         }
     }
 
+    fun actualizarDevice(device: UpdateDeviceModel, context: Activity) {
+        try {
+            val db = this.writableDatabase
+            db.execSQL("UPDATE DBDevice set nombre = '${device.nombre}', descripcion = '${device.descripcion}' WHERE Id = '${device.id}'")
+            reiniciarInfoPersistente(context)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     override fun onCreate(db: SQLiteDatabase?) {
         TODO("Not yet implemented")
     }
@@ -123,18 +144,16 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         try {
             val db = this.writableDatabase
             val result = db.rawQuery("SELECT * FROM DBDevice", null)
-            if (result.moveToFirst()) {
-                while (result.moveToNext()) {
-                    retval.add(DevicesModel(
-                            result.getString(result.getColumnIndex("Id")),
-                            result.getString(result.getColumnIndex("nombre")),
-                            result.getString(result.getColumnIndex("descripcion")),
-                            result.getString(result.getColumnIndex("url")),
-                            result.getString(result.getColumnIndex("protocolo")),
-                            result.getString(result.getColumnIndex("tipo"))))
-                }
-                result.close()
+            while (result.moveToNext()) {
+                retval.add(DevicesModel(
+                        result.getString(result.getColumnIndex("Id")),
+                        result.getString(result.getColumnIndex("nombre")),
+                        result.getString(result.getColumnIndex("descripcion")),
+                        result.getString(result.getColumnIndex("url")),
+                        result.getString(result.getColumnIndex("protocolo")),
+                        result.getString(result.getColumnIndex("tipo"))))
             }
+            result.close()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -157,17 +176,29 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
             val db = this.writableDatabase
             val result = db.rawQuery("SELECT * FROM DBDevice WHERE idRoutine = ?", arrayOf(idRoutine.toString()))
 
-            if (result.moveToFirst()) {
-                while (result.moveToNext()) {
-                    retval.add(DevicesModel(
-                            result.getString(result.getColumnIndex("id")),
-                            result.getString(result.getColumnIndex("nombre")),
-                            result.getString(result.getColumnIndex("descripcion")),
-                            result.getString(result.getColumnIndex("url")),
-                            result.getString(result.getColumnIndex("protocolo")),
-                            result.getString(result.getColumnIndex("tipo"))))
-                }
-                result.close()
+            while (result.moveToNext()) {
+                retval.add(DevicesModel(
+                        result.getString(result.getColumnIndex("id")),
+                        result.getString(result.getColumnIndex("nombre")),
+                        result.getString(result.getColumnIndex("descripcion")),
+                        result.getString(result.getColumnIndex("url")),
+                        result.getString(result.getColumnIndex("protocolo")),
+                        result.getString(result.getColumnIndex("tipo"))))
+            }
+            result.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return retval
+    }
+
+    fun getDiasByRoutineFromBD(idRoutine: Int): List<String> {
+        val retval: MutableList<String> = arrayListOf()
+        try {
+            val db = this.writableDatabase
+            val res = db.rawQuery("SELECT * FROM Routine_day WHERE idRoutine = ?", arrayOf(idRoutine.toString()))
+            while (res.moveToNext()) {
+                retval.add(res.getString(res.getColumnIndex("IdRoutine")))
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -175,21 +206,7 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         return retval
     }
 
-    fun getDiasByRoutineFromBD(idRoutine : Int): List<String> {
-        val retval : MutableList<String> =  arrayListOf()
-        try {
-            val db = this.writableDatabase
-            val res = db.rawQuery("SELECT * FROM Routine_day WHERE idRoutine = ?", arrayOf(idRoutine.toString()))
-            while (res.moveToNext()) {
-                retval.add(res.getString(res.getColumnIndex("IdRoutine")))
-            }
-        } catch (e:Exception){
-            e.printStackTrace()
-        }
-        return retval
-    }
-
-    fun insertarRoutinesBBDD(routines : List<RoutinesModel>) {
+    fun insertarRoutinesBBDD(routines: List<RoutinesModel>) {
         val db = this.writableDatabase
         try {
             for (routine in routines) {
@@ -212,19 +229,17 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         try {
             val db = this.writableDatabase
             val res = db.rawQuery("SELECT * FROM DBRoutine", null)
-            if (res.moveToFirst()) {
-                while (res.moveToNext()) {
-                    retval.add(RoutinesModel(
-                            res.getString(res.getColumnIndex("id")),
-                            res.getString(res.getColumnIndex("nombre")),
-                            res.getString(res.getColumnIndex("descripcion")),
-                            res.getInt(res.getColumnIndex("hour")),
-                            res.getInt(res.getColumnIndex("minute")),
-                            getDevicesByRoutineFromBD(res.getColumnIndex("routineId")),
-                            getDiasByRoutineFromBD(res.getColumnIndex("routineId"))))
-                }
-                res.close()
+            while (res.moveToNext()) {
+                retval.add(RoutinesModel(
+                        res.getString(res.getColumnIndex("id")),
+                        res.getString(res.getColumnIndex("nombre")),
+                        res.getString(res.getColumnIndex("descripcion")),
+                        res.getInt(res.getColumnIndex("hour")),
+                        res.getInt(res.getColumnIndex("minute")),
+                        getDevicesByRoutineFromBD(res.getColumnIndex("routineId")),
+                        getDiasByRoutineFromBD(res.getColumnIndex("routineId"))))
             }
+            res.close()
         } catch (e: Exception) {
             e.printStackTrace()
         }

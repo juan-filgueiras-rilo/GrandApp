@@ -3,26 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragmentSearchDevices"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardElevation="2dp"
-        app:cardUseCompatPadding="true"
+        android:layout_height="match_parent"
         app:contentPadding="6dp">
 
         <RelativeLayout
             android:id="@+id/relative"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingTop="2dp"
-            android:paddingBottom="1dp">
+            android:paddingBottom="1dp"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:weightSum="20">
 

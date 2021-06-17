@@ -67,13 +67,41 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="2">
                                 <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/editText"
+                                    android:id="@+id/editTextNombre"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="60dp"
+                                    android:hint="Bombilla del Salón" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/descripcion"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="40dp"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:text="Nombre Personalizado"
+                            android:textColor="@color/grey"
+                            android:textSize="26sp" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="left"
+                            android:weightSum="10">
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="2">
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/editTextDescripcion"
                                     android:layout_width="match_parent"
                                     android:layout_height="60dp"
                                     android:hint="Bombilla del Salón" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
                     </LinearLayout>
+
                     <TextView
                         android:id="@+id/rutinas"
                         android:layout_width="match_parent"

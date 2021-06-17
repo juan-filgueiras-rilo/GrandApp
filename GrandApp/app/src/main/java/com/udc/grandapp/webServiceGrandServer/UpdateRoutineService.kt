@@ -16,7 +16,7 @@ class UpdateRoutineService: GrandServer() {
                     "    \"userId\": \"1\",\n" +
                     "}")
 
-            doPutRequest(body, "")
+            //doPutRequest(body, "")
         }catch (e:Exception){
             e.printStackTrace()
         }
