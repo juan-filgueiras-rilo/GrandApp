@@ -175,7 +175,21 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         return retval
     }
 
-    fun insertarRoutinesBBDD(routines: List<RoutinesModel>) {
+    fun getDiasByRoutineFromBD(idRoutine : Int): List<String> {
+        val retval : MutableList<String> =  arrayListOf()
+        try {
+            val db = this.writableDatabase
+            val res = db.rawQuery("SELECT * FROM Routine_day WHERE idRoutine = ?", arrayOf(idRoutine.toString()))
+            while (res.moveToNext()) {
+                retval.add(res.getString(res.getColumnIndex("IdRoutine")))
+            }
+        } catch (e:Exception){
+            e.printStackTrace()
+        }
+        return retval
+    }
+
+    fun insertarRoutinesBBDD(routines : List<RoutinesModel>) {
         val db = this.writableDatabase
         try {
             for (routine in routines) {
@@ -206,7 +220,8 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
                             res.getString(res.getColumnIndex("descripcion")),
                             res.getInt(res.getColumnIndex("hour")),
                             res.getInt(res.getColumnIndex("minute")),
-                            getDevicesByRoutineFromBD(res.getColumnIndex("routineId"))))
+                            getDevicesByRoutineFromBD(res.getColumnIndex("routineId")),
+                            getDiasByRoutineFromBD(res.getColumnIndex("routineId"))))
                 }
                 res.close()
             }
