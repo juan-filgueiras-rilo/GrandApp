@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.R
 import com.udc.grandapp.fragments.RoutineView
-import com.udc.grandapp.items.CustomerRoutine
 import com.udc.grandapp.model.RoutinesModel
 import kotlinx.android.synthetic.main.custom_rutina.view.*
 
@@ -58,7 +57,7 @@ class RoutinesSummaryAdapter(context : Context, val items: List<RoutinesModel>, 
             }
             custom_rutina_parent.setOnClickListener {
                 val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                ft.replace(R.id.mainFragment, RoutineView())
+                ft.replace(R.id.mainFragment, RoutineView(item))
                 ft.addToBackStack("RoutinesSummaryAdapter")
                 ft.commit()
             }

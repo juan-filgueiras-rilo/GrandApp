@@ -123,18 +123,16 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         try {
             val db = this.writableDatabase
             val result = db.rawQuery("SELECT * FROM DBDevice", null)
-            if (result.moveToFirst()) {
-                while (result.moveToNext()) {
-                    retval.add(DevicesModel(
-                            result.getString(result.getColumnIndex("Id")),
-                            result.getString(result.getColumnIndex("nombre")),
-                            result.getString(result.getColumnIndex("descripcion")),
-                            result.getString(result.getColumnIndex("url")),
-                            result.getString(result.getColumnIndex("protocolo")),
-                            result.getString(result.getColumnIndex("tipo"))))
-                }
-                result.close()
+            while (result.moveToNext()) {
+                retval.add(DevicesModel(
+                        result.getString(result.getColumnIndex("Id")),
+                        result.getString(result.getColumnIndex("nombre")),
+                        result.getString(result.getColumnIndex("descripcion")),
+                        result.getString(result.getColumnIndex("url")),
+                        result.getString(result.getColumnIndex("protocolo")),
+                        result.getString(result.getColumnIndex("tipo"))))
             }
+            result.close()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -144,6 +142,7 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
     fun deleteDevicesFromBD() {
         try {
             val db = this.writableDatabase
+            db.delete("Routine_devices", "IdDevice > 0", null)
             db.delete("DBDevice", "id > 0", null)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -155,20 +154,19 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
 
         try {
             val db = this.writableDatabase
-            val result = db.rawQuery("SELECT * FROM DBDevice WHERE idRoutine = ?", arrayOf(idRoutine.toString()))
+            val result = db.rawQuery("SELECT * FROM DBDevice d join Routine_devices rd on d.id = rd.IdDevice WHERE idRoutine = ?", arrayOf(idRoutine.toString()))
 
-            if (result.moveToFirst()) {
-                while (result.moveToNext()) {
-                    retval.add(DevicesModel(
-                            result.getString(result.getColumnIndex("id")),
-                            result.getString(result.getColumnIndex("nombre")),
-                            result.getString(result.getColumnIndex("descripcion")),
-                            result.getString(result.getColumnIndex("url")),
-                            result.getString(result.getColumnIndex("protocolo")),
-                            result.getString(result.getColumnIndex("tipo"))))
-                }
-                result.close()
+            while (result.moveToNext()) {
+                retval.add(DevicesModel(
+                        result.getString(result.getColumnIndex("Id")),
+                        result.getString(result.getColumnIndex("nombre")),
+                        result.getString(result.getColumnIndex("descripcion")),
+                        result.getString(result.getColumnIndex("url")),
+                        result.getString(result.getColumnIndex("protocolo")),
+                        result.getString(result.getColumnIndex("tipo"))))
             }
+            result.close()
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -181,7 +179,7 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
             val db = this.writableDatabase
             val res = db.rawQuery("SELECT * FROM Routine_day WHERE idRoutine = ?", arrayOf(idRoutine.toString()))
             while (res.moveToNext()) {
-                retval.add(res.getString(res.getColumnIndex("IdRoutine")))
+                retval.add(res.getString(res.getColumnIndex("day")))
             }
         } catch (e:Exception){
             e.printStackTrace()
@@ -201,6 +199,14 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
                     put("minute", routine.minuto)
                 }
                 val newRowId = db?.insert("DBRoutine", null, values)
+
+                for(device in routine.devices) {
+                    insertRoutineDevices(routine.id.toInt(), device.id.toInt())
+                }
+
+                for(dia in routine.dias) {
+                    insertRoutineDay(routine.id.toInt(),dia)
+                }
             }
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
@@ -212,19 +218,17 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
         try {
             val db = this.writableDatabase
             val res = db.rawQuery("SELECT * FROM DBRoutine", null)
-            if (res.moveToFirst()) {
-                while (res.moveToNext()) {
-                    retval.add(RoutinesModel(
-                            res.getString(res.getColumnIndex("id")),
-                            res.getString(res.getColumnIndex("nombre")),
-                            res.getString(res.getColumnIndex("descripcion")),
-                            res.getInt(res.getColumnIndex("hour")),
-                            res.getInt(res.getColumnIndex("minute")),
-                            getDevicesByRoutineFromBD(res.getColumnIndex("routineId")),
-                            getDiasByRoutineFromBD(res.getColumnIndex("routineId"))))
-                }
-                res.close()
+            while (res.moveToNext()) {
+                retval.add(RoutinesModel(
+                        res.getString(res.getColumnIndex("routineId")),
+                        res.getString(res.getColumnIndex("nombre")),
+                        res.getString(res.getColumnIndex("descripcion")),
+                        res.getInt(res.getColumnIndex("hour")),
+                        res.getInt(res.getColumnIndex("minute")),
+                        getDevicesByRoutineFromBD(res.getString(res.getColumnIndex("routineId")).toInt()),
+                        getDiasByRoutineFromBD(res.getString(res.getColumnIndex("routineId")).toInt())))
             }
+            res.close()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -234,9 +238,30 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
     fun deleteRoutinesFromBD() {
         try {
             val db = this.writableDatabase
+            db.delete("Routine_devices", "IdRoutine > 0", null)
+            db.delete("Routine_day", "IdRoutine > 0", null)
             db.delete("DBRoutine", "id > 0", null)
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
+
+    fun insertRoutineDevices(idRoutine: Int, idDevice: Int) {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put("IdRoutine", idRoutine)
+            put("IdDevice", idDevice)
+        }
+        val newRowId = db?.insert("Routine_devices", null, values)
+    }
+
+    fun insertRoutineDay(idRoutine: Int, day: String) {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put("IdRoutine", idRoutine)
+            put("day", day)
+        }
+        val newRowId = db?.insert("Routine_day", null, values)
+    }
+
 }
