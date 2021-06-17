@@ -1,6 +1,7 @@
 package com.udc.grandapp.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -30,6 +31,7 @@ class DeviceList(responseManager: IResponseFragmentManagerGeneric) : Fragment() 
     private lateinit var rootView : View
     private lateinit var recyclerView: RecyclerView
     private var responseManager: IResponseFragmentManagerGeneric = responseManager
+    private lateinit var mCustomerDevices: MutableList<CustomerDevice>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_w_recycler, container, false)
@@ -37,10 +39,10 @@ class DeviceList(responseManager: IResponseFragmentManagerGeneric) : Fragment() 
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
-        val deviceSummaryListExample: List<DevicesModel> = UserConfigManager(context as FragmentActivity).getDevicesFromBD()
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
-                DeviceListAdapter(it, deviceSummaryListExample, responseManager, it1) {
+                mCustomerDevices = getDevicesFromBD(it)
+                DeviceListAdapter(it, mCustomerDevices, responseManager, it1) {
                 }
             }
         }
@@ -92,6 +94,17 @@ class DeviceList(responseManager: IResponseFragmentManagerGeneric) : Fragment() 
 
         val responseManager: IResponseManagerGeneric = ResponseManager()
         mGetDevicesManager.realizarOperacion(responseManager, DatosOperacionGeneric())
+    }
+
+    private fun getDevicesFromBD(context: Context): MutableList<CustomerDevice> {
+        val dbManager = UserConfigManager(context)
+        val devicesModel: List<DevicesModel> = dbManager.getDevicesFromBD()
+        val customerDevices: MutableList<CustomerDevice> = arrayListOf<CustomerDevice>()
+        for (device in devicesModel) {
+            customerDevices.add(CustomerDevice(device.id.toLong(), device.nombre, device.descripcion, device.url, device.puerto.toLong(), device.tipo))
+        }
+        UserConfigManager.reiniciarInfoPersistente(context)
+        return customerDevices
     }
 
 }

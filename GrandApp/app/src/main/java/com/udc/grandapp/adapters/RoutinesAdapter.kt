@@ -16,12 +16,18 @@ import com.udc.grandapp.R
 import com.udc.grandapp.fragments.UpdateRoutine
 import com.udc.grandapp.items.CustomerRoutine
 import com.udc.grandapp.manager.DeleteRoutineManager
+import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosDeleteRoutine
+import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.utils.CommonMethods
+import com.udc.grandapp.webServiceHandleDevice.HandleDeviceService
 import kotlinx.android.synthetic.main.custom_rutina.view.*
 import kotlinx.android.synthetic.main.custom_rutina.view.descripcion
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RoutinesAdapter(context : Context, val items: List<CustomerRoutine>, activity: FragmentActivity, val listener: (ClipData.Item) -> Unit,val fragment: Fragment) : RecyclerView.Adapter<RoutinesAdapter.ViewHolder>(){
 
@@ -48,7 +54,27 @@ class RoutinesAdapter(context : Context, val items: List<CustomerRoutine>, activ
             nombreRutina.text = item.name
             descripcion.text = item.description
             ejecutar.setOnClickListener {
-                Toast.makeText(context, "Ejecutar rutina", Toast.LENGTH_LONG).show()
+                //Toast.makeText(context, "Ejecutar rutina", Toast.LENGTH_LONG).show()
+                var devices: List<DevicesModel> = UserConfigManager(context).getDevicesByRoutineFromBD(item.id.toInt())
+                for (i in devices) {
+                    val scope = CoroutineScope(Dispatchers.IO)
+                    scope.launch {
+                        val status = HandleDeviceService(i.url,i.puerto.toInt(),i.tipo).queryDevice()
+                        if (status == "on") {
+                            HandleDeviceService(
+                                i.url,
+                                i.puerto.toInt(),
+                                i.tipo
+                            ).powerOffDevice()
+                        } else {
+                            HandleDeviceService(
+                                i.url,
+                                i.puerto.toInt(),
+                                i.tipo
+                            ).powerOnDevice()
+                        }
+                    }
+                }
             }
             eliminar.setOnClickListener {
                 MaterialAlertDialogBuilder(context)

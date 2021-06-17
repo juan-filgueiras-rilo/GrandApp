@@ -58,6 +58,7 @@ class ViewRoutineAdapter(context : Context, val items: List<RoutinesDevice>, fra
                 ft.commit()
             }
             borrar.setOnClickListener {
+                println("hola")
                 MaterialAlertDialogBuilder(context)
                     .setTitle(resources.getString(R.string.titlealert))
                     .setMessage(resources.getString(R.string.supporting_textRoutineFromDevice))

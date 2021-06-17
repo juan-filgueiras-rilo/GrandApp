@@ -17,10 +17,10 @@ import com.udc.grandapp.model.DevicesModel
 import kotlinx.android.synthetic.main.custom_lista.view.*
 
 
-class DeviceListAdapter(context : Context, val items: List<DevicesModel>, responseManager : IResponseFragmentManagerGeneric, activity : FragmentActivity, val listener: (ClipData.Item) -> Unit)  : RecyclerView.Adapter<DeviceListAdapter.ViewHolder>(){
+class DeviceListAdapter(context : Context, val items: List<CustomerDevice>, responseManager : IResponseFragmentManagerGeneric, activity : FragmentActivity, val listener: (ClipData.Item) -> Unit)  : RecyclerView.Adapter<DeviceListAdapter.ViewHolder>(){
 
     private var mContext : Context = context
-    private var mItems : List<DevicesModel> = items
+    private var mItems : List<CustomerDevice> = items
     private var mActivity : FragmentActivity = activity
     private var mresponseManager : IResponseFragmentManagerGeneric = responseManager
 
@@ -38,12 +38,12 @@ class DeviceListAdapter(context : Context, val items: List<DevicesModel>, respon
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: DevicesModel, mresponseManager: IResponseFragmentManagerGeneric , listener: (ClipData.Item) -> Unit, activity: FragmentActivity) = with(itemView) {
+        fun bind(item: CustomerDevice, mresponseManager: IResponseFragmentManagerGeneric , listener: (ClipData.Item) -> Unit, activity: FragmentActivity) = with(itemView) {
             nombreDispositivo.text = item.nombre
             descripcion.text = item.descripcion
 
             r_customlista.setOnClickListener {
-                mresponseManager.onSuccesResponse(CustomerDevice(item.id.toLong(), item.nombre, item.descripcion, item.url, item.puerto.toLong(), item.tipo))
+                mresponseManager.onSuccesResponse(CustomerDevice(item.id, item.nombre, item.descripcion, item.url, item.puerto, item.tipo))
                 //CommonMethods.clearExistFragments(context as FragmentActivity)
                 // Al seleccionar un dispositivo deberíamos poder seguir configurando la rutina
                 (context as FragmentActivity).supportFragmentManager.popBackStack()

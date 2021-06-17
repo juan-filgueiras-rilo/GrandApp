@@ -23,6 +23,7 @@ import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.items.CustomerRoutine
 import com.udc.grandapp.manager.UpdateRoutineManager
 import com.udc.grandapp.manager.configuration.UserConfigManager
+import com.udc.grandapp.manager.listeners.IResponseFragmentManagerGeneric
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
 import com.udc.grandapp.model.DevicesModel
@@ -39,6 +40,8 @@ class UpdateRoutine(layout: Int, idRoutine: Int) : Fragment() {
     private lateinit var rootView : View
     private lateinit var recyclerView: RecyclerView
     private val idRoutine : Int = idRoutine
+    private lateinit var responseManager: IResponseFragmentManagerGeneric
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.edit_rutina, container, false)
@@ -51,6 +54,20 @@ class UpdateRoutine(layout: Int, idRoutine: Int) : Fragment() {
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
         val listaExample: MutableList<CustomerDevice> = getDevicesFromByIdRutinaBD(context as FragmentActivity, idRoutine)
+
+        class ResponseManager() : IResponseFragmentManagerGeneric {
+            override  fun onSuccesResponse(model: CustomerDevice) {
+                var repetido = listaExample.find { disp -> model.equals(disp) }
+                if (repetido == null) {
+                    listaExample.add(model)
+                }
+                refresh(listaExample)
+            }
+            override fun onErrorResponse(model: String) {
+
+            }
+        }
+        responseManager = ResponseManager()
 
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
@@ -75,12 +92,12 @@ class UpdateRoutine(layout: Int, idRoutine: Int) : Fragment() {
                     Toast.makeText(context, "Cancelar", Toast.LENGTH_LONG).show()
                     CommonMethods.clearExistFragments(context as FragmentActivity)
                 }
-                /*addDispositivoButton.setOnClickListener {
+                addDispositivoButton.setOnClickListener {
                     val ft: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
                     ft?.replace(R.id.crearRutina, DeviceList(responseManager))
                     ft?.addToBackStack("Update Routine")
                     ft?.commit()
-                }*/
+                }
             }
             2 -> {
                 guardarRutina.setOnClickListener {
@@ -157,6 +174,16 @@ class UpdateRoutine(layout: Int, idRoutine: Int) : Fragment() {
         }
         UserConfigManager.reiniciarInfoPersistente(context)
         return customerDevices
+    }
+    fun refresh(listaExample: List<CustomerDevice>) {
+        recyclerView.adapter = context?.let {
+            activity?.let { it1 ->
+                DevicesAdapter(it, listaExample as ArrayList<CustomerDevice>, it1, R.layout.custom_dispositivosrutina, {
+                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                }, this)
+            }
+        }
     }
 
 }

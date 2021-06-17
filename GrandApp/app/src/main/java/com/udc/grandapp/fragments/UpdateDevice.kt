@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -19,10 +20,12 @@ import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.RoutinesSummaryAdapter
 import com.udc.grandapp.adapters.ViewRoutineAdapter
+import com.udc.grandapp.items.CustomerRoutine
 import com.udc.grandapp.items.RoutinesDevice
 import com.udc.grandapp.manager.GetDevicesManager
 import com.udc.grandapp.manager.UpdateDeviceManager
 import com.udc.grandapp.manager.configuration.UserConfigManager
+import com.udc.grandapp.manager.listeners.IResponseFragmentManagerGeneric
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
 import com.udc.grandapp.manager.transferObjects.DatosUpdateDevice
@@ -31,12 +34,17 @@ import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.model.RoutinesModel
 import com.udc.grandapp.model.UpdateDeviceModel
 import com.udc.grandapp.utils.CommonMethods
+import kotlinx.android.synthetic.main.edit_rutina.*
 import kotlinx.android.synthetic.main.fragment_editdevice.*
+import kotlinx.android.synthetic.main.fragment_editdevice.editTextDescripcion
+import kotlinx.android.synthetic.main.fragment_editdevice.editTextNombre
 
 class UpdateDevice(val id: Long, val nombre: String, val descripcion: String, val readOnly: Boolean) : Fragment() {
 
     private lateinit var rootView: View
     private lateinit var recyclerView: RecyclerView
+    private lateinit var responseManager: IResponseFragmentManagerGeneric
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_editdevice, container, false)
@@ -56,13 +64,13 @@ class UpdateDevice(val id: Long, val nombre: String, val descripcion: String, va
 
     override fun onResume() {
         super.onResume()
-        val routineList: List<RoutinesModel> = UserConfigManager(context as FragmentActivity).getRoutinesFromBD()
-
+        println(id)
+        var lista: List<RoutinesModel> = UserConfigManager(context as FragmentActivity).getRoutinesByDeviceFromBD(id.toInt())
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
-                RoutinesSummaryAdapter(it, routineList, it1, (if(readOnly) R.layout.custom_rutina_dispositivo_read_only else R.layout.custom_rutina_dispositivo)) {
-                    //Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
-                }
+                RoutinesSummaryAdapter(it, lista, it1, (if(readOnly) R.layout.custom_rutina_dispositivo_read_only else R.layout.custom_rutina_dispositivo), {
+                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                }, this)
             }
         }
     }

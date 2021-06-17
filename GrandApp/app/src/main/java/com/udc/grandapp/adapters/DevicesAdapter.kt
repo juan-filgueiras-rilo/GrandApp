@@ -141,14 +141,6 @@ class DevicesAdapter(context: Context, items: List<CustomerDevice>, activity: Fr
                     eliminardisp.setOnClickListener {
                         adapter.refresh(adapterPosition)
 
-                        //TODO eliminar dispositivo de lista
-                    }
-                    modificardisp.setOnClickListener {
-                        val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                        ft.replace(R.id.crearRutina, UpdateDevice(item.id, item.nombre, item.descripcion, false))
-                        ft?.detach(fragment)
-                        ft.addToBackStack("DevicesAdapter")
-                        ft.commit()
                     }
 
                 }

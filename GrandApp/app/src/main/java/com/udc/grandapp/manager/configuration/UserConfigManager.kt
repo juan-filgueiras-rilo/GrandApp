@@ -6,6 +6,7 @@ import com.udc.grandapp.model.UserInfoModel
 import android.content.Context
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.sqlite.SQLiteDatabase
+import com.udc.grandapp.items.CustomerRoutine
 import com.udc.grandapp.model.*
 
 class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp", null, 6) {
@@ -183,6 +184,32 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
                         result.getString(result.getColumnIndex("url")),
                         result.getString(result.getColumnIndex("protocolo")),
                         result.getString(result.getColumnIndex("tipo"))))
+            }
+            result.close()
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return retval
+    }
+
+    fun getRoutinesByDeviceFromBD(idDevice: Int): MutableList<RoutinesModel> {
+        val retval: MutableList<RoutinesModel> = arrayListOf()
+        try {
+            val db = this.writableDatabase
+            val result = db.rawQuery("SELECT * " +
+                    "FROM Routine_devices rd " +
+                    "INNER JOIN DBRoutine db " +
+                    "ON rd.IdRoutine = db.routineId " +
+                    "WHERE rd.IdDevice = \"" + idDevice.toString() + "\"", null)
+            while (result.moveToNext()) {
+               retval.add(RoutinesModel(result.getString(result.getColumnIndex("IdRoutine")),
+                   result.getString(result.getColumnIndex("nombre")),
+                   result.getString(result.getColumnIndex("descripcion")),
+                   result.getString(result.getColumnIndex("hour")).toInt(),
+                   result.getString(result.getColumnIndex("minute")).toInt(),
+                   getDevicesByRoutineFromBD(idDevice),
+                   getDiasByRoutineFromBD(idDevice)))
             }
             result.close()
 
