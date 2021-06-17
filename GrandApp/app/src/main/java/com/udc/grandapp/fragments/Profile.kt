@@ -25,7 +25,7 @@ class Profile : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.profile, container, false)
         var editText : EditText = rootView.findViewById<EditText>(R.id.editTextNombre)
-//        editText.setText(UserConfigManager.infoPersistente!!.userName)
+        editText.setText(UserConfigManager.infoPersistente!!.userName)
         rootView.findViewById<Button>(R.id.buttonGuardarCambios).setOnClickListener(View.OnClickListener {
             if (!editText.text.toString().equals(UserConfigManager.infoPersistente!!.userName)){
                 Toast.makeText(context, "Cambios guardados", Toast.LENGTH_LONG).show()
@@ -49,6 +49,10 @@ class Profile : Fragment() {
             CommonMethods.clearExistFragments(context as FragmentActivity)
             val intent: Intent = Intent(activity, MainActivity::class.java)
             activity?.startActivity(intent)
+
+            if (MainActivity.mGoogleSignInClientStatic != null){
+                MainActivity.mGoogleSignInClientStatic!!.signOut()
+            }
 
 
         }

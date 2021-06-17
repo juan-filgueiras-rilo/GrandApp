@@ -13,7 +13,7 @@ class DeleteRoutineService: GrandServer() {
             val body: RequestBody = RequestBody.create(mediaType, "{\n" +
                     "    \"id\": \"${datosPeticion.id}\"\n"+
                     "}")
-            doDeleteRequest(body, MetodoDeleteRoutine, datos)
+            doDeleteRequest(body, MetodoDeleteRoutine, datos, token)
         }catch (e:Exception){
             e.printStackTrace()
         }

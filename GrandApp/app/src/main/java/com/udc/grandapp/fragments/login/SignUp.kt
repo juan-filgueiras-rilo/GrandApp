@@ -148,7 +148,7 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
                 override fun onSuccesResponse(model: GenericModel) {
                     if (model.error == "0") {
                         val singUp: SignUpLoginModel =  SignUpLoginModel.Parse(model.json)
-                        insertarUserBD(singUp, valuePwd)
+                        UserConfigManager(activity).insertarUserBD(singUp, valuePwd, activity)
                         val intent: Intent = Intent(activity, MainScreenActivity::class.java)
                         activity.startActivity(intent)
                     }
@@ -172,21 +172,6 @@ class SignUp : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    fun insertarUserBD(singUp: SignUpLoginModel, pwd: String){
-        val db = UserConfigManager(this).writableDatabase
 
-        val values = ContentValues().apply {
-            put("userId", singUp.id)
-            put("token",singUp.token)
-            put("userName", singUp.userName)
-            put("email", singUp.email)
-            put("role", singUp.role)
-            put("pwd", pwd)
-        }
-
-        val newRowId = db?.insert("DBUser", null, values)
-
-        UserConfigManager.reiniciarInfoPersistente(this)
-    }
 
 }

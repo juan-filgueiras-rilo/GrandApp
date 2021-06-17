@@ -25,6 +25,23 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
 
     }
 
+    fun insertarUserBD(singUp: SignUpLoginModel, pwd: String, context: Context){
+        val db = UserConfigManager(context).writableDatabase
+
+        val values = ContentValues().apply {
+            put("userId", singUp.id)
+            put("token",singUp.token)
+            put("userName", singUp.userName)
+            put("email", singUp.email)
+            put("role", singUp.role)
+            put("pwd", pwd)
+        }
+
+        val newRowId = db?.insert("DBUser", null, values)
+
+        UserConfigManager.reiniciarInfoPersistente(context)
+    }
+
     fun getUniqueIPs(): MutableList<String> {
         val retval: MutableList<String> = arrayListOf()
         try {
@@ -212,7 +229,33 @@ class UserConfigManager(context: Context) : SQLiteOpenHelper(context, "GrandApp"
                    getDiasByRoutineFromBD(idDevice)))
             }
             result.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return retval
+    }
 
+    fun getRoutineFromBD(idRoutine: Int): RoutinesModel {
+        var retval: RoutinesModel = RoutinesModel()
+        try {
+            val db = this.writableDatabase
+            val res = db.rawQuery(
+                "SELECT * FROM DBRoutine WHERE routineId = ?",
+                arrayOf(idRoutine.toString())
+            )
+            while (res.moveToNext()) {
+                retval = RoutinesModel(
+                    res.getString(res.getColumnIndex("routineId")),
+                    res.getString(res.getColumnIndex("nombre")),
+                    res.getString(res.getColumnIndex("descripcion")),
+                    res.getInt(res.getColumnIndex("hour")),
+                    res.getInt(res.getColumnIndex("minute")),
+                    getDevicesByRoutineFromBD(
+                        res.getString(res.getColumnIndex("routineId")).toInt()
+                    ),
+                    getDiasByRoutineFromBD(res.getString(res.getColumnIndex("routineId")).toInt())
+                )
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }

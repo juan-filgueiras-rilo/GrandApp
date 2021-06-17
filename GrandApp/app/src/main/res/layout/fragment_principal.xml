@@ -51,9 +51,10 @@
                 android:orientation="vertical"
                 android:weightSum="4">
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="@string/mis_dispositivos"/>
 
                 <include layout="@layout/recycler"
@@ -69,9 +70,10 @@
                 android:orientation="vertical"
                 android:weightSum="4">
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/black"
                     android:text="@string/mis_rutinas"/>
 
                 <include layout="@layout/recycler"

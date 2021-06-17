@@ -31,7 +31,7 @@ open class GrandServer {
     val MetodoCreateRoutine: String = "/routines/create"
     val MetodoDeleteRoutine: String = "/routines"
 
-    fun createPostRequest(body: RequestBody, metodo: String, token: Boolean): Request {
+    fun createPostRequest(body: RequestBody, metodo: String, useToken: Boolean, token: String): Request {
         val url = url.plus(metodo)
         val re: Request.Builder? = Request.Builder().post(body)
                 .url(url)
@@ -39,20 +39,19 @@ open class GrandServer {
                 .header("Accept", "*/*")
                 .header("Content-Type", "application/json")
                 .header("Cache-Control", "no-cache")
-        if (token)
+        if (useToken)
             return re!!
-                    .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzOTUzNzQxfQ.smhJ-U1rZY6hiGTUHZMpWUVHSM81Phy58CG40JRmS_xqz4qNhJTQ3LHqXEanREofjxA0lQI92Jnh3HOD2lSEaA")
-                    //.header("Authorization", "Bearer " + token)
+                    .header("Authorization", "Bearer " + token)
                     .build()
         else
             return re!!.build()
     }
 
-    fun doPostRequest(body: RequestBody, metodo: String, datos: GenericManager.Companion.DatosThreaded, token: Boolean) {
+    fun doPostRequest(body: RequestBody, metodo: String, datos: GenericManager.Companion.DatosThreaded, useToken: Boolean, token: String) {
         val client: OkHttpClient = OkHttpClient()
         val mediaType = MediaType.parse("application/json; charset=utf-8")
 
-        client.newCall(createPostRequest(body, metodo, token)).enqueue(object : Callback {
+        client.newCall(createPostRequest(body, metodo, useToken, token)).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
@@ -76,7 +75,7 @@ open class GrandServer {
 
     }
 
-    fun createPutRequest(body: RequestBody, metodo: String): Request {
+    fun createPutRequest(body: RequestBody, metodo: String, token: String): Request {
         val url = url.plus(metodo)
         return Request.Builder()
                 .put(body)
@@ -85,16 +84,16 @@ open class GrandServer {
                 .header("Accept", "*/*")
                 .header("Content-Type", "application/json")
                 .header("Cache-Control", "no-cache")
-                .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzOTUzNzQxfQ.smhJ-U1rZY6hiGTUHZMpWUVHSM81Phy58CG40JRmS_xqz4qNhJTQ3LHqXEanREofjxA0lQI92Jnh3HOD2lSEaA")
+                .header("Authorization", "Bearer " + token)
                 .build()
     }
 
-    fun doPutRequest(body: RequestBody, metodo: String, datos: GenericManager.Companion.DatosThreaded) {
+    fun doPutRequest(body: RequestBody, metodo: String, datos: GenericManager.Companion.DatosThreaded, token: String) {
         val client: OkHttpClient = OkHttpClient()
         val mediaType = MediaType.parse("application/json; charset=utf-8")
 
 
-        client.newCall(createPutRequest(body, metodo)).enqueue(object : Callback {
+        client.newCall(createPutRequest(body, metodo, token)).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }
@@ -167,7 +166,7 @@ open class GrandServer {
         })
     }
 
-    fun createDeleteRequest(body: RequestBody, metodo: String): Request {
+    fun createDeleteRequest(body: RequestBody, metodo: String, token: String): Request {
         val url = url.plus(metodo)
         return Request.Builder()
                 .delete(body)
@@ -176,15 +175,15 @@ open class GrandServer {
                 .header("Accept", "*/*")
                 .header("Content-Type", "application/json")
                 .header("Cache-Control", "no-cache")
-                .header("Authorization", "Bearer eyJhbGciOiJIUzUxMiJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjIzOTUzNzQxfQ.smhJ-U1rZY6hiGTUHZMpWUVHSM81Phy58CG40JRmS_xqz4qNhJTQ3LHqXEanREofjxA0lQI92Jnh3HOD2lSEaA")
+                .header("Authorization", "Bearer " + token)
                 .build()
     }
 
-    fun doDeleteRequest(body: RequestBody, metodo: String, datos: GenericManager.Companion.DatosThreaded) {
+    fun doDeleteRequest(body: RequestBody, metodo: String, datos: GenericManager.Companion.DatosThreaded, token: String) {
         val client: OkHttpClient = OkHttpClient()
         val mediaType = MediaType.parse("application/json; charset=utf-8")
 
-        client.newCall(createDeleteRequest(body, metodo)).enqueue(object : Callback {
+        client.newCall(createDeleteRequest(body, metodo, token)).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 e.printStackTrace()
             }

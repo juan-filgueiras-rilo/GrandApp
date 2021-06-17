@@ -18,7 +18,7 @@ class CreateDeviceService: GrandServer() {
                     "    \"tipo\": \""+ datosPeticion.tipo + "\"\n" +
                     "}")
 
-            doPostRequest(body, MetodoCreateDevice, datos, true)
+            doPostRequest(body, MetodoCreateDevice, datos, true, token)
 
         } catch (e:Exception){
             e.printStackTrace()

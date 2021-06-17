@@ -28,7 +28,6 @@ class Login : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var identificarse : MaterialButton
     private lateinit var registrarse : TextView
-    private lateinit var identificarseGoogle: MaterialButton
     private lateinit var email: TextInputEditText
     private lateinit var emailContenedor: TextInputLayout
     private lateinit var pwd: TextInputEditText
@@ -44,9 +43,6 @@ class Login : AppCompatActivity(), View.OnClickListener {
 
         registrarse = findViewById(R.id.registrarseLogin)
         registrarse.setOnClickListener(this)
-
-        identificarseGoogle = findViewById(R.id.identificarseGoogle)
-        identificarseGoogle.setOnClickListener(this)
 
         email = findViewById(R.id.editText_nombre_login)
         emailContenedor = findViewById(R.id.editText_nombre_loginContenedor)

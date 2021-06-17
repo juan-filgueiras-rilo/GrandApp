@@ -46,19 +46,25 @@
                 android:layout_marginBottom="0dp"
                 app:srcCompat="@drawable/bombilla" />
 
-            <TextView
-                android:id="@+id/sinIniciarSesion"
-                android:layout_width="wrap_content"
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/google_login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="8dp"
+                android:padding="8dp"
+                android:textAllCaps="false"
                 android:gravity="center"
-                android:layout_height="0dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="2"
-                android:inputType="none"
-                android:text="@string/sinsesion"
-                android:textColor="@color/offwhite" />
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="0dp"
+                android:backgroundTint="@color/cleargrey"
+                android:textColor="@color/black"
+                app:cornerRadius="50dp"
+                android:textStyle="bold" />
+
+
 
         </LinearLayout>
 

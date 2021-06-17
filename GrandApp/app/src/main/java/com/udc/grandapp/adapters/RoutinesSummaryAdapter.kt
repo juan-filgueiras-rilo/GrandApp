@@ -54,6 +54,7 @@ class RoutinesSummaryAdapter(context: Context, val items: List<RoutinesModel>, a
                     nombreRutina.text = item.nombre
                     descripcion.text = item.descripcion
                     modificar.visibility = View.GONE
+                    eliminar.visibility = View.GONE
                     ejecutar.setOnClickListener {
                         //Toast.makeText(context, "Ejecutar rutina", Toast.LENGTH_LONG).show()
                         var devices: List<DevicesModel> = UserConfigManager(context).getDevicesByRoutineFromBD(item.id.toInt())
@@ -76,18 +77,6 @@ class RoutinesSummaryAdapter(context: Context, val items: List<RoutinesModel>, a
                                 }
                             }
                         }
-                    }
-                    eliminar.setOnClickListener {
-                        MaterialAlertDialogBuilder(context)
-                                .setTitle(resources.getString(R.string.titlealert))
-                                .setMessage(resources.getString(R.string.supporting_textRoutine))
-                                .setNegativeButton(resources.getString(R.string.decline)) { dialog, which ->
-                                    // Respond to negative button press
-                                }
-                                .setPositiveButton(resources.getString(R.string.accept)) { dialog, which ->
-                                    // Respond to positive button press
-                                }
-                                .show()
                     }
                     custom_rutina_parent.setOnClickListener {
                         val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()

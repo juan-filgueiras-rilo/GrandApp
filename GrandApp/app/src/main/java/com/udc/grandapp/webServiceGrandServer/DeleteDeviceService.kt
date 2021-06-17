@@ -15,7 +15,7 @@ class DeleteDeviceService: GrandServer() {
                     "    \"id\": \"${datosPeticion.id}\"\n" +
                     "}")
 
-            doDeleteRequest(body, MetodoDeleteDevice, datos)
+            doDeleteRequest(body, MetodoDeleteDevice, datos, token)
         } catch (e:Exception){
             e.printStackTrace()
             return GenericModel("1", "failed to delete device", "")
