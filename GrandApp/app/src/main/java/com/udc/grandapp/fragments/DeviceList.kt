@@ -1,8 +1,6 @@
 package com.udc.grandapp.fragments
 
 import android.app.Activity
-import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -15,20 +13,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
+import com.udc.grandapp.adapters.DeviceListAdapter
 import com.udc.grandapp.adapters.DeviceSummaryAdapter
 import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.manager.GetDevicesManager
 import com.udc.grandapp.manager.configuration.UserConfigManager
+import com.udc.grandapp.manager.listeners.IResponseFragmentManagerGeneric
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.utils.CommonMethods
 
-class DeviceList : Fragment() {
+class DeviceList(responseManager: IResponseFragmentManagerGeneric) : Fragment() {
 
     private lateinit var rootView : View
     private lateinit var recyclerView: RecyclerView
+    private var responseManager: IResponseFragmentManagerGeneric = responseManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.fragment_w_recycler, container, false)
@@ -43,7 +44,7 @@ class DeviceList : Fragment() {
         val deviceSummaryListExample: List<DevicesModel> = UserConfigManager(context as FragmentActivity).getDevicesFromBD()
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
-                DeviceSummaryAdapter(it, deviceSummaryListExample, R.layout.fragment_w_recycler, it1) {
+                DeviceListAdapter(it, listaExample, responseManager, it1) {
                     //Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
                 }
             }
