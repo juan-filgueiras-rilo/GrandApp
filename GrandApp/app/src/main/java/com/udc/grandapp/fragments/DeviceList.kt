@@ -9,20 +9,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.udc.grandapp.MainScreenActivity
 import com.udc.grandapp.R
-import com.udc.grandapp.adapters.DevicesAdapter
+import com.udc.grandapp.adapters.DeviceSummaryAdapter
 import com.udc.grandapp.items.CustomerDevice
 import com.udc.grandapp.manager.GetDevicesManager
 import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.manager.listeners.IResponseManagerGeneric
 import com.udc.grandapp.manager.transferObjects.DatosOperacionGeneric
-import com.udc.grandapp.model.CreateDeviceModel
 import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.utils.CommonMethods
@@ -41,10 +39,12 @@ class DeviceList : Fragment() {
                 CustomerDevice(2, "NombreProducto2", "loadURL", "", 1, ""),
                 CustomerDevice(3, "NombreProducto3", "loadURL", "", 1, ""))
 
+
+        val deviceSummaryListExample: List<DevicesModel> = UserConfigManager(context as FragmentActivity).getDevicesFromBD()
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
-                DevicesAdapter(it, listaExample, it1, R.layout.custom_lista) {
-                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                DeviceSummaryAdapter(it, deviceSummaryListExample, R.layout.fragment_w_recycler, it1) {
+                    //Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
                 }
             }
         }

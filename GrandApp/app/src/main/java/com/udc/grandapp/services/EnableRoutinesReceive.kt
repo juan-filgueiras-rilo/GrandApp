@@ -104,7 +104,6 @@ class EnableRoutinesReceive  : BroadcastReceiver() {
                                 result.getString(result.getColumnIndex("IdRoutine")) + "\"", null
                     )
                     if (cursor.moveToFirst()) {
-                        var j = 0
                         while (!cursor.isAfterLast) {
                             if (cursor.getString(cursor.getColumnIndex("routineId")) != null) {
                                 //TODO ejecutar rutina con id i

@@ -63,7 +63,7 @@ class RoutinesSummaryAdapter(context: Context, val items: List<RoutinesModel>, a
                     }
                     custom_rutina_parent.setOnClickListener {
                         val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
-                        ft.replace(R.id.mainFragment, RoutineView())
+                        ft.replace(R.id.mainFragment, RoutineView(/*item*/))
                         ft.addToBackStack("RoutinesSummaryAdapter")
                         ft.commit()
                     }
