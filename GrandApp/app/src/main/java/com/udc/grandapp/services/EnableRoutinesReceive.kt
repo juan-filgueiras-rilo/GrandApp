@@ -6,7 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import com.udc.grandapp.R
 import com.udc.grandapp.manager.configuration.UserConfigManager
+import com.udc.grandapp.webServiceHandleDevice.HandleDeviceService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -41,7 +47,7 @@ class EnableRoutinesReceive  : BroadcastReceiver() {
         val values2 = ContentValues().apply {
             put("descripcion", "descripcion")
             put("userId","1")
-            put("hour", "12")
+            put("hour", "13")
             put("minute", "00")
             put("nombre", "hila")
             put("routineId", "2")
@@ -66,20 +72,64 @@ class EnableRoutinesReceive  : BroadcastReceiver() {
 
         val values11 = ContentValues().apply {
             put("IdRoutine", "1")
-            put("day","Wednesday")
+            put("day","WEDNESDAY")
         }
 
         val values12 = ContentValues().apply {
             put("IdRoutine", "2")
-            put("day","Wednesday")
+            put("day","WEDNESDAY")
         }
         val values13 = ContentValues().apply {
             put("IdRoutine", "3")
-            put("day","Tuesday")
+            put("day","TUESDAY")
         }
         val values14 = ContentValues().apply {
             put("IdRoutine", "4")
-            put("day","Tuesday")
+            put("day","TUESDAY")
+        }
+
+        val values16 = ContentValues().apply {
+            put("Id", "1")
+            put("protocolo","puerto")
+            put("tipo","tipo")
+            put("url","url")
+        }
+
+        val values17 = ContentValues().apply {
+            put("Id", "2")
+            put("protocolo","puerto")
+            put("tipo","tipo")
+            put("url","url")
+        }
+        val values18 = ContentValues().apply {
+            put("Id", "3")
+            put("protocolo","puerto")
+            put("tipo","tipo")
+            put("url","url")
+        }
+        val values19 = ContentValues().apply {
+            put("Id", "4")
+            put("protocolo","puerto")
+            put("tipo","tipo")
+            put("url","url")
+        }
+
+        val values20 = ContentValues().apply {
+            put("IdDevice", "1")
+            put("IdRoutine","1")
+        }
+
+        val values21 = ContentValues().apply {
+            put("IdDevice", "2")
+            put("IdRoutine","2")
+        }
+        val values22 = ContentValues().apply {
+            put("IdDevice", "3")
+            put("IdRoutine","2")
+        }
+        val values23 = ContentValues().apply {
+            put("IdDevice", "4")
+            put("IdRoutine","3")
         }
 
         val newRowId = db?.insert("DBUser", null, values)
@@ -91,7 +141,19 @@ class EnableRoutinesReceive  : BroadcastReceiver() {
         val newRowId5 = db?.insert("Routine_day", null, values11)
         val newRowId6 = db?.insert("Routine_day", null, values12)
         val newRowId7 = db?.insert("Routine_day", null, values13)
-        val newRowId8 = db?.insert("Routine_day", null, values14)*/
+        val newRowId8 = db?.insert("Routine_day", null, values14)
+        val newRowId9 = db?.insert("DBDevice", null, values16)
+        val newRowId10 = db?.insert("DBDevice", null, values17)
+        val newRowId11 = db?.insert("DBDevice", null, values18)
+        val newRowId12 = db?.insert("DBDevice", null, values19)
+        val newRowId13 = db?.insert("Routine_devices", null, values20)
+        val newRowId14 = db?.insert("Routine_devices", null, values21)
+        val newRowId15 = db?.insert("Routine_devices", null, values22)
+        val newRowId16 = db?.insert("Routine_devices", null, values23)
+
+        day = "WEDNESDAY"
+        hour = "12"
+        minute = "00"*/
 
         var result = db!!.rawQuery("SELECT IdRoutine FROM Routine_day WHERE day = \"" + day + "\"", null)
         var toExecute: MutableList<String> = mutableListOf()
@@ -106,13 +168,56 @@ class EnableRoutinesReceive  : BroadcastReceiver() {
                     if (cursor.moveToFirst()) {
                         while (!cursor.isAfterLast) {
                             if (cursor.getString(cursor.getColumnIndex("routineId")) != null) {
-                                //TODO ejecutar rutina con id i
-                                println("Tengo la rutina " + cursor.getString(cursor.getColumnIndex("routineId")))
+                                //println("Tengo la rutina " + cursor.getString(cursor.getColumnIndex("routineId")))
+                                var cursor2 = db!!.rawQuery(
+                                    "SELECT IdDevice FROM Routine_devices WHERE IdRoutine = \"" +
+                                            cursor.getString(cursor.getColumnIndex("routineId")) + "\"", null
+                                )
+                                if (cursor2.moveToFirst()) {
+                                    while (!cursor2.isAfterLast) {
+                                        if (cursor2.getString(cursor2.getColumnIndex("IdDevice")) != null) {
+                                            var cursor3 = db!!.rawQuery(
+                                                "SELECT * FROM DBDevice WHERE Id = \"" +
+                                                        cursor2.getString(cursor2.getColumnIndex("IdDevice")) + "\"", null
+                                            )
+
+                                            if (cursor3.moveToFirst()) {
+                                                var j=0
+                                                while (!cursor3.isAfterLast) {
+                                                    if (cursor3.getString(cursor3.getColumnIndex("Id")) != null) {
+                                                        println(cursor3.getString(cursor3.getColumnIndex("Id")))
+                                                        println("veces" + j)
+                                                        j++
+                                                    val scope = CoroutineScope(Dispatchers.IO)
+                                                        scope.launch {
+                                                            val status = HandleDeviceService(cursor3.getString(cursor3.getColumnIndex("url")),
+                                                                cursor3.getString(cursor3.getColumnIndex("puerto")).toInt(),
+                                                                cursor3.getString(cursor3.getColumnIndex("tipo"))).queryDevice()
+                                                            if(status == "on") {
+                                                                HandleDeviceService(cursor3.getString(cursor3.getColumnIndex("url")),
+                                                                    cursor3.getString(cursor3.getColumnIndex("puerto")).toInt(),
+                                                                    cursor3.getString(cursor3.getColumnIndex("tipo"))).powerOffDevice()
+                                                            } else {
+                                                                HandleDeviceService(cursor3.getString(cursor3.getColumnIndex("url")),
+                                                                    cursor3.getString(cursor3.getColumnIndex("puerto")).toInt(),
+                                                                    cursor3.getString(cursor3.getColumnIndex("tipo"))).powerOnDevice()
+                                                            }
+                                                        }
+                                                    }
+                                                    cursor3.moveToNext()
+                                                }
+                                            }
+                                            cursor3.close()
+                                        }
+                                        cursor2.moveToNext()
+                                    }
+                                }
+                                cursor2.close()
                             }
                             cursor.moveToNext()
                         }
-                        cursor.close()
                     }
+                    cursor.close()
                 }
                 result.moveToNext()
             }

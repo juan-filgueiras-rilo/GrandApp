@@ -51,17 +51,15 @@ class AddRoutine : Fragment() {
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
-        /*var listaExample = mutableListOf(CustomerDevice(1,"NombreProducto1", "loadURL", "", 1, ""),
-                CustomerDevice(2, "NombreProducto2", "loadURL", "", 1, ""),
-                CustomerDevice(3, "NombreProducto3", "loadURL", "", 1, "")*/
-
         var listaExample = mutableListOf<CustomerDevice>()
 
 
         class ResponseManager() : IResponseFragmentManagerGeneric {
-            lateinit var dispositivo: CustomerDevice
             override  fun onSuccesResponse(model: CustomerDevice) {
-                listaExample.add(model)
+                var repetido = listaExample.find { disp -> model.equals(disp) }
+                if (repetido == null) {
+                    listaExample.add(model)
+                }
                 recyclerView.adapter = context?.let {
                     activity?.let { it1 ->
                         DevicesAdapter(it, listaExample as ArrayList<CustomerDevice>, it1, R.layout.custom_dispositivosrutina) {

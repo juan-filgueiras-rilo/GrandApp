@@ -36,16 +36,11 @@ class DeviceList(responseManager: IResponseFragmentManagerGeneric) : Fragment() 
         recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler)
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
-        val listaExample: List<CustomerDevice> = listOf(CustomerDevice(1,"NombreProducto1", "loadURL", "", 1, ""),
-                CustomerDevice(2, "NombreProducto2", "loadURL", "", 1, ""),
-                CustomerDevice(3, "NombreProducto3", "loadURL", "", 1, ""))
-
 
         val deviceSummaryListExample: List<DevicesModel> = UserConfigManager(context as FragmentActivity).getDevicesFromBD()
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
-                DeviceListAdapter(it, listaExample, responseManager, it1) {
-                    //Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                DeviceListAdapter(it, deviceSummaryListExample, responseManager, it1) {
                 }
             }
         }

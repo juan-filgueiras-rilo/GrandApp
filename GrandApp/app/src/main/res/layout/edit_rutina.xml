@@ -92,8 +92,9 @@
 
         <TimePicker
             android:id="@+id/datePicker1"
-            android:layout_width="wrap_content"
-            android:layout_height="96dp" />
+            android:layout_width="match_parent"
+            android:timePickerMode="spinner"
+            android:layout_height="wrap_content" />
 
         <LinearLayout
             android:id="@+id/addDispositivo"

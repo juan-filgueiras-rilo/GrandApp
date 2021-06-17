@@ -136,6 +136,8 @@ class DevicesAdapter(context: Context, items: List<CustomerDevice>, activity: Fr
                     nombreDisp.text = item.nombre
                     descripciondisp.text = item.descripcion
                     eliminardisp.setOnClickListener {
+                        adapter.refresh(adapterPosition)
+
                         //TODO eliminar dispositivo de lista
                     }
                     modificardisp.setOnClickListener {
