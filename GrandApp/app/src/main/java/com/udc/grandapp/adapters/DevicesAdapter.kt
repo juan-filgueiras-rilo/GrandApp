@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.MainThread
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
@@ -72,8 +73,15 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
                     val scope = CoroutineScope(Dispatchers.IO)
                     scope.launch {
                         val status = HandleDeviceService(item.url, item.puerto.toInt(), item.tipo).queryDevice()
+                        if(status == "on") {
+                            encender.backgroundTintList = ContextCompat.getColorStateList(context,R.color.lemon);
+                        } else {
+                            encender.backgroundTintList = ContextCompat.getColorStateList(context,R.color.cleargrey);
+                        }
                     }
+/*
                     bombilla_cd.setBackgroundColor(context.resources.getColor(R.color.green))
+*/
                     consulta.setOnClickListener {
                         val ft: FragmentTransaction = activity.supportFragmentManager.beginTransaction()
                         ft.replace(R.id.fragmentDevices, UpdateDevice())
@@ -82,7 +90,14 @@ class DevicesAdapter(context: Context, val items: List<CustomerDevice>, activity
                     }
                     encender.setOnClickListener {
                         scope.launch {
-                            HandleDeviceService(item.url, item.puerto.toInt(), item.tipo).powerOnDevice()
+                            val status = HandleDeviceService(item.url, item.puerto.toInt(), item.tipo).queryDevice()
+                            if(status == "on") {
+                                HandleDeviceService(item.url, item.puerto.toInt(), item.tipo).powerOffDevice()
+                                encender.backgroundTintList = ContextCompat.getColorStateList(context,R.color.cleargrey);
+                            } else {
+                                HandleDeviceService(item.url, item.puerto.toInt(), item.tipo).powerOnDevice()
+                                encender.backgroundTintList = ContextCompat.getColorStateList(context,R.color.lemon);
+                            }
                         }
                     }
                     eliminar.setOnClickListener {
