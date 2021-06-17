@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.fragment_devices.*
 
 class Devices : Fragment() {
 
-    private lateinit var rootView : View
+    private lateinit var rootView: View
     private lateinit var recyclerView: RecyclerView
     private lateinit var mCustomerDevices: MutableList<CustomerDevice>
 
@@ -51,7 +51,8 @@ class Devices : Fragment() {
         addDevice.setOnClickListener {
             Toast.makeText(context, "Nuevo dispositivo", Toast.LENGTH_LONG).show()
             val ft: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
-            ft?.replace(R.id.fragmentDevices, NewDevice())
+            ft?.detach(this)
+            ft?.replace(R.id.main_container, NewDevice())
             ft?.addToBackStack("Devices")
             ft?.commit()
         }
@@ -62,9 +63,20 @@ class Devices : Fragment() {
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
                 mCustomerDevices = getDevicesFromBD(it)
-                DevicesAdapter(it, mCustomerDevices as ArrayList<CustomerDevice>, it1, R.layout.custom_dispositivo) {
+                DevicesAdapter(it, mCustomerDevices as ArrayList<CustomerDevice>, it1, R.layout.custom_dispositivo, {
                     Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
-                }
+                }, this)
+            }
+        }
+    }
+
+    fun reload() {
+        recyclerView.adapter = context?.let {
+            activity?.let { it1 ->
+                mCustomerDevices = getDevicesFromBD(it)
+                DevicesAdapter(it, mCustomerDevices as ArrayList<CustomerDevice>, it1, R.layout.custom_dispositivo, {
+                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                }, this)
             }
         }
     }
@@ -82,12 +94,11 @@ class Devices : Fragment() {
             override fun onSuccesResponse(model: GenericModel) {
                 val modelResponse: GenericModel = model as GenericModel
                 if (modelResponse.error == "0") {
-                    val devices: List<DevicesModel> =  DevicesModel.Parse(modelResponse.json)
+                    val devices: List<DevicesModel> = DevicesModel.Parse(modelResponse.json)
                     //TODO login?
                     startActivity(Intent(MainScreenActivity::class.simpleName))
-                }
-                else {
-                        //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
+                } else {
+                    //Toast.makeText(context, modelResponse.mensaje, Toast.LENGTH_LONG).show()
                     MaterialAlertDialogBuilder(activity)
                             .setTitle("Error")
                             .setMessage(modelResponse.mensaje)
@@ -101,13 +112,13 @@ class Devices : Fragment() {
             }
 
             override fun onErrorResponse(model: String) {
-                    //Toast.makeText(context, "Error al obtener los dispositivos (Diálogo)", Toast.LENGTH_LONG).show()
-                        MaterialAlertDialogBuilder(activity)
-                                .setTitle("Error")
-                                .setMessage("Al obtener los dispositivos")
-                                .setNeutralButton("OK") { dialog, which ->
-                                    // Respond to positive button press
-                                }.show()
+                //Toast.makeText(context, "Error al obtener los dispositivos (Diálogo)", Toast.LENGTH_LONG).show()
+                MaterialAlertDialogBuilder(activity)
+                        .setTitle("Error")
+                        .setMessage("Al obtener los dispositivos")
+                        .setNeutralButton("OK") { dialog, which ->
+                            // Respond to positive button press
+                        }.show()
 
 
             }

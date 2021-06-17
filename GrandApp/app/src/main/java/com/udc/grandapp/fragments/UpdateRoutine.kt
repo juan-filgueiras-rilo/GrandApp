@@ -51,9 +51,9 @@ class UpdateRoutine(layout: Int) : Fragment() {
 
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
-                DevicesAdapter(it, listaExample, it1, R.layout.custom_dispositivosrutina) {
+                DevicesAdapter(it, listaExample, it1, R.layout.custom_dispositivosrutina, {
                     Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
-                }
+                }, this)
             }
         }
 

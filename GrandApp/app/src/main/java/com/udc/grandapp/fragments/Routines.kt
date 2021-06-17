@@ -36,17 +36,6 @@ class Routines : Fragment() {
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
-        var lista: List<CustomerRoutine> = listOf(
-            CustomerRoutine(1, "Rutina 1", "Descripción de la rutina 1", "url1"),
-            CustomerRoutine(2, "Rutina 2", "Descripción de la rutina 2", "url2"),
-            CustomerRoutine(3, "Rutina 3", "Descripción de la rutina 3", "url3"))
-        recyclerView.adapter = context?.let {
-            activity?.let { it1 ->
-                RoutinesAdapter(it, lista, it1) {
-                Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
-            }
-            }
-        }
         return rootView
     }
 
@@ -55,9 +44,24 @@ class Routines : Fragment() {
         titulo.text = activity?.resources?.getString(R.string.mis_rutinas)
         addRoutine.setOnClickListener {
             val ft: FragmentTransaction? = activity?.supportFragmentManager?.beginTransaction()
-            ft?.replace(R.id.fragmentRoutines, AddRoutine())
+            ft?.replace(R.id.main_container, AddRoutine())
             ft?.addToBackStack("Routines")
             ft?.commit()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var lista: List<CustomerRoutine> = listOf(
+                CustomerRoutine(1, "Rutina 1", "Descripción de la rutina 1", "url1"),
+                CustomerRoutine(2, "Rutina 2", "Descripción de la rutina 2", "url2"),
+                CustomerRoutine(3, "Rutina 3", "Descripción de la rutina 3", "url3"))
+        recyclerView.adapter = context?.let {
+            activity?.let { it1 ->
+                RoutinesAdapter(it, lista, it1) {
+                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                }
+            }
         }
     }
 

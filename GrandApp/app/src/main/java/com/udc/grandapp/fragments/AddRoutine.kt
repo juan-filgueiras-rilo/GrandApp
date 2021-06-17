@@ -53,22 +53,13 @@ class AddRoutine : Fragment() {
 
         var listaExample = mutableListOf<CustomerDevice>()
 
-
         class ResponseManager() : IResponseFragmentManagerGeneric {
             override  fun onSuccesResponse(model: CustomerDevice) {
                 var repetido = listaExample.find { disp -> model.equals(disp) }
                 if (repetido == null) {
                     listaExample.add(model)
                 }
-                recyclerView.adapter = context?.let {
-                    activity?.let { it1 ->
-                        DevicesAdapter(it, listaExample as ArrayList<CustomerDevice>, it1, R.layout.custom_dispositivosrutina) {
-                            Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
-                            Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
-                        }
-                    }
-                }
-
+                refresh(listaExample)
             }
             override fun onErrorResponse(model: String) {
 
@@ -176,6 +167,17 @@ class AddRoutine : Fragment() {
             CreateRoutineManager.realizarOperacion(responseManager, DatosCreateRoutine(editTextNombre.text.toString(),
                     editTextDescripcion.text.toString(), UserConfigManager.getUserInfoPersistente(context as Activity)!!.userId,
                     dias, datePicker1.hour, datePicker1.minute, devices))
+        }
+    }
+
+    fun refresh(listaExample: List<CustomerDevice>) {
+        recyclerView.adapter = context?.let {
+            activity?.let { it1 ->
+                DevicesAdapter(it, listaExample as ArrayList<CustomerDevice>, it1, R.layout.custom_dispositivosrutina, {
+                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
+                }, this)
+            }
         }
     }
 

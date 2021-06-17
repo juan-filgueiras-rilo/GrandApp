@@ -1,14 +1,12 @@
 package com.udc.grandapp.fragments
 
-import android.opengl.Visibility
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.system.Os.socket
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -19,17 +17,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.udc.grandapp.R
 import com.udc.grandapp.adapters.DevicesAdapter
 import com.udc.grandapp.items.CustomerDevice
-import com.udc.grandapp.items.CustomerDeviceSummary
 import com.udc.grandapp.manager.configuration.UserConfigManager
 import com.udc.grandapp.utils.CommonMethods
 import es.udc.grandapp.ssdpconnect.client.SsdpClient
 import es.udc.grandapp.ssdpconnect.client.response.SsdpResponse
 import es.udc.grandapp.ssdpconnect.model.*
 import kotlinx.android.synthetic.main.fragment_searchdevices.*
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.lang.Exception
+import java.net.DatagramPacket
+import java.net.DatagramSocket
+import java.net.InetAddress
+
 
 class NewDevice : Fragment() {
 
@@ -47,9 +48,9 @@ class NewDevice : Fragment() {
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
         recyclerView.adapter = context?.let {
             activity?.let { it1 ->
-                DevicesAdapter(it, mDevicesList, it1, R.layout.custom_nuevodispositivo) {
+                DevicesAdapter(it, mDevicesList, it1, R.layout.custom_nuevodispositivo, {
                     Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG).show()
-                }
+                }, this)
             }
         }
         mDeviceFound.observe(viewLifecycleOwner, Observer {
@@ -73,7 +74,8 @@ class NewDevice : Fragment() {
         findDevicesCoroutine(mSpinnerActive, mDeviceFound)
     }
 
-    private fun findDevicesCoroutine(spinnerActive : MutableLiveData<Boolean>, deviceFound: MutableLiveData<CustomerDevice>) {
+
+    private fun findDevicesCoroutine(spinnerActive: MutableLiveData<Boolean>, deviceFound: MutableLiveData<CustomerDevice>) {
         viewLifecycleOwner.lifecycleScope.launch {
             spinnerActive.postValue(true)
             mDevicesList.clear()
@@ -103,6 +105,39 @@ class NewDevice : Fragment() {
             delay(5 * 1000)
             client.stopDiscovery()
             spinnerActive.postValue(false)
+        }
+    }
+
+    private fun findRoombaCoroutine(spinnerActive: MutableLiveData<Boolean>, deviceFound: MutableLiveData<CustomerDevice>) {
+        val scope = CoroutineScope(Dispatchers.IO)
+        scope.launch {
+            spinnerActive.postValue(true)
+            mDevicesList.clear()
+            val client = SsdpClient.create()
+            val options = DiscoveryOptions.builder().port(1900).build()
+            val all = SsdpRequest.builder().discoveryOptions(options).build()
+
+            client.discoverServices(all, object : DiscoveryListener {
+                override fun onFailed(ex: Exception, response: SsdpResponse) {
+                    Log.e("TAG", "ERROR ${response}")
+                }
+
+                override fun onServiceDiscovered(service: SsdpService) {
+                    Log.e("TAG", "Found service: $service")
+                    val id = service.serialNumber.split("x")[1].toLong(radix = 16)
+                    val puerto = service.location.split(":")[2].replace(",", "").toLong()
+                    val currentIPs = UserConfigManager(context as FragmentActivity).getUniqueIPs()
+                    if (!currentIPs.contains(service.remoteIp.hostAddress)) {
+                        deviceFound.postValue(CustomerDevice(id, "roomba", "", service.remoteIp.hostAddress, puerto, "yeelight"))
+                    }
+                }
+
+                override fun onServiceAnnouncement(announcement: SsdpServiceAnnouncement) {
+                    Log.e("TAG", "Service announced something: $announcement")
+                }
+            })
+            delay(5 * 1000)
+            client.stopDiscovery()
         }
     }
 }

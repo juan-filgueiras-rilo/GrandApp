@@ -2,13 +2,15 @@ package com.udc.grandapp
 
 import android.app.Activity
 import android.os.Bundle
-import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.udc.grandapp.adapters.FragmentPageChanger
+import com.udc.grandapp.fragments.Devices
 import com.udc.grandapp.manager.GetDevicesManager
 import com.udc.grandapp.manager.GetRoutinesManager
 import com.udc.grandapp.manager.configuration.SharedPreferenceManager
@@ -19,6 +21,7 @@ import com.udc.grandapp.model.DevicesModel
 import com.udc.grandapp.model.GenericModel
 import com.udc.grandapp.model.RoutinesModel
 import com.udc.grandapp.utils.CommonMethods
+
 
 class MainScreenActivity : AppCompatActivity() {
 
@@ -46,9 +49,29 @@ class MainScreenActivity : AppCompatActivity() {
         /*Intent(this, RoutineAlarmService::class.java).also { intent ->
             startService(intent) //TODO DESCOMENTAR ESTO
         }*/
+        supportFragmentManager.addOnBackStackChangedListener {
+            val f: Fragment? = supportFragmentManager.findFragmentById(R.id.fragmentDevices)
+            if (f != null) {
+                updateTitleAndDrawer(f)
+            }
+        }
+
     }
 
-    fun initTabLayout(){
+    private fun updateTitleAndDrawer(fragment: Fragment) {
+        val fragClassName = fragment.javaClass.name
+        if (fragClassName == Devices::class.java.getName()) {
+            (fragClassName as Devices).reload()
+            //set selected item position, etc
+        } /*else if (fragClassName == B::class.java.getName()) {
+            title = "B"
+            //set selected item position, etc
+        } else if (fragClassName == C::class.java.getName()) {
+            title = "C"
+            //set selected item position, etc
+        }*/
+    }
+    private fun initTabLayout(){
         setSupportActionBar(toolbar)
 
         val onTabSelectedListener: OnTabSelectedListener = object : OnTabSelectedListener {
@@ -56,7 +79,9 @@ class MainScreenActivity : AppCompatActivity() {
                 CommonMethods.clearExistFragments(this@MainScreenActivity)
                 viewPager.currentItem = tab.position
             }
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                CommonMethods.clearExistFragments(this@MainScreenActivity)
+            }
             override fun onTabReselected(tab: TabLayout.Tab) {
                 CommonMethods.clearExistFragments(this@MainScreenActivity)
                 viewPager.currentItem = tab.position
@@ -64,7 +89,9 @@ class MainScreenActivity : AppCompatActivity() {
         }
 
         viewPager.adapter = FragmentPageChanger(supportFragmentManager, this)
+        tabLayout.addOnTabSelectedListener(onTabSelectedListener)
         tabLayout.setupWithViewPager(viewPager)
+
     }
 
     fun getDevices(){

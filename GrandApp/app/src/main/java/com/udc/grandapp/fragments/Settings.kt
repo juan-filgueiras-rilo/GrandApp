@@ -43,9 +43,6 @@ class Settings() : Fragment() {
         recyclerView.setHasFixedSize(true)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
 
-        recyclerView.adapter = context?.let { SettingsAdapter(it, listaSettings, parentFragmentManager) {
-            Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG)
-        } }
         return rootView
     }
 
@@ -54,6 +51,12 @@ class Settings() : Fragment() {
         titulo.text = "Ajustes"
     }
 
+    override fun onResume() {
+        super.onResume()
+        recyclerView.adapter = context?.let { SettingsAdapter(it, listaSettings, parentFragmentManager) {
+            Toast.makeText(context, "${it.text} Clicked", Toast.LENGTH_LONG)
+        } }
+    }
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
         CommonMethods.recyclerViewGridCount(context as FragmentActivity, recyclerView)
