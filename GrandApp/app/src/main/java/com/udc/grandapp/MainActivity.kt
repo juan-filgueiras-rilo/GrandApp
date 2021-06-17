@@ -178,7 +178,7 @@ class MainActivity : AppCompatActivity() , View.OnClickListener {
                                 val modelResponse: GenericModel = model
                                 if (modelResponse.error == "0") {
                                         val login: SignUpLoginModel = SignUpLoginModel.Parse(modelResponse.json)
-                                        UserConfigManager(activity).insertarUserBD(login)
+                                        UserConfigManager(activity).insertarUserBD(login, login.email, activity)
                                         UserConfigManager.reiniciarInfoPersistente(activity)
                                         startActivity(Intent(activity, MainScreenActivity::class.java))
                                 }else Toast.makeText(applicationContext, model.mensaje, Toast.LENGTH_LONG).show()

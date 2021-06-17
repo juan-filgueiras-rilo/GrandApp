@@ -22,7 +22,6 @@ class SplashActivity : AppCompatActivity() {
                 super.onCreate(savedInstanceState)
                 setContentView(R.layout.splash_activity)
                 UserConfigManager(this).getUserInfoFromBD()
-                //comprobarUsuarioLogueado()
                 startTime()
 
 

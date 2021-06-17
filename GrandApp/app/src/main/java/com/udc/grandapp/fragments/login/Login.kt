@@ -108,7 +108,7 @@ class Login : AppCompatActivity(), View.OnClickListener {
                     val modelResponse: GenericModel = model as GenericModel
                     if (modelResponse.error == "0") {
                         val login: SignUpLoginModel =  SignUpLoginModel.Parse(modelResponse.json)
-                        UserConfigManager(activity).insertarUserBD(login)
+                        UserConfigManager(activity).insertarUserBD(login, valuePwd, activity)
                         UserConfigManager.reiniciarInfoPersistente(activity)
                         val intent: Intent = Intent(activity, MainScreenActivity::class.java)
                         activity.startActivity(intent)
